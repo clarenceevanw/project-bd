@@ -12,6 +12,7 @@ public class LoginSession {
     private String email;
     private String role;
     private LocalDateTime waktuLogin;
+    private UUID idClub;
 
     private LoginSession() {}
 
@@ -42,5 +43,7 @@ public class LoginSession {
     public String getEmail() { return email; }
     public String getRole() { return role; }
     public LocalDateTime getWaktuLogin() { return waktuLogin; }
+    public UUID getIdClub() { return idClub; }
+    public void setIdClub(UUID idClub) { this.idClub = idClub; }
 }
 

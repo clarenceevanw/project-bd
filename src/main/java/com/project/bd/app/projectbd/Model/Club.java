@@ -5,17 +5,17 @@ import java.util.UUID;
 
 public class Club {
     private UUID id_club;
+    private UUID id_kategori;
     private String nama;
     private String deskripsi;
     private int tahun_berdiri;
-    private List<String> kategori;
     private List<Keanggotaan> anggota;
 
-    public Club() {
-    }
+    public Club() {}
 
-    public Club(UUID id_club, String nama, String deskripsi, int tahun_berdiri){
+    public Club(UUID id_club, UUID id_kategori, String nama, String deskripsi, int tahun_berdiri){
         this.id_club = id_club;
+        this.id_kategori = id_kategori;
         this.nama = nama;
         this.deskripsi = deskripsi;
         this.tahun_berdiri = tahun_berdiri;
@@ -53,14 +53,6 @@ public class Club {
         this.tahun_berdiri = tahun_berdiri;
     }
 
-    public List<String> getKategori() {
-        return kategori;
-    }
-
-    public void setKategori(List<String> kategori) {
-        this.kategori = kategori;
-    }
-
     public List<Keanggotaan> getAnggota() {
         return anggota;
     }
@@ -68,4 +60,18 @@ public class Club {
     public void setAnggota(List<Keanggotaan> anggota) {
         this.anggota = anggota;
     }
+
+    public UUID getId_kategori() {
+        return id_kategori;
+    }
+
+    public void setId_kategori(UUID id_kategori) {
+        this.id_kategori = id_kategori;
+    }
+
+    @Override
+    public String toString() {
+        return getNama();
+    }
+
 }

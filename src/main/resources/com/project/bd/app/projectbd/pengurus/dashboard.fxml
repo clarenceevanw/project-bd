@@ -23,10 +23,8 @@
 
     <!-- Tombol-tombol di tengah -->
     <center>
-        <VBox alignment="CENTER" spacing="30" style="-fx-padding: 40;">
-            <Button onAction="#goToKelolaClub" prefHeight="50" prefWidth="200" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Kelola Data Club" />
-            <Button onAction="#goToKelolaJadwal" prefHeight="50" prefWidth="200" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Kelola Jadwal Kegiatan" />
-            <Button onAction="#handleLogout" prefHeight="50" prefWidth="200" style="-fx-background-color: #E1D6F5; -fx-text-fill: #6C3BB9; -fx-font-weight: bold; -fx-background-radius: 10;" text="Logout" />
+        <VBox fx:id="contentBox" alignment="CENTER" spacing="30" style="-fx-padding: 40;">
+            <!-- Isi akan ditentukan dari controller -->
         </VBox>
     </center>
 </BorderPane>

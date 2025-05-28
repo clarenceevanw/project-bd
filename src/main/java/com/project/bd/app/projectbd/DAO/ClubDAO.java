@@ -19,9 +19,9 @@ public class ClubDAO {
     }
 
     public void insert(Club club) throws Exception {
-        String sql = "INSERT INTO club (id_club, nama, deskripsi, tahun_berdiri) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO club (id_kategori, nama, deskripsi, tahun_berdiri) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setObject(1, club.getId_club());
+            stmt.setObject(1, club.getId_kategori());
             stmt.setString(2, club.getNama());
             stmt.setString(3, club.getDeskripsi());
             stmt.setInt(4, club.getTahun_berdiri());
@@ -32,12 +32,13 @@ public class ClubDAO {
     }
 
     public void update(Club club) throws Exception{
-        String sql = "UPDATE club SET nama = ?, deskripsi = ?, tahun_berdiri = ? WHERE id_club = ?";
+        String sql = "UPDATE club SET id_kategori = ?, nama = ?, deskripsi = ?, tahun_berdiri = ? WHERE id_club = ?";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setString(1, club.getNama());
-            stmt.setString(2, club.getDeskripsi());
-            stmt.setInt(3, club.getTahun_berdiri());
-            stmt.setObject(4, club.getId_club());
+            stmt.setObject(1, club.getId_kategori());
+            stmt.setString(2, club.getNama());
+            stmt.setString(3, club.getDeskripsi());
+            stmt.setInt(4, club.getTahun_berdiri());
+            stmt.setObject(5, club.getId_club());
             stmt.executeUpdate();
         } catch (SQLException e) {
             AlertNotification.showError(e.getMessage());
@@ -93,6 +94,7 @@ public class ClubDAO {
         club.setNama(rs.getString("nama"));
         club.setDeskripsi(rs.getString("deskripsi"));
         club.setTahun_berdiri(rs.getInt("tahun_berdiri"));
+        club.setId_kategori(rs.getObject("id_kategori", UUID.class));
         List<Keanggotaan> keanggotaan = new KeanggotaanDAO().findKeanggotaanByClub(club.getId_club());
         club.setAnggota(keanggotaan);
         return club;

@@ -83,33 +83,40 @@ public class LoginController extends BaseController {
             return;
         }
 
-        List<Keanggotaan> keanggotaan = mhs.getKeanggotaan();
-
-        if (keanggotaan == null || keanggotaan.isEmpty()) {
-            AlertNotification.showError("Mahasiswa tidak terdaftar sebagai anggota maupun pengurus!");
-            return;
+//        List<Keanggotaan> keanggotaan = mhs.getKeanggotaan();
+//
+//        if (keanggotaan == null || keanggotaan.isEmpty()) {
+//            AlertNotification.showError("Mahasiswa tidak terdaftar sebagai anggota maupun pengurus!");
+//            return;
+//        }
+//
+//        boolean found = false;
+//
+//        for (Keanggotaan keanggotaan1 : keanggotaan) {
+//            if (keanggotaan1.getPeran().equals(selectedRole)) {
+//                found = true;
+//                LoginSession.getInstance().setSession(mhs.getIdMahasiswa(), mhs.getNrp(), mhs.getNama(), mhs.getEmail(), selectedRole);
+//                if (selectedRole.equals("Pengurus")) {
+//                    switchScenes("pengurus/dashboard.fxml", "Dashboard Pengurus");
+//                } else {
+//                    switchScenes("anggota/dashboard.fxml", "Dashboard Anggota");
+//                }
+//                AlertNotification.showSuccess("Login berhasil sebagai " + selectedRole + "!");
+//                return;
+//            }
+//        }
+//
+//        if (!found) {
+//            AlertNotification.showError("Mahasiswa tidak terdaftar sebagai " + selectedRole + "!");
+//            return;
+//           }
+        LoginSession.getInstance().setSession(mhs.getIdMahasiswa(), mhs.getNrp(), mhs.getNama(), mhs.getEmail(), selectedRole);
+        if(selectedRole.equals("Pengurus")) {
+            switchScenes("pengurus/dashboard.fxml", "Dashboard Pengurus");
+        } else if (selectedRole.equals("Anggota")) {
+            switchScenes("anggota/dashboard.fxml", "Dashboard Anggota");
         }
-
-        boolean found = false;
-
-        for (Keanggotaan keanggotaan1 : keanggotaan) {
-            if (keanggotaan1.getPeran().equals(selectedRole)) {
-                found = true;
-                LoginSession.getInstance().setSession(mhs.getIdMahasiswa(), mhs.getNrp(), mhs.getNama(), mhs.getEmail(), selectedRole);
-                if (selectedRole.equals("Pengurus")) {
-                    switchScenes("pengurus/dashboard.fxml", "Dashboard Pengurus");
-                } else {
-                    switchScenes("anggota/dashboard.fxml", "Dashboard Anggota");
-                }
-                AlertNotification.showSuccess("Login berhasil sebagai " + selectedRole + "!");
-                return;
-            }
-        }
-
-        if (!found) {
-            AlertNotification.showError("Mahasiswa tidak terdaftar sebagai " + selectedRole + "!");
-            return;
-        }
+        AlertNotification.showSuccess("Login berhasil sebagai " + selectedRole + "!");
     }
 
     @FXML
