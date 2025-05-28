@@ -18,7 +18,9 @@ public class CRUDClubController extends BaseController {
     @FXML private TextField fieldKategori;
     @FXML private TextField fieldPembina;
 
-    @FXML private void handleBackToDashboard() {  }
+    @FXML private void handleBackToDashboard() {
+        System.out.println("TEST");
+    }
     @FXML private void handleTambah() {  }
     @FXML private void handleEdit() {  }
     @FXML private void handleHapus() {  }
