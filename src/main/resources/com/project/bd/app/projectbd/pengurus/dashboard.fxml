@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.PengurusDashboardController">
+
+    <!-- Kiri tetap untuk logo dan judul -->
+    <left>
+        <VBox alignment="CENTER" prefWidth="300" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 30;">
+            <ImageView fitHeight="80" fitWidth="307.0">
+                <image>
+                    <Image url="@../image/PCU-LOGO.png" />
+                </image>
+            </ImageView>
+            <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Dashboard Pengurus" />
+        </VBox>
+    </left>
+
+    <!-- Tombol-tombol di tengah -->
+    <center>
+        <VBox alignment="CENTER" spacing="30" style="-fx-padding: 40;">
+            <Button onAction="#goToKelolaClub" prefHeight="50" prefWidth="200" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Kelola Data Club" />
+            <Button onAction="#goToKelolaJadwal" prefHeight="50" prefWidth="200" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Kelola Jadwal Kegiatan" />
+            <Button onAction="#handleLogout" prefHeight="50" prefWidth="200" style="-fx-background-color: #E1D6F5; -fx-text-fill: #6C3BB9; -fx-font-weight: bold; -fx-background-radius: 10;" text="Logout" />
+        </VBox>
+    </center>
+</BorderPane>
