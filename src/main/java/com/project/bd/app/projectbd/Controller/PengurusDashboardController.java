@@ -53,34 +53,29 @@ public class PengurusDashboardController extends BaseController implements Initi
             Button buatClub = new Button("Buat Club Baru");
             buatClub.setPrefSize(200, 50);
             buatClub.setStyle("-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
-            buatClub.setOnAction(e -> goToBuatClub());
+            buatClub.setOnAction(e -> {
+                try {
+                    goToBuatClub();
+                } catch (IOException ex) {
+                    try {
+                        AlertNotification.showError(ex.getMessage());
+                    } catch (Exception exc) {
+                        throw new RuntimeException(exc);
+                    }
+                }
+            });
 
             contentBox.getChildren().setAll(info, buatClub);
         } else {
-            ComboBox<Club> comboBox = new ComboBox<>();
-            comboBox.getItems().addAll(clubPengurus);
-            comboBox.setPromptText("Pilih club yang ingin dikelola");
-            comboBox.setPrefWidth(250);
-            comboBox.setStyle("-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;");
-
-            Label pilihLabel = new Label("Club Anda:");
-            pilihLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: black;");
-
             Button kelolaButton = new Button("Kelola Club");
             kelolaButton.setPrefSize(200, 40);
             kelolaButton.setStyle("-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
-            kelolaButton.setOnAction(e -> {
-                Club selectedClub = comboBox.getValue();
-                if (selectedClub != null) {
-                    LoginSession.getInstance().setIdClub(selectedClub.getId_club()); // simpan club yg dipilih
+            kelolaButton.setOnAction(event -> {
+                try {
+                    goToKelolaClub();
+                }catch (IOException e) {
                     try {
-                        goToKelolaClub();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                } else {
-                    try {
-                        AlertNotification.showError("Silakan pilih club terlebih dahulu.");
+                        AlertNotification.showError(e.getMessage());
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
@@ -94,10 +89,14 @@ public class PengurusDashboardController extends BaseController implements Initi
                 try {
                     goToKelolaJadwal();
                 } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                    try {
+                        AlertNotification.showError(ex.getMessage());
+                    } catch (Exception exc) {
+                        throw new RuntimeException(exc);
+                    }
                 }
             });
-            contentBox.getChildren().setAll(pilihLabel, comboBox, kelolaButton, kelolaJadwal);
+            contentBox.getChildren().setAll(kelolaButton, kelolaJadwal);
         }
 
         Button logout = new Button("Logout");
@@ -106,19 +105,19 @@ public class PengurusDashboardController extends BaseController implements Initi
         logout.setOnAction(e -> {
             try {
                 handleLogout();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+            } catch (Exception exception) {
+                try {
+                    AlertNotification.showError(exception.getMessage());
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         contentBox.getChildren().add(logout);
     }
 
-    public void goToBuatClub() {
-        try {
-            switchScenes("pengurus/buat-club.fxml", "Buat Club");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void goToBuatClub() throws IOException {
+        switchScenes("pengurus/buat-club.fxml", "Buat Club");
     }
 
     @FXML
