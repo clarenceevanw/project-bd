@@ -11,7 +11,7 @@ public class DatabaseConnection {
     public static Connection getConnection(){
         String databaseName = "Project-BD";
         String user = "postgres";
-        String password = "";
+        String password = "abcd1234";
         String url = "jdbc:postgresql://localhost:5432/" + databaseName;
 
         try {

@@ -1,5 +1,7 @@
 package com.project.bd.app.projectbd.Controller;
 
+import com.project.bd.app.projectbd.DAO.ClubDAO;
+import com.project.bd.app.projectbd.DAO.KeanggotaanDAO;
 import com.project.bd.app.projectbd.DAO.MahasiswaDAO;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +10,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class BaseController {
     protected Stage stage;
+
+    protected ClubDAO clubDAO = new ClubDAO();
+
+    protected KeanggotaanDAO keanggotaanDAO = new KeanggotaanDAO();
 
     protected MahasiswaDAO mhsDAO = new MahasiswaDAO();
 
