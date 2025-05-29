@@ -59,6 +59,7 @@ public class KeanggotaanDAO {
                         mhs,
                         club,
                         rs.getString("peran"),
+                        rs.getString("status"),
                         rs.getDate("tanggal_bergabung").toLocalDate()
                 );
                 list.add(keanggotaan);
@@ -111,6 +112,7 @@ public class KeanggotaanDAO {
                         mhs,
                         club,
                         rs.getString("peran"),
+                        rs.getString("status"),
                         rs.getDate("tanggal_bergabung").toLocalDate()
                 );
 
@@ -129,6 +131,28 @@ public class KeanggotaanDAO {
             stmt.setObject(2, keanggotaan.getClub().getId_club());
             stmt.setString(3, keanggotaan.getPeran());
             stmt.setDate(4, java.sql.Date.valueOf(keanggotaan.getTanggal_bergabung()));
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            AlertNotification.showError(e.getMessage());
+        }
+    }
+
+    public void update(Keanggotaan keanggotaan) throws Exception {
+        String sql = "UPDATE keanggotaan SET peran = ?, status = ? WHERE id_keanggotaan = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, keanggotaan.getPeran());
+            stmt.setString(2, keanggotaan.getStatus());
+            stmt.setObject(3, keanggotaan.getId_keanggotaan());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            AlertNotification.showError(e.getMessage());
+        }
+    }
+
+    public void delete(UUID idKeanggotaan) throws Exception {
+        String sql = "DELETE FROM keanggotaan WHERE id_keanggotaan = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setObject(1, idKeanggotaan);
             stmt.executeUpdate();
         } catch (SQLException e) {
             AlertNotification.showError(e.getMessage());

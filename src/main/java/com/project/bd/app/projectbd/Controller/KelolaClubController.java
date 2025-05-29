@@ -89,7 +89,7 @@ public class KelolaClubController extends BaseController {
             List<Keanggotaan> keanggotaanMhs = mhsDAO.findKeanggotaan(LoginSession.getInstance().getIdMahasiswa());
 
             for (Keanggotaan keanggotaan : keanggotaanMhs) {
-                if (keanggotaan.getPeran().equals("Pengurus")) {
+                if (keanggotaan.getPeran().equals("Pengurus") && keanggotaan.getStatus().equals("Aktif")) {
                     clubs.add(keanggotaan.getClub());
                 }
             }

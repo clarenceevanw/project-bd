@@ -9,7 +9,7 @@
     <!-- Sidebar -->
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
-            <ImageView fitHeight="75" fitWidth="233.0">
+            <ImageView fitHeight="75" fitWidth="280.0">
                 <image>
                     <Image url="@../image/PCU-LOGO.png" />
                 </image>

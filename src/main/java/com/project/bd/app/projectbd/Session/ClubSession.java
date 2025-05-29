@@ -1,6 +1,7 @@
 package com.project.bd.app.projectbd.Session;
 
 import com.project.bd.app.projectbd.Model.Club;
+import com.project.bd.app.projectbd.Model.Keanggotaan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.UUID;
 public class ClubSession {
     private static ClubSession instance;
     private Club club; //Untuk menyimpan club yang dipilih oleh user
+    private Keanggotaan keanggotaan;
 
     public static ClubSession getInstance() {
         if (instance == null) {
@@ -23,5 +25,13 @@ public class ClubSession {
 
     public void setClub(Club club) {
         this.club = club;
+    }
+
+    public Keanggotaan getKeanggotaan() {
+        return keanggotaan;
+    }
+
+    public void setKeanggotaan(Keanggotaan keanggotaan) {
+        this.keanggotaan = keanggotaan;
     }
 }
