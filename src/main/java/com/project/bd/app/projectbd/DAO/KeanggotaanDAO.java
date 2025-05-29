@@ -78,7 +78,7 @@ public class KeanggotaanDAO {
         JOIN mahasiswa m ON k.id_mahasiswa = m.id_mahasiswa
         JOIN club c ON k.id_club = c.id_club
         JOIN kategori k2 ON c.id_kategori = k2.id_kategori
-        WHERE k.id_prodi = ?
+        WHERE k.id_club = ?
     """;
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, idClub);
