@@ -1,8 +1,6 @@
 package com.project.bd.app.projectbd.DAO;
 
-import com.project.bd.app.projectbd.Model.Club;
-import com.project.bd.app.projectbd.Model.Kategori;
-import com.project.bd.app.projectbd.Model.Keanggotaan;
+import com.project.bd.app.projectbd.Model.*;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
 
@@ -20,11 +18,12 @@ public class KeanggotaanDAO {
         return DatabaseConnection.getConnection();
     }
 
-    public List<Keanggotaan> findKeanggotaanByMahasiswa(UUID idMahasiswa) {
+    public List<Keanggotaan> findKeanggotaanByMahasiswa(UUID idMahasiswa) throws Exception {
         List<Keanggotaan> list = new ArrayList<>();
         String sql = """
-        SELECT k.*, c.*, k2.nama AS nama_kategori
+        SELECT k.*, m.nama AS nama_mahasiswa, m.nrp as nrp, m.email as email, m.tgl_lahir as tgl_lahir, m.id_prodi as id_prodi, m.id_program as id_program, c.*, k2.nama AS nama_kategori
         FROM keanggotaan k
+        JOIN mahasiswa m ON k.id_mahasiswa = m.id_mahasiswa
         JOIN club c ON k.id_club = c.id_club
         JOIN kategori k2 ON c.id_kategori = k2.id_kategori
         WHERE k.id_mahasiswa = ?
@@ -36,6 +35,18 @@ public class KeanggotaanDAO {
                 UUID idKeanggotaan = rs.getObject("id_keanggotaan", UUID.class);
                 UUID idClub = rs.getObject("id_club", UUID.class);
 
+                // Buat Mahasiswa
+                Mahasiswa mhs = new Mahasiswa();
+                mhs.setIdMahasiswa(idMahasiswa);
+                mhs.setNrp(rs.getString("nrp"));
+                mhs.setNama(rs.getString("nama_mahasiswa"));
+                mhs.setEmail(rs.getString("email"));
+                mhs.setTglLahir(rs.getDate("tgl_lahir").toLocalDate());
+                Prodi prodi = new ProdiDAO().findById(rs.getObject("id_prodi", UUID.class));
+                Program program = new ProgramDAO().findById(rs.getObject("id_program", UUID.class));
+                mhs.setProdi(prodi);
+                mhs.setProgram(program);
+
                 // Buat Club
                 Club club = new Club();
                 club.setId_club(idClub);
@@ -45,7 +56,7 @@ public class KeanggotaanDAO {
                 club.setKategori(new Kategori(rs.getObject("id_kategori", UUID.class), rs.getString("nama_kategori")));
                 Keanggotaan keanggotaan = new Keanggotaan(
                         idKeanggotaan,
-                        idMahasiswa,
+                        mhs,
                         club,
                         rs.getString("peran"),
                         rs.getDate("tanggal_bergabung").toLocalDate()
@@ -59,14 +70,15 @@ public class KeanggotaanDAO {
     }
 
 
-    public List<Keanggotaan> findKeanggotaanByClub(UUID idClub) {
+    public List<Keanggotaan> findKeanggotaanByClub(UUID idClub) throws Exception {
         List<Keanggotaan> list = new ArrayList<>();
         String sql = """
-        SELECT k.*, c.*, k2.nama AS nama_kategori
+        SELECT k.*, m.id_mahasiswa as id_mahasiswa, m.nama AS nama_mahasiswa, m.nrp as nrp, m.email as email, m.tgl_lahir as tgl_lahir, m.id_prodi as id_prodi, m.id_program as id_program, c.*, k2.nama AS nama_kategori
         FROM keanggotaan k
+        JOIN mahasiswa m ON k.id_mahasiswa = m.id_mahasiswa
         JOIN club c ON k.id_club = c.id_club
         JOIN kategori k2 ON c.id_kategori = k2.id_kategori
-        WHERE k.id_club = ?
+        WHERE k.id_prodi = ?
     """;
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, idClub);
@@ -74,6 +86,18 @@ public class KeanggotaanDAO {
             while (rs.next()) {
                 UUID idKeanggotaan = rs.getObject("id_keanggotaan", UUID.class);
                 UUID idMahasiswaResult = rs.getObject("id_mahasiswa", UUID.class);
+
+                // Buat Mahasiswa
+                Mahasiswa mhs = new Mahasiswa();
+                mhs.setIdMahasiswa(idMahasiswaResult);
+                mhs.setNrp(rs.getString("nrp"));
+                mhs.setNama(rs.getString("nama_mahasiswa"));
+                mhs.setEmail(rs.getString("email"));
+                mhs.setTglLahir(rs.getDate("tgl_lahir").toLocalDate());
+                Prodi prodi = new ProdiDAO().findById(rs.getObject("id_prodi", UUID.class));
+                Program program = new ProgramDAO().findById(rs.getObject("id_program", UUID.class));
+                mhs.setProdi(prodi);
+                mhs.setProgram(program);
 
                 // Buat Club
                 Club club = new Club();
@@ -84,7 +108,7 @@ public class KeanggotaanDAO {
                 club.setKategori(new Kategori(rs.getObject("id_kategori", UUID.class), rs.getString("nama_kategori")));
                 Keanggotaan keanggotaan = new Keanggotaan(
                         idKeanggotaan,
-                        idMahasiswaResult,
+                        mhs,
                         club,
                         rs.getString("peran"),
                         rs.getDate("tanggal_bergabung").toLocalDate()
@@ -101,7 +125,7 @@ public class KeanggotaanDAO {
     public void insert(Keanggotaan keanggotaan) throws Exception {
         String sql = "INSERT INTO keanggotaan (id_mahasiswa, id_club, peran, tanggal_bergabung) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setObject(1, keanggotaan.getId_mahasiswa());
+            stmt.setObject(1, keanggotaan.getMahasiswa().getIdMahasiswa());
             stmt.setObject(2, keanggotaan.getClub().getId_club());
             stmt.setString(3, keanggotaan.getPeran());
             stmt.setDate(4, java.sql.Date.valueOf(keanggotaan.getTanggal_bergabung()));

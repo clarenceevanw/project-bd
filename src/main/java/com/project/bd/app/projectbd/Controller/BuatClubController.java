@@ -3,6 +3,7 @@ package com.project.bd.app.projectbd.Controller;
 import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.Kategori;
 import com.project.bd.app.projectbd.Model.Keanggotaan;
+import com.project.bd.app.projectbd.Model.Mahasiswa;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.collections.FXCollections;
@@ -84,7 +85,8 @@ public class BuatClubController extends BaseController{
             try {
                 LocalDate date = LocalDate.now();
                 Keanggotaan keanggotaan = new Keanggotaan();
-                keanggotaan.setId_mahasiswa(LoginSession.getInstance().getIdMahasiswa());
+                Mahasiswa mhs = mhsDAO.findById(LoginSession.getInstance().getIdMahasiswa());
+                keanggotaan.setMahasiswa(mhs);
                 keanggotaan.setClub(club);
                 keanggotaan.setPeran("Pengurus");
                 keanggotaan.setTanggal_bergabung(date);
