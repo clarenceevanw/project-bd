@@ -28,4 +28,9 @@ public class Kategori {
     public void setNama(String nama) {
         this.nama = nama;
     }
+
+    @Override
+    public String toString() {
+        return nama; // Tampilkan nama saat objek jadi string
+    }
 }

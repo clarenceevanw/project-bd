@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Club {
     private UUID id_club;
-    private UUID id_kategori;
+    private Kategori kategori = new Kategori();
     private String nama;
     private String deskripsi;
     private int tahun_berdiri;
@@ -13,9 +13,9 @@ public class Club {
 
     public Club() {}
 
-    public Club(UUID id_club, UUID id_kategori, String nama, String deskripsi, int tahun_berdiri){
+    public Club(UUID id_club, Kategori kategori, String nama, String deskripsi, int tahun_berdiri){
         this.id_club = id_club;
-        this.id_kategori = id_kategori;
+        this.kategori = kategori;
         this.nama = nama;
         this.deskripsi = deskripsi;
         this.tahun_berdiri = tahun_berdiri;
@@ -61,12 +61,12 @@ public class Club {
         this.anggota = anggota;
     }
 
-    public UUID getId_kategori() {
-        return id_kategori;
+    public Kategori getKategori() {
+        return kategori;
     }
 
-    public void setId_kategori(UUID id_kategori) {
-        this.id_kategori = id_kategori;
+    public void setKategori(Kategori kategori) {
+        this.kategori = kategori;
     }
 
     @Override

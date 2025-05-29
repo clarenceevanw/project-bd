@@ -1,6 +1,7 @@
 package com.project.bd.app.projectbd.Controller;
 
 import com.project.bd.app.projectbd.DAO.ClubDAO;
+import com.project.bd.app.projectbd.DAO.KategoriDAO;
 import com.project.bd.app.projectbd.DAO.KeanggotaanDAO;
 import com.project.bd.app.projectbd.DAO.MahasiswaDAO;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
@@ -17,6 +18,8 @@ public class BaseController {
     protected ClubDAO clubDAO = new ClubDAO();
 
     protected KeanggotaanDAO keanggotaanDAO = new KeanggotaanDAO();
+
+    protected KategoriDAO kategoriDAO = new KategoriDAO();
 
     protected MahasiswaDAO mhsDAO = new MahasiswaDAO();
 
