@@ -6,9 +6,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnection {
-    public static Connection databaseLink;
+    private static Connection databaseLink;
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
+        if (databaseLink != null) {
+            try {
+                if (!databaseLink.isClosed()) {
+                    return databaseLink;
+                }
+            } catch (SQLException e) {
+                System.out.println("Error checking connection: " + e.getMessage());
+            }
+        }
+
+        // Kalau belum ada koneksi, buat baru
         String databaseName = "Project-BD";
         String user = "postgres";
         String password = "abcd1234";
@@ -16,14 +27,13 @@ public class DatabaseConnection {
 
         try {
             Class.forName("org.postgresql.Driver");
-            System.out.println("Driver loaded successfully!");
             databaseLink = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to database!");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
 
-        return  databaseLink;
+        return databaseLink;
     }
 
     public static Statement getStatement() throws SQLException {
