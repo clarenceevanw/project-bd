@@ -8,6 +8,7 @@ import com.project.bd.app.projectbd.utils.DatabaseConnection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -44,5 +45,22 @@ public class BaseController {
         DatabaseConnection.getConnection();
         stage.show();
         stage.centerOnScreen();
+    }
+
+    public void setActiveSidebarButton(String page, Button btnDashboard, Button btnKelolaClub, Button btnKelolaKegiatan) {
+        String active = "-fx-background-color: #4B208E; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10px;";
+        String inactive = "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10px;";
+
+        btnDashboard.setStyle(inactive);
+        btnKelolaClub.setStyle(inactive);
+        btnKelolaKegiatan.setStyle(inactive);
+
+        if (page.equals("dashboard")) {
+            btnDashboard.setStyle(active);
+        } else if (page.equals("kelola")) {
+            btnKelolaClub.setStyle(active);
+        } else if (page.equals("kegiatan")){
+            btnKelolaKegiatan.setStyle(active);
+        }
     }
 }

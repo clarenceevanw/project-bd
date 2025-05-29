@@ -17,9 +17,18 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import javafx.scene.control.Button;
 
 public class KelolaClubController extends BaseController {
+    @FXML
+    private Button btnDashboard;
+
+    @FXML
+    private Button btnKelolaClub;
+
+    @FXML
+    private Button btnKelolaKegiatan;
+
     @FXML
     private TableView<Club> clubTable;
 
@@ -39,6 +48,8 @@ public class KelolaClubController extends BaseController {
 
     @FXML
     public void initialize() {
+        setActiveSidebarButton("kelola", btnDashboard, btnKelolaClub, btnKelolaKegiatan);
+
         // Inisialisasi kolom
         colNama.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNama()));
         colDeskripsi.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeskripsi()));
@@ -124,6 +135,7 @@ public class KelolaClubController extends BaseController {
             clubDAO.delete(selected.getId_club());
             clubList.remove(selected);
             AlertNotification.showSuccess("Hapus Club, Club berhasil dihapus.");
+            switchScenes("pengurus/dashboard.fxml", "Dashboard");
         } else {
             AlertNotification.showError("Pilih club yang ingin dihapus.");
         }
@@ -146,9 +158,8 @@ public class KelolaClubController extends BaseController {
     public void handleViewKegiatan() throws Exception {
         Club selected = clubTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            // TODO: buka view kegiatan club
             ClubSession.getInstance().setClub(selected);
-            switchScenes("pengurus/kelola-kegiatan-club.fxml", "Kelola Kegiatan Club");
+            switchScenes("pengurus/kegiatan.fxml", "Kelola Kegiatan Club");
             AlertNotification.showSuccess("Melihat kegiatan dari club: " + selected.getNama());
         } else {
             AlertNotification.showError("Pilih club terlebih dahulu.");
@@ -157,9 +168,16 @@ public class KelolaClubController extends BaseController {
 
     @FXML
     public void navigateToDashboard() throws Exception {
-        // TODO: navigasi ke dashboard
         switchScenes("pengurus/dashboard.fxml", "Dashboard");
-        AlertNotification.showSuccess("Pindah ke halaman Dashboard.");
+    }
+
+    @FXML
+    private void navigateToKelolaKegiatan() throws Exception {
+        try{
+            switchScenes("pengurus/kelola-kegiatan.fxml", "Kelola Kegiatan");
+        } catch (IOException e) {
+            AlertNotification.showError(e.getMessage());
+        }
     }
 
 }

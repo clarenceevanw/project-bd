@@ -76,12 +76,12 @@ public class PengurusDashboardController extends BaseController implements Initi
                 }
             });
 
-            Button kelolaJadwal = new Button("Kelola Jadwal Kegiatan");
+            Button kelolaJadwal = new Button("Kelola Kegiatan");
             kelolaJadwal.setPrefSize(200, 40);
             kelolaJadwal.setStyle("-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
             kelolaJadwal.setOnAction(e -> {
                 try {
-                    goToKelolaJadwal();
+                    goToKelolaKegiatan();
                 } catch (IOException ex) {
                     try {
                         AlertNotification.showError(ex.getMessage());
@@ -125,7 +125,7 @@ public class PengurusDashboardController extends BaseController implements Initi
         switchScenes("pengurus/kelola-club.fxml", "Kelola Club");
     }
 
-    public void goToKelolaJadwal() throws IOException {
-        switchScenes("pengurus/crud-jadwal-kegiatan.fxml", "Kelola Jadwal Kegiatan");
+    public void goToKelolaKegiatan() throws IOException {
+        switchScenes("pengurus/kelola-kegiatan.fxml", "Kelola Kegiatan");
     }
 }

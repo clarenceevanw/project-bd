@@ -4,11 +4,11 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.BuatClubController">
+<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.EditClubController">
 
     <!-- Sidebar -->
     <left>
-        <VBox alignment="CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
             <ImageView fitHeight="75" fitWidth="233.0">
                 <image>
                     <Image url="@../image/PCU-LOGO.png" />
@@ -25,8 +25,8 @@
 
     <!-- Form Content -->
     <center>
-        <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 30;">
-            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #6C3BB9;" text="Buat Club" />
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #6C3BB9;" text="Edit Club" />
 
             <GridPane hgap="10" vgap="10">
                 <columnConstraints>
@@ -49,12 +49,12 @@
                 <!-- Kategori -->
                 <Label text="Kategori:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                 <ComboBox fx:id="comboKategori" promptText="Pilih Kategori" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" />
-            <rowConstraints>
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-            </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
             </GridPane>
 
             <!-- Tombol Aksi -->

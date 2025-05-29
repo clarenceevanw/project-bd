@@ -73,5 +73,4 @@ public class Club {
     public String toString() {
         return getNama();
     }
-
 }
