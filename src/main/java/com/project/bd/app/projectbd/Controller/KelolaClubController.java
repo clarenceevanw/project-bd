@@ -135,7 +135,7 @@ public class KelolaClubController extends BaseController {
             clubDAO.delete(selected.getId_club());
             clubList.remove(selected);
             AlertNotification.showSuccess("Hapus Club, Club berhasil dihapus.");
-            switchScenes("pengurus/dashboard.fxml", "Dashboard");
+            loadData();
         } else {
             AlertNotification.showError("Pilih club yang ingin dihapus.");
         }
