@@ -8,7 +8,6 @@ import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -24,30 +23,26 @@ public class PengurusDashboardController extends BaseController implements Initi
 
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
-        List<Keanggotaan> anggota = keanggotaanDAO.findKeanggotaanByMahasiswa(LoginSession.getInstance().getIdMahasiswa());
         List<Club> clubPengurus = new ArrayList<>();
+        try{
+            List<Keanggotaan> keanggotaanMhs = mhsDAO.findKeanggotaan(LoginSession.getInstance().getIdMahasiswa());
 
-        System.out.println(LoginSession.getInstance().getIdMahasiswa());
-        System.out.println(anggota);
-
-        for (Keanggotaan keanggotaan : anggota) {
-            Club club = new Club();
-            try {
-                club = clubDAO.findById(keanggotaan.getId_club());
-            } catch (Exception e) {
-                try {
-                    AlertNotification.showError(e.getMessage());
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+            for (Keanggotaan keanggotaan : keanggotaanMhs) {
+                if (keanggotaan.getPeran().equals("Pengurus")) {
+                    clubPengurus.add(keanggotaan.getClub());
                 }
             }
-            if (club != null) {
-                clubPengurus.add(club);
+        }catch (Exception e) {
+            try {
+                AlertNotification.showError(e.getMessage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
         }
 
+
         if (clubPengurus.isEmpty()) {
-            Label info = new Label("Anda belum tergabung dalam club mana pun.");
+            Label info = new Label("Anda belum mengelola club mana pun.");
             info.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-weight: bold;");
 
             Button buatClub = new Button("Buat Club Baru");
@@ -64,7 +59,6 @@ public class PengurusDashboardController extends BaseController implements Initi
                     }
                 }
             });
-
             contentBox.getChildren().setAll(info, buatClub);
         } else {
             Button kelolaButton = new Button("Kelola Club");
@@ -82,12 +76,12 @@ public class PengurusDashboardController extends BaseController implements Initi
                 }
             });
 
-            Button kelolaJadwal = new Button("Kelola Jadwal Kegiatan");
+            Button kelolaJadwal = new Button("Kelola Kegiatan");
             kelolaJadwal.setPrefSize(200, 40);
             kelolaJadwal.setStyle("-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
             kelolaJadwal.setOnAction(e -> {
                 try {
-                    goToKelolaJadwal();
+                    goToKelolaKegiatan();
                 } catch (IOException ex) {
                     try {
                         AlertNotification.showError(ex.getMessage());
@@ -128,10 +122,10 @@ public class PengurusDashboardController extends BaseController implements Initi
     }
 
     public void goToKelolaClub() throws IOException {
-        switchScenes("pengurus/crud-club.fxml", "Kelola Club");
+        switchScenes("pengurus/kelola-club.fxml", "Kelola Club");
     }
 
-    public void goToKelolaJadwal() throws IOException {
-        switchScenes("pengurus/crud-jadwal-kegiatan.fxml", "Kelola Jadwal Kegiatan");
+    public void goToKelolaKegiatan() throws IOException {
+        switchScenes("pengurus/kelola-kegiatan.fxml", "Kelola Kegiatan");
     }
 }

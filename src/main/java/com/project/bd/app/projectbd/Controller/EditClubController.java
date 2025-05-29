@@ -3,7 +3,7 @@ package com.project.bd.app.projectbd.Controller;
 import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.Kategori;
 import com.project.bd.app.projectbd.Model.Keanggotaan;
-import com.project.bd.app.projectbd.Model.Mahasiswa;
+import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.collections.FXCollections;
@@ -14,7 +14,7 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class BuatClubController extends BaseController{
+public class EditClubController extends BaseController{
 
     @FXML
     private Button btnDashboard;
@@ -42,17 +42,33 @@ public class BuatClubController extends BaseController{
     @FXML
     public void initialize() {
         setActiveSidebarButton("kelola", btnDashboard, btnKelolaClub, btnKelolaKegiatan);
-        try{
+        try {
             kategoriList.addAll(kategoriDAO.findAll());
+            comboKategori.setItems(kategoriList);
+
+            Club club = ClubSession.getInstance().getClub();
+            if (club != null) {
+                txtNama.setText(club.getNama());
+                txtDeskripsi.setText(club.getDeskripsi());
+                txtTahun.setText(String.valueOf(club.getTahun_berdiri()));
+
+                // Pilih kategori yang sesuai di combo box
+                for (Kategori kategori : kategoriList) {
+                    if (kategori.getId_kategori().equals(club.getKategori().getId_kategori())) {
+                        comboKategori.getSelectionModel().select(kategori);
+                        break;
+                    }
+                }
+            }
         } catch (Exception e) {
             try{
-                AlertNotification.showError(e.getMessage());
-            } catch (Exception er){
+                AlertNotification.showError("Gagal inisialisasi data club: " + e.getMessage());
+            } catch (Exception er) {
                 throw new RuntimeException(er);
             }
         }
-        comboKategori.setItems(kategoriList);
     }
+
 
     @FXML
     private void handleSimpan() throws Exception {
@@ -70,34 +86,22 @@ public class BuatClubController extends BaseController{
             int tahunInt = Integer.parseInt(tahun);
 
             Club club = new Club();
+            club.setId_club(ClubSession.getInstance().getClub().getId_club());
             club.setNama(nama);
             club.setDeskripsi(deskripsi);
             club.setTahun_berdiri(tahunInt);
             club.setKategori(kategori);
 
-            try{
-                clubDAO.insert(club);
+            try {
+                clubDAO.update(club);
+                switchScenes("pengurus/kelola-club.fxml", "Kelola Club");
+                AlertNotification.showSuccess("Club berhasil diperbarui.");
             } catch (Exception e) {
                 AlertNotification.showError(e.getMessage());
                 switchScenes("pengurus/dashboard.fxml", "Dashboard");
             }
-
-            try {
-                LocalDate date = LocalDate.now();
-                Keanggotaan keanggotaan = new Keanggotaan();
-                Mahasiswa mhs = mhsDAO.findById(LoginSession.getInstance().getIdMahasiswa());
-                keanggotaan.setMahasiswa(mhs);
-                keanggotaan.setClub(club);
-                keanggotaan.setPeran("Pengurus");
-                keanggotaan.setTanggal_bergabung(date);
-                keanggotaanDAO.insert(keanggotaan);
-                switchScenes("pengurus/kelola-club.fxml", "Kelola Club");
-                AlertNotification.showSuccess("Club berhasil dibuat.");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         } catch (NumberFormatException e) {
-            AlertNotification.showError("Tahun berdiri harus berupa angka.");
+            throw new RuntimeException(e);
         }
     }
 

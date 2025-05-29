@@ -1,8 +1,6 @@
 package com.project.bd.app.projectbd.DAO;
 
-import com.project.bd.app.projectbd.Model.Club;
-import com.project.bd.app.projectbd.Model.Keanggotaan;
-import com.project.bd.app.projectbd.Model.Mahasiswa;
+import com.project.bd.app.projectbd.Model.*;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
 
@@ -22,8 +20,8 @@ public class MahasiswaDAO {
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, mhs.getIdMahasiswa());
-            stmt.setObject(2, mhs.getIdProdi());
-            stmt.setObject(3, mhs.getIdProgram());
+            stmt.setObject(2, mhs.getProdi().getIdProdi());
+            stmt.setObject(3, mhs.getProgram().getIdProgram());
             stmt.setString(4, mhs.getNrp());
             stmt.setString(5, mhs.getNama());
             stmt.setString(6, mhs.getEmail());
@@ -38,8 +36,8 @@ public class MahasiswaDAO {
         String sql = "UPDATE mahasiswa SET id_prodi = ?, id_program = ?, nrp = ?, nama = ?, email = ?, tgl_lahir = ? " +
                 "WHERE id_mahasiswa = ?";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setObject(1, mhs.getIdProdi());
-            stmt.setObject(2, mhs.getIdProgram());
+            stmt.setObject(1, mhs.getProdi().getIdProdi());
+            stmt.setObject(2, mhs.getProgram().getIdProgram());
             stmt.setString(3, mhs.getNrp());
             stmt.setString(4, mhs.getNama());
             stmt.setString(5, mhs.getEmail());
@@ -112,13 +110,15 @@ public class MahasiswaDAO {
     private Mahasiswa mapResultSetToMahasiswa(ResultSet rs) throws SQLException, Exception {
         UUID idMahasiswa = (UUID) rs.getObject("id_mahasiswa");
         UUID idProdi = (UUID) rs.getObject("id_prodi");
+        Prodi prodi = new ProdiDAO().findById(idProdi);
         UUID idProgram = (UUID) rs.getObject("id_program");
+        Program program = new ProgramDAO().findById(idProgram);
         String nrp = rs.getString("nrp");
         String nama = rs.getString("nama");
         String email = rs.getString("email");
         LocalDate tglLahir = rs.getDate("tgl_lahir").toLocalDate();
 
-        Mahasiswa mhs = new Mahasiswa(idMahasiswa, idProdi, idProgram, nrp, nama, email, tglLahir);
+        Mahasiswa mhs = new Mahasiswa(idMahasiswa, prodi, program, nrp, nama, email, tglLahir);
         List<Keanggotaan> keanggotaan = findKeanggotaan(idMahasiswa);
         mhs.setKeanggotaan(keanggotaan);
         return mhs;

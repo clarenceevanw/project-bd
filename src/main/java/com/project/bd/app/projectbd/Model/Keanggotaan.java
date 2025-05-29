@@ -5,16 +5,16 @@ import java.util.UUID;
 
 public class Keanggotaan {
     private UUID id_keanggotaan;
-    private UUID id_mahasiswa;
-    private UUID id_club;
+    private Mahasiswa mahasiswa;
+    private Club club;
     private String peran;
     private LocalDate tanggal_bergabung;
 
     public Keanggotaan() {}
-    public Keanggotaan(UUID id_keanggotaan, UUID id_mahasiswa, UUID id_club, String peran, LocalDate tanggal_bergabung) {
+    public Keanggotaan(UUID id_keanggotaan, Mahasiswa mahasiswa, Club club, String peran, LocalDate tanggal_bergabung) {
         this.id_keanggotaan = id_keanggotaan;
-        this.id_mahasiswa = id_mahasiswa;
-        this.id_club = id_club;
+        this.mahasiswa = mahasiswa;
+        this.club = club;
         this.peran = peran;
         this.tanggal_bergabung = tanggal_bergabung;
     }
@@ -27,20 +27,20 @@ public class Keanggotaan {
         this.id_keanggotaan = id_keanggotaan;
     }
 
-    public UUID getId_mahasiswa() {
-        return id_mahasiswa;
+    public Mahasiswa getMahasiswa() {
+        return mahasiswa;
     }
 
-    public void setId_mahasiswa(UUID id_mahasiswa) {
-        this.id_mahasiswa = id_mahasiswa;
+    public void setMahasiswa(Mahasiswa mahasiswa) {
+        this.mahasiswa = mahasiswa;
     }
 
-    public UUID getId_club() {
-        return id_club;
+    public Club getClub() {
+        return club;
     }
 
-    public void setId_club(UUID id_club) {
-        this.id_club = id_club;
+    public void setClub(Club club) {
+        this.club = club;
     }
 
     public String getPeran() {

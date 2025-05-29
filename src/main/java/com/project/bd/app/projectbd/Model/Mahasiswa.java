@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public class Mahasiswa {
     private UUID idMahasiswa;
-    private UUID idProdi;
-    private UUID idProgram;
+    private Prodi prodi;
+    private Program program;
     private String nrp;
     private String nama;
     private String email;
@@ -16,10 +16,10 @@ public class Mahasiswa {
 
     public Mahasiswa() {}
 
-    public Mahasiswa(UUID idMahasiswa, UUID idProdi, UUID idProgram, String nrp, String nama, String email, LocalDate tglLahir) {
+    public Mahasiswa(UUID idMahasiswa, Prodi prodi, Program program, String nrp, String nama, String email, LocalDate tglLahir) {
         this.idMahasiswa = idMahasiswa;
-        this.idProdi = idProdi;
-        this.idProgram = idProgram;
+        this.prodi = prodi;
+        this.program = program;
         this.nrp = nrp;
         this.nama = nama;
         this.email = email;
@@ -34,20 +34,20 @@ public class Mahasiswa {
         this.idMahasiswa = idMahasiswa;
     }
 
-    public UUID getIdProdi() {
-        return idProdi;
+    public Prodi getProdi() {
+        return prodi;
     }
 
-    public void setIdProdi(UUID idProdi) {
-        this.idProdi = idProdi;
+    public void setProdi(Prodi prodi) {
+        this.prodi = prodi;
     }
 
-    public UUID getIdProgram() {
-        return idProgram;
+    public Program getProgram() {
+        return program;
     }
 
-    public void setIdProgram(UUID idProgram) {
-        this.idProgram = idProgram;
+    public void setProgram(Program program) {
+        this.program = program;
     }
 
     public String getNrp() {
