@@ -1,6 +1,7 @@
 package com.project.bd.app.projectbd.utils;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class AlertNotification {
     public static void showError(String message) throws Exception {
