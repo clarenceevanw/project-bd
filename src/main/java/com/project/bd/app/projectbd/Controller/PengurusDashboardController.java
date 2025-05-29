@@ -5,11 +5,15 @@ import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,8 +25,12 @@ public class PengurusDashboardController extends BaseController implements Initi
     @FXML
     private VBox contentBox;
 
+    @FXML
+    private VBox leftPane;
+
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
+        leftPane.setTranslateX(-300);
         List<Club> clubPengurus = new ArrayList<>();
         try{
             List<Keanggotaan> keanggotaanMhs = mhsDAO.findKeanggotaan(LoginSession.getInstance().getIdMahasiswa());
@@ -60,6 +68,7 @@ public class PengurusDashboardController extends BaseController implements Initi
                 }
             });
             contentBox.getChildren().setAll(info, buatClub);
+            animateNodesSequentially(List.of(info, buatClub));
         } else {
             Button kelolaButton = new Button("Kelola Club");
             kelolaButton.setPrefSize(200, 40);
@@ -91,6 +100,7 @@ public class PengurusDashboardController extends BaseController implements Initi
                 }
             });
             contentBox.getChildren().setAll(kelolaButton, kelolaJadwal);
+            animateNodesSequentially(List.of(kelolaButton, kelolaJadwal));
         }
 
         Button logout = new Button("Logout");
@@ -108,7 +118,35 @@ public class PengurusDashboardController extends BaseController implements Initi
             }
         });
         contentBox.getChildren().add(logout);
+        animateNodesSequentially(contentBox.getChildren().subList(0, contentBox.getChildren().size()));
+
+        TranslateTransition slideRight = new TranslateTransition(Duration.millis(1000), leftPane);
+        slideRight.setToX(0);
+        slideRight.play();
     }
+
+    // Tambahkan helper untuk animasi bertahap
+    private void animateNodesSequentially(List<javafx.scene.Node> nodes) {
+        int delayMultiplier = 0;
+        for (javafx.scene.Node node : nodes) {
+            node.setOpacity(0);          // awalnya tak terlihat
+            node.setTranslateY(-50);     // posisi awal di atas
+
+            TranslateTransition slide = new TranslateTransition(Duration.millis(500), node);
+            slide.setToY(0);
+
+            FadeTransition fade = new FadeTransition(Duration.millis(500), node);
+            fade.setToValue(1.0);
+
+            ParallelTransition parallel = new ParallelTransition(node, slide, fade);
+            parallel.setDelay(Duration.millis(150 * delayMultiplier)); // delay antar elemen
+            parallel.play();
+
+            delayMultiplier++;
+        }
+    }
+
+
 
     public void goToBuatClub() throws IOException {
         switchScenes("pengurus/buat-club.fxml", "Buat Club");

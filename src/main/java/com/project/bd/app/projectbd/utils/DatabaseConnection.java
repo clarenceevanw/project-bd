@@ -22,7 +22,7 @@ public class DatabaseConnection {
         // Kalau belum ada koneksi, buat baru
         String databaseName = "Project-BD";
         String user = "postgres";
-        String password = "santoso135";
+        String password = "abcd1234";
         String url = "jdbc:postgresql://localhost:5432/" + databaseName;
 
         try {

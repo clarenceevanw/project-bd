@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -34,6 +35,12 @@ public class LoginController extends BaseController {
     private PasswordField signupPassword;
 
     @FXML
+    private VBox leftPane;
+
+    @FXML
+    private StackPane formContainer;
+
+    @FXML
     private VBox loginForm;
 
     @FXML
@@ -43,12 +50,22 @@ public class LoginController extends BaseController {
     @FXML
     public void initialize() {
         roleComboBox.getItems().addAll("Pengurus", "Anggota");
+        leftPane.setTranslateX(-300);
+        formContainer.setTranslateX(300);
 
         // Geser signupForm ke kanan agar tidak terlihat saat awal
         if (signUpForm != null) {
             signUpForm.setTranslateX(400);
             signUpForm.setVisible(false); // disembunyikan saat start
         }
+
+        TranslateTransition slideRight = new TranslateTransition(Duration.millis(1500), leftPane);
+        slideRight.setToX(0);
+        slideRight.play();
+
+        TranslateTransition slideLeft = new TranslateTransition(Duration.millis(1500), formContainer);
+        slideLeft.setToX(0);
+        slideLeft.play();
     }
 
     @FXML
