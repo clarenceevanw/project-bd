@@ -4,24 +4,66 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.AnggotaBiodataController">
+<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.project.bd.app.projectbd.Controller.AnggotaBiodataController">
     <left>
-        <VBox fx:id="sidebarAnggotaBiodata" alignment="CENTER" prefWidth="300" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 30;">
+        <VBox fx:id="sidebarAnggotaBiodata" alignment="CENTER" prefWidth="300" spacing="20"
+              style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 30;">
             <ImageView fitHeight="80" fitWidth="307.0">
                 <image>
-                    <Image url="@../image/PCU-LOGO.png" />
+                    <Image url="@../image/PCU-LOGO.png"/>
                 </image>
             </ImageView>
-            <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Biodata Anggota" />
+            <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Biodata Anggota"/>
         </VBox>
     </left>
     <center>
-        <VBox fx:id="biodataBox" alignment="TOP_LEFT" spacing="10" style="-fx-padding: 40;">
-            <Label fx:id="nrpLabel" style="-fx-font-size: 16px;" text="NRP: " />
-            <Label fx:id="namaLabel" style="-fx-font-size: 16px;" text="Nama: " />
-            <Label fx:id="programLabel" style="-fx-font-size: 16px;" text="Program: " />
-            <Label fx:id="prodiLabel" style="-fx-font-size: 16px;" text="Prodi: " />
-            <Label fx:id="emailLabel" style="-fx-font-size: 16px;" text="Email: " />
-        </VBox>
+        <StackPane>
+            <VBox fx:id="biodataBox" alignment="CENTER" spacing="15" style="-fx-padding: 40;">
+
+                <!-- NRP -->
+                <VBox fx:id="nrpBox" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 3);">
+                    <Label text="NRP" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+                    <Label fx:id="nrpLabel" style="-fx-font-size: 14;"/>
+                </VBox>
+
+                <!-- Nama -->
+                <VBox fx:id="namaBox" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 3);">
+                    <Label text="Nama" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+                    <Label fx:id="namaLabel" style="-fx-font-size: 14;"/>
+                </VBox>
+
+                <!-- Email -->
+                <VBox fx:id="emailBox" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 3);">
+                    <Label text="Email" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+                    <Label fx:id="emailLabel" style="-fx-font-size: 14;"/>
+                </VBox>
+
+                <!-- Program -->
+                <VBox fx:id="programBox"
+                      style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 3);">
+                    <Label text="Program" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+                    <Label fx:id="programLabel" style="-fx-font-size: 14;"/>
+                </VBox>
+
+                <!-- Prodi -->
+                <VBox fx:id="prodiBox"
+                      style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 3);">
+                    <Label text="Prodi" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+                    <Label fx:id="prodiLabel" style="-fx-font-size: 14;"/>
+                </VBox>
+
+                <!-- Jurusan (sebagai alternatif) -->
+                <VBox fx:id="jurusanBox"
+                      style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 3);">
+                    <Label text="Jurusan" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+                    <Label fx:id="jurusanLabel" style="-fx-font-size: 14;"/>
+                </VBox>
+                <Button text="Kembali ke Dashboard"
+                        onAction="#goToAnggotaDashboard"
+                        style="-fx-font-size: 14px; -fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 8;" />
+            </VBox>
+        </StackPane>
     </center>
 </BorderPane>

@@ -34,4 +34,5 @@ public class AnggotaDashboardController extends BaseController {
     public void goToBiodata() throws IOException {
         switchScenes("anggota/biodata.fxml", "Biodata Anggota");
     }
+
 }
