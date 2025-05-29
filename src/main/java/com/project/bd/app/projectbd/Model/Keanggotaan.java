@@ -8,14 +8,16 @@ public class Keanggotaan {
     private Mahasiswa mahasiswa;
     private Club club;
     private String peran;
+    private String status;
     private LocalDate tanggal_bergabung;
 
     public Keanggotaan() {}
-    public Keanggotaan(UUID id_keanggotaan, Mahasiswa mahasiswa, Club club, String peran, LocalDate tanggal_bergabung) {
+    public Keanggotaan(UUID id_keanggotaan, Mahasiswa mahasiswa, Club club, String peran, String status, LocalDate tanggal_bergabung) {
         this.id_keanggotaan = id_keanggotaan;
         this.mahasiswa = mahasiswa;
         this.club = club;
         this.peran = peran;
+        this.status = status;
         this.tanggal_bergabung = tanggal_bergabung;
     }
 
@@ -57,5 +59,13 @@ public class Keanggotaan {
 
     public void setTanggal_bergabung(LocalDate tanggal_bergabung) {
         this.tanggal_bergabung = tanggal_bergabung;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

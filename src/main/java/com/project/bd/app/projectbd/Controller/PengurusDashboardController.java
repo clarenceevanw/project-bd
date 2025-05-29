@@ -28,7 +28,7 @@ public class PengurusDashboardController extends BaseController implements Initi
             List<Keanggotaan> keanggotaanMhs = mhsDAO.findKeanggotaan(LoginSession.getInstance().getIdMahasiswa());
 
             for (Keanggotaan keanggotaan : keanggotaanMhs) {
-                if (keanggotaan.getPeran().equals("Pengurus")) {
+                if (keanggotaan.getPeran().equals("Pengurus") && keanggotaan.getStatus().equals("Aktif")){
                     clubPengurus.add(keanggotaan.getClub());
                 }
             }
