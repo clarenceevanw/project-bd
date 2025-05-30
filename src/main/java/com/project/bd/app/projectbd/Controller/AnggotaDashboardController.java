@@ -35,4 +35,9 @@ public class AnggotaDashboardController extends BaseController {
         switchScenes("anggota/biodata.fxml", "Biodata Anggota");
     }
 
+    @FXML
+    public void goToDaftarClub() throws IOException {
+        //switchScenes();
+    }
+
 }

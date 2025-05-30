@@ -74,7 +74,6 @@ public class AnggotaBiodataController extends BaseController {
                 e.getMessage();
             }
         });
-        animateBiodataItems();
     }
 
     private void showBiodata() throws Exception {
@@ -108,6 +107,7 @@ public class AnggotaBiodataController extends BaseController {
                 prodiBox.setVisible(false);
                 prodiBox.setManaged(false);
             }
+            animateBiodataItems();
         }
     }
 
