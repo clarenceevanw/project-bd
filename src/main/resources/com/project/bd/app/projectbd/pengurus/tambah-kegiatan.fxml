@@ -43,7 +43,7 @@
 
                 <!-- Nama Kegiatan -->
                 <Label text="Nama Kegiatan:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="txtNama" promptText="Masukkan nama club" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="txtNama" promptText="Masukkan nama kegiatan" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                 <!-- Link Dokumentasi -->
                 <Label text="Link Dokumentasi:" GridPane.rowIndex="1" />
