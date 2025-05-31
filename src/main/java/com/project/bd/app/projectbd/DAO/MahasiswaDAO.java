@@ -59,39 +59,16 @@ public class MahasiswaDAO {
         }
     }
 
-    public Mahasiswa findById(UUID idMahasiswa) throws Exception {
-        String sql = "SELECT * FROM mahasiswa WHERE id_mahasiswa = ?";
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setObject(1, idMahasiswa);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return mapResultSetToMahasiswa(rs);
-                }
-            }
-        } catch (SQLException e) {
-            AlertNotification.showError(e.getMessage());
-        }
-        return null;
-    }
-
-    public Mahasiswa findByNrp(String nrp) throws Exception {
-        String sql = "SELECT * FROM mahasiswa WHERE nrp = ?";
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setString(1, nrp);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return mapResultSetToMahasiswa(rs);
-            }
-        } catch (SQLException e) {
-            AlertNotification.showError(e.getMessage());
-        }
-        return null;
-    }
-
-    public List<Mahasiswa> findAll() throws Exception{
+    public List<Mahasiswa> findAll() throws Exception {
         List<Mahasiswa> list = new ArrayList<>();
-        int index = 0;
-        String sql = "SELECT * FROM mahasiswa ORDER BY nama";
+        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, " +
+                "p.id_prodi, p.nama AS prodi_nama, " +
+                "pr.id_program, pr.nama AS program_nama " +
+                "FROM mahasiswa m " +
+                "LEFT JOIN prodi p ON m.id_prodi = p.id_prodi " +
+                "LEFT JOIN program pr ON m.id_program = pr.id_program " +
+                "ORDER BY m.nama";
+
         try (PreparedStatement stmt = getConnection().prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -100,27 +77,79 @@ public class MahasiswaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return list;
+    }
+
+    public Mahasiswa findById(UUID idMahasiswa) throws Exception {
+        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, " +
+                "p.id_prodi, p.nama AS prodi_nama, " +
+                "pr.id_program, pr.nama AS program_nama " +
+                "FROM mahasiswa m " +
+                "LEFT JOIN prodi p ON m.id_prodi = p.id_prodi " +
+                "LEFT JOIN program pr ON m.id_program = pr.id_program " +
+                "WHERE m.id_mahasiswa = ?";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setObject(1, idMahasiswa);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Mahasiswa mhs = mapResultSetToMahasiswa(rs);
+                    mhs.setKeanggotaan(findKeanggotaan(idMahasiswa)); // Opsional
+                    return mhs;
+                }
+            }
+        } catch (SQLException e) {
+            AlertNotification.showError(e.getMessage());
+        }
+
+        return null;
+    }
+
+    public Mahasiswa findByNrp(String nrp) throws Exception {
+        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, " +
+                "p.id_prodi, p.nama AS prodi_nama, " +
+                "pr.id_program, pr.nama AS program_nama " +
+                "FROM mahasiswa m " +
+                "LEFT JOIN prodi p ON m.id_prodi = p.id_prodi " +
+                "LEFT JOIN program pr ON m.id_program = pr.id_program " +
+                "WHERE m.nrp = ?";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, nrp);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Mahasiswa mhs = mapResultSetToMahasiswa(rs);
+                mhs.setKeanggotaan(findKeanggotaan(mhs.getIdMahasiswa())); // Opsional
+                return mhs;
+            }
+        } catch (SQLException e) {
+            AlertNotification.showError(e.getMessage());
+        }
+
+        return null;
+    }
+
+    private Mahasiswa mapResultSetToMahasiswa(ResultSet rs) throws SQLException {
+        Prodi prodi = new Prodi();
+        prodi.setIdProdi(rs.getObject("id_prodi", UUID.class));
+        prodi.setNama(rs.getString("prodi_nama"));
+
+        Program program = new Program();
+        program.setIdProgram(rs.getObject("id_program", UUID.class));
+        program.setNama(rs.getString("program_nama"));
+
+        UUID idMahasiswa = rs.getObject("id_mahasiswa", UUID.class);
+        String nrp = rs.getString("nrp");
+        String nama = rs.getString("nama");
+        String email = rs.getString("email");
+        LocalDate tglLahir = rs.getDate("tgl_lahir").toLocalDate();
+
+        return new Mahasiswa(idMahasiswa, prodi, program, nrp, nama, email, tglLahir);
     }
 
     public List<Keanggotaan> findKeanggotaan(UUID idMahasiswa) throws Exception {
         return new KeanggotaanDAO().findKeanggotaanByMahasiswa(idMahasiswa);
     }
 
-    private Mahasiswa mapResultSetToMahasiswa(ResultSet rs) throws SQLException, Exception {
-        UUID idMahasiswa = (UUID) rs.getObject("id_mahasiswa");
-        UUID idProdi = (UUID) rs.getObject("id_prodi");
-        Prodi prodi = new ProdiDAO().findById(idProdi);
-        UUID idProgram = (UUID) rs.getObject("id_program");
-        Program program = new ProgramDAO().findById(idProgram);
-        String nrp = rs.getString("nrp");
-        String nama = rs.getString("nama");
-        String email = rs.getString("email");
-        LocalDate tglLahir = rs.getDate("tgl_lahir").toLocalDate();
-
-        Mahasiswa mhs = new Mahasiswa(idMahasiswa, prodi, program, nrp, nama, email, tglLahir);
-        List<Keanggotaan> keanggotaan = findKeanggotaan(idMahasiswa);
-        mhs.setKeanggotaan(keanggotaan);
-        return mhs;
-    }
 }

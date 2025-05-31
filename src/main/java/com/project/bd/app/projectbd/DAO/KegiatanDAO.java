@@ -41,7 +41,7 @@ public class KegiatanDAO {
             stmt.setString(2, kegiatan.getLinkDokumentasi());
             stmt.setObject(3, kegiatan.getClub().getId_club());
             stmt.setObject(4, kegiatan.getJenisKegiatan().getIdJenisKegiatan());
-            stmt.setObject(5, kegiatan.getKategori());
+            stmt.setString(5, kegiatan.getKategori());
             stmt.setObject(6, kegiatan.getIdKegiatan());
             stmt.executeUpdate();
         } catch (SQLException e) {
