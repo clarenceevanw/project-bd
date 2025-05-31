@@ -8,16 +8,12 @@ import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Control;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.control.Button;
 
 public class KelolaClubController extends BaseController {
     @FXML
@@ -80,6 +76,7 @@ public class KelolaClubController extends BaseController {
 
         clubTable.setFixedCellSize(-1);
         loadData();
+        clubTable.setItems(clubList);
     }
 
     public void loadData(){
@@ -101,7 +98,7 @@ public class KelolaClubController extends BaseController {
             }
         }
         clubList.addAll(clubs);
-        clubTable.setItems(clubList);
+        clubTable.refresh();
     }
 
     @FXML
@@ -132,10 +129,14 @@ public class KelolaClubController extends BaseController {
     public void handleDeleteClub() throws Exception {
         Club selected = clubTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            clubDAO.delete(selected.getId_club());
-            clubList.remove(selected);
-            AlertNotification.showSuccess("Hapus Club, Club berhasil dihapus.");
-            loadData();
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Apakah anda yakin ingin menghapus club " + selected.getNama() + " ?", ButtonType.YES,  ButtonType.CANCEL);
+            confirm.showAndWait();
+            if (confirm.getResult() == ButtonType.CANCEL) {
+                clubDAO.delete(selected.getId_club());
+                clubList.remove(selected);
+                AlertNotification.showSuccess("Hapus Club, Club berhasil dihapus.");
+                loadData();
+            }
         } else {
             AlertNotification.showError("Pilih club yang ingin dihapus.");
         }

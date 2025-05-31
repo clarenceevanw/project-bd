@@ -19,7 +19,11 @@ public class ProgramDAO {
 
     public List<Program> findAll() throws Exception {
         List<Program> list = new ArrayList<>();
-        String sql = "SELECT * FROM program ORDER BY nama";
+        String sql = "SELECT p.id_program, p.nama AS program_nama, " +
+                "pr.id_prodi, pr.nama AS prodi_nama " +
+                "FROM program p " +
+                "JOIN prodi pr ON p.id_prodi = pr.id_prodi " +
+                "ORDER BY p.nama";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -32,7 +36,11 @@ public class ProgramDAO {
     }
 
     public Program findById(UUID idProgram) throws Exception {
-        String sql = "SELECT * FROM program WHERE id_program = ?";
+        String sql = "SELECT p.id_program, p.nama AS program_nama, " +
+                "pr.id_prodi, pr.nama AS prodi_nama " +
+                "FROM program p " +
+                "JOIN prodi pr ON p.id_prodi = pr.id_prodi " +
+                "WHERE p.id_program = ?";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, idProgram);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -47,12 +55,15 @@ public class ProgramDAO {
     }
 
     private Program mapResultSetToProgram(ResultSet rs) throws Exception {
+        Prodi prodi = new Prodi();
+        prodi.setIdProdi(rs.getObject("id_prodi", UUID.class));
+        prodi.setNama(rs.getString("prodi_nama"));
+
         Program program = new Program();
-        UUID idProdi = rs.getObject("id_prodi", UUID.class);
-        Prodi prodi = new ProdiDAO().findById(idProdi);
         program.setIdProgram(rs.getObject("id_program", UUID.class));
+        program.setNama(rs.getString("program_nama"));
         program.setProdi(prodi);
-        program.setNama(rs.getString("nama"));
+
         return program;
     }
 }
