@@ -1,5 +1,8 @@
 package com.project.bd.app.projectbd.DAO;
 
+import com.project.bd.app.projectbd.Model.Club;
+import com.project.bd.app.projectbd.Model.JenisKegiatan;
+import com.project.bd.app.projectbd.Model.Kategori;
 import com.project.bd.app.projectbd.Model.Kegiatan;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
@@ -60,7 +63,11 @@ public class KegiatanDAO {
     }
 
     public Kegiatan findById(UUID idKegiatan) throws Exception {
-        String sql = "SELECT * FROM kegiatan WHERE id_kegiatan = ?";
+        String sql = "SELECT k.id_kegiatan, k.nama as nama_kegiatan, k.link_dokumentasi, k.kategori, c.id_club, c.nama, c.deskripsi, c.tahun_berdiri, ka.id_kategori, ka.nama as nama_kategori, j.id_jenis_kegiatan, j.nama as nama_jenis_kegiatan FROM kegiatan k " +
+                "JOIN club c ON k.id_club = c.id_club " +
+                "JOIN kategori ka on c.id_kategori = ka.id_kategori " +
+                "JOIN jenis_kegiatan j ON k.id_jenis_kegiatan = j.id_jenis_kegiatan " +
+                "WHERE k.id_kegiatan = ?";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, idKegiatan);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -76,7 +83,11 @@ public class KegiatanDAO {
 
     public List<Kegiatan> findByClub(UUID idClub) throws Exception {
         List<Kegiatan> list = new ArrayList<>();
-        String sql = "SELECT * FROM kegiatan WHERE id_club = ?";
+        String sql = "SELECT k.id_kegiatan, k.nama as nama_kegiatan, k.link_dokumentasi, k.kategori, c.id_club, c.nama, c.deskripsi, c.tahun_berdiri, ka.id_kategori, ka.nama as nama_kategori, j.id_jenis_kegiatan, j.nama as nama_jenis_kegiatan FROM kegiatan k " +
+                "JOIN club c ON k.id_club = c.id_club " +
+                "JOIN kategori ka on c.id_kategori = ka.id_kategori " +
+                "JOIN jenis_kegiatan j ON k.id_jenis_kegiatan = j.id_jenis_kegiatan " +
+                "WHERE k.id_club = ?";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, idClub);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -92,7 +103,11 @@ public class KegiatanDAO {
 
     public List<Kegiatan> findAll() throws Exception {
         List<Kegiatan> list = new ArrayList<>();
-        String sql = "SELECT * FROM kegiatan ORDER BY nama";
+        String sql =  "SELECT k.id_kegiatan, k.nama as nama_kegiatan, k.link_dokumentasi, k.kategori, c.id_club, c.nama, c.deskripsi, c.tahun_berdiri, ka.id_kategori, ka.nama as nama_kategori, j.id_jenis_kegiatan, j.nama as nama_jenis_kegiatan FROM kegiatan k " +
+                "JOIN club c ON k.id_club = c.id_club " +
+                "JOIN kategori ka on c.id_kategori = ka.id_kategori " +
+                "JOIN jenis_kegiatan j ON k.id_jenis_kegiatan = j.id_jenis_kegiatan " +
+                "ORDER BY k.nama";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -107,10 +122,21 @@ public class KegiatanDAO {
     private Kegiatan mapResultSetToKegiatan(ResultSet rs) throws Exception {
         Kegiatan kegiatan = new Kegiatan();
         kegiatan.setIdKegiatan(rs.getObject("id_kegiatan", UUID.class));
-        kegiatan.setNama(rs.getString("nama"));
+        kegiatan.setNama(rs.getString("nama_kegiatan"));
         kegiatan.setLinkDokumentasi(rs.getString("link_dokumentasi"));
-        kegiatan.setClub(new ClubDAO().findById(rs.getObject("id_club", UUID.class)));
-        kegiatan.setJenisKegiatan(new JenisKegiatanDAO().findById(rs.getObject("id_jenis_kegiatan", UUID.class)));
+
+        Kategori kategori = new Kategori(rs.getObject("id_kategori", UUID.class), rs.getString("nama_kategori"));
+
+        Club club = new Club();
+        club.setId_club(rs.getObject("id_club", UUID.class));
+        club.setNama(rs.getString("nama"));
+        club.setDeskripsi(rs.getString("deskripsi"));
+        club.setTahun_berdiri(rs.getInt("tahun_berdiri"));
+        club.setKategori(kategori);
+        kegiatan.setClub(club);
+
+        JenisKegiatan jenisKegiatan = new JenisKegiatan(rs.getObject("id_jenis_kegiatan", UUID.class), rs.getString("nama_jenis_kegiatan"));
+        kegiatan.setJenisKegiatan(jenisKegiatan);
         kegiatan.setKategori(rs.getString("kategori"));
         return kegiatan;
     }
