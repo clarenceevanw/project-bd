@@ -6,9 +6,57 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.project.bd.app.projectbd.Controller.DaftarClubController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.project.bd.app.projectbd.Controller.DaftarClubController">
 
-</AnchorPane>
+    <!-- Sidebar di kiri -->
+    <left>
+        <VBox fx:id="sidebarDaftarClub" alignment="TOP_CENTER" prefWidth="200" spacing="20"
+              style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+            <ImageView fitHeight="75" fitWidth="280.0">
+                <image>
+                    <Image url="@../image/PCU-LOGO.png"/>
+                </image>
+            </ImageView>
+
+            <Button maxWidth="180" onAction="#goToDashboard"
+                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;"
+                    text="Dashboard"/>
+            <Button maxWidth="180" onAction="#goToDaftarClubYangDiikuti"
+                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;"
+                    text="Club Yang Diikuti"/>
+        </VBox>
+    </left>
+
+    <!-- Konten utama -->
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Label text="Daftar Club" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <ScrollPane fx:id="scrollPane"
+                        fitToHeight="false"
+                        fitToWidth="false"
+                        hbarPolicy="ALWAYS"
+                        vbarPolicy="NEVER"
+                        style="-fx-background-color:transparent;"
+                        prefWidth="1200"
+                        maxWidth="1200"
+                        prefHeight="300"
+                        maxHeight="300">
+                <HBox fx:id="clubContainer"
+                      alignment="CENTER_LEFT"
+                      spacing="20"
+                      style="-fx-padding: 20;"
+                      maxHeight="Infinity"
+                      maxWidth="Infinity"
+                      fillHeight="false">
+                    <!-- Cards akan diisi dari Controller -->
+                </HBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>
+

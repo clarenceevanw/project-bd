@@ -18,7 +18,6 @@ public class MainApplication extends Application {
 
         LoginController controller = fxmlLoader.getController();
         controller.setStage(stage);
-
         stage.setScene(new Scene(root));
         stage.setTitle("Login");
 

@@ -39,7 +39,6 @@ public class BaseController {
 
         BaseController controller = loader.getController();
         controller.setStage(stage);
-
         stage.setTitle(title);
         stage.setScene(new Scene(root));
         DatabaseConnection.getConnection();

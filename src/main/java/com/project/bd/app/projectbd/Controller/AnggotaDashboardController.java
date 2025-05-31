@@ -37,7 +37,7 @@ public class AnggotaDashboardController extends BaseController {
 
     @FXML
     public void goToDaftarClub() throws IOException {
-        //switchScenes();
+        switchScenes("anggota/daftarClub.fxml", "Daftar Club");
     }
 
 }
