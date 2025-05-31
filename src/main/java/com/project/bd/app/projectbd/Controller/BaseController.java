@@ -1,9 +1,6 @@
 package com.project.bd.app.projectbd.Controller;
 
-import com.project.bd.app.projectbd.DAO.ClubDAO;
-import com.project.bd.app.projectbd.DAO.KategoriDAO;
-import com.project.bd.app.projectbd.DAO.KeanggotaanDAO;
-import com.project.bd.app.projectbd.DAO.MahasiswaDAO;
+import com.project.bd.app.projectbd.DAO.*;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +20,10 @@ public class BaseController {
     protected KategoriDAO kategoriDAO = new KategoriDAO();
 
     protected MahasiswaDAO mhsDAO = new MahasiswaDAO();
+
+    protected KegiatanDAO kegiatanDAO = new KegiatanDAO();
+
+    protected JenisKegiatanDAO jenisKegiatanDAO = new JenisKegiatanDAO();
 
 
     public Stage getStage(){
@@ -48,8 +49,8 @@ public class BaseController {
     }
 
     public void setActiveSidebarButton(String page, Button btnDashboard, Button btnKelolaClub, Button btnKelolaKegiatan) {
-        String active = "-fx-background-color: #4B208E; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10px;";
-        String inactive = "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10px;";
+        String active = "-fx-background-color: #4B208E; -fx-text-fill: white; -fx-font-weight: bold;";
+        String inactive = "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-weight: bold;";
 
         btnDashboard.setStyle(inactive);
         btnKelolaClub.setStyle(inactive);

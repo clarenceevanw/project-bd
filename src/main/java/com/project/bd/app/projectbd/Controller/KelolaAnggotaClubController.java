@@ -42,12 +42,13 @@ public class KelolaAnggotaClubController extends BaseController{
         colPeran.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPeran()));
         colStatus.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
         loadData();
+        anggotaTable.setItems(anggotaList);
     }
 
     public void loadData() throws Exception {
         UUID idClub = ClubSession.getInstance().getClub().getId_club();
         anggotaList = FXCollections.observableArrayList(keanggotaanDAO.findKeanggotaanByClub(idClub));
-        anggotaTable.setItems(anggotaList);
+        anggotaTable.refresh();
     }
 
     @FXML
@@ -91,7 +92,7 @@ public class KelolaAnggotaClubController extends BaseController{
     @FXML
     public void handleDeleteAnggota() throws Exception {
         Keanggotaan keanggotaan = anggotaTable.getSelectionModel().getSelectedItem();
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Apakah anda yakin ingin menghapus anggota " + keanggotaan.getMahasiswa().getNrp() + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Apakah anda yakin ingin menghapus anggota " + keanggotaan.getMahasiswa().getNrp() + " ?", ButtonType.YES, ButtonType.CANCEL);
         confirm.showAndWait();
         if (confirm.getResult() == ButtonType.YES){
             keanggotaanDAO.delete(keanggotaan.getId_keanggotaan());
