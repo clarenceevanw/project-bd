@@ -15,7 +15,7 @@
 
     <!-- Bagian kiri tetap -->
     <left>
-        <VBox alignment="CENTER" prefWidth="400" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB);">
+        <VBox fx:id="leftPane" alignment="CENTER" prefWidth="400" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB);">
             <ImageView fitHeight="96.0" fitWidth="378.0">
                 <image>
                     <Image url="@image/PCU-LOGO.png" />

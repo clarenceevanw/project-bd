@@ -10,7 +10,7 @@
 
     <!-- Kiri tetap untuk logo dan judul -->
     <left>
-        <VBox alignment="CENTER" prefWidth="300" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 30;">
+        <VBox fx:id="leftPane" alignment="CENTER" prefWidth="300" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 30;">
             <ImageView fitHeight="80" fitWidth="307.0">
                 <image>
                     <Image url="@../image/PCU-LOGO.png" />
