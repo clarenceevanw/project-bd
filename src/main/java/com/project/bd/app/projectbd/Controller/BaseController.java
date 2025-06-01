@@ -25,6 +25,11 @@ public class BaseController {
 
     protected JenisKegiatanDAO jenisKegiatanDAO = new JenisKegiatanDAO();
 
+    protected JadwalKegiatanDAO jadwalKegiatanDAO = new JadwalKegiatanDAO();
+
+    protected PresensiDAO presensiKegiatanDAO = new PresensiDAO();
+
+    protected PesertaKegiatanDAO pesertaKegiatanDAO = new PesertaKegiatanDAO();
 
     public Stage getStage(){
         return stage;

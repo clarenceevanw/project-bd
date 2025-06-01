@@ -109,6 +109,18 @@ public class KegiatanController extends BaseController{
     }
 
     @FXML
+    public void handleLihatPeserta() throws Exception {
+        Kegiatan selected = kegiatanTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            ClubSession.getInstance().setKegiatan(selected);
+            // TODO: peserta-kegiatan
+            switchScenes("pengurus/peserta-kegiatan.fxml", "Peserta Kegiatan");
+        } else {
+            AlertNotification.showError("Pilih kegiatan terlebih dahulu.");
+        }
+    }
+
+    @FXML
     public void handleLihatJadwal() throws Exception {
         Kegiatan selected = kegiatanTable.getSelectionModel().getSelectedItem();
         if (selected != null) {

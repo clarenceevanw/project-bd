@@ -1,8 +1,6 @@
 package com.project.bd.app.projectbd.Session;
 
-import com.project.bd.app.projectbd.Model.Club;
-import com.project.bd.app.projectbd.Model.Keanggotaan;
-import com.project.bd.app.projectbd.Model.Kegiatan;
+import com.project.bd.app.projectbd.Model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +11,9 @@ public class ClubSession {
     private Club club; //Untuk menyimpan club yang dipilih oleh user
     private Keanggotaan keanggotaan;
     private Kegiatan kegiatan;
+    private JadwalKegiatan jadwalKegiatan;
+    private PesertaKegiatan pesertaKegiatan;
+    private PresensiKegiatan presensiKegiatan;
 
     public static ClubSession getInstance() {
         if (instance == null) {
@@ -43,5 +44,29 @@ public class ClubSession {
 
     public void setKegiatan(Kegiatan kegiatan) {
         this.kegiatan = kegiatan;
+    }
+
+    public JadwalKegiatan getJadwalKegiatan() {
+        return jadwalKegiatan;
+    }
+
+    public void setJadwalKegiatan(JadwalKegiatan jadwalKegiatan) {
+        this.jadwalKegiatan = jadwalKegiatan;
+    }
+
+    public PesertaKegiatan getPesertaKegiatan() {
+        return pesertaKegiatan;
+    }
+
+    public void setPesertaKegiatan(PesertaKegiatan pesertaKegiatan) {
+        this.pesertaKegiatan = pesertaKegiatan;
+    }
+
+    public PresensiKegiatan getPresensiKegiatan() {
+        return presensiKegiatan;
+    }
+
+    public void setPresensiKegiatan(PresensiKegiatan presensiKegiatan) {
+        this.presensiKegiatan = presensiKegiatan;
     }
 }

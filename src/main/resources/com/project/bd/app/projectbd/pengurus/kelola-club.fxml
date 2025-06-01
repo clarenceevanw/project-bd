@@ -39,7 +39,7 @@
                 <Button onAction="#handleEditClub" style="-fx-background-color: #9D50BB; -fx-text-fill: white;" text="Edit Club" />
                 <Button onAction="#handleDeleteClub" style="-fx-background-color: #FF6B6B; -fx-text-fill: white;" text="Hapus Club" />
                 <Button onAction="#handleViewAnggota" style="-fx-background-color: #6C3BB9; -fx-text-fill: white;" text="Lihat Anggota" />
-                <Button onAction="#handleViewKegiatan" style="-fx-background-color: #6C3BB9; -fx-text-fill: white;" text="Lihat Kegiatan" />
+                <Button onAction="#handleViewKegiatan" style="-fx-background-color: #208EFF; -fx-text-fill: white;" text="Lihat Kegiatan" />
             </HBox>
 
             <TableView fx:id="clubTable" prefHeight="400" prefWidth="650">

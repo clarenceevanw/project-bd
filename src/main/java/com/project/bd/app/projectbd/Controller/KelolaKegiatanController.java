@@ -55,7 +55,11 @@ public class KelolaKegiatanController extends BaseController {
     }
 
     @FXML
-    public void handlePilihClub() {
+    public void handlePilihClub() throws Exception {
+        if(comboClub.getValue() == null) {
+            AlertNotification.showError("Silahkan pilih club terlebih dahulu.");
+            return;
+        }
         ClubSession.getInstance().setClub(comboClub.getValue());
         try {
             switchScenes("pengurus/kegiatan.fxml", "Kegiatan");
