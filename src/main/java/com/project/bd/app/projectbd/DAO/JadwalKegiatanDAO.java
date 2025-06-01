@@ -14,7 +14,7 @@ public class JadwalKegiatanDAO {
         return DatabaseConnection.getConnection();
     }
 
-    public void insert(JadwalKegiatan jadwalKegiatan) throws Exception {
+    public UUID insert(JadwalKegiatan jadwalKegiatan) throws Exception {
         String sql = "INSERT INTO jadwal_kegiatan (waktu_kegiatan, lokasi_kegiatan, id_kegiatan) VALUES(?, ?, ?) RETURNING id_jadwal_kegiatan;";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setTimestamp(1, Timestamp.valueOf(jadwalKegiatan.getWaktuKegiatan()));
@@ -23,10 +23,12 @@ public class JadwalKegiatanDAO {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 jadwalKegiatan.setIdJadwalKegiatan(rs.getObject("id_jadwal_kegiatan", UUID.class));
+                return jadwalKegiatan.getIdJadwalKegiatan();
             }
         } catch (SQLException e) {
             AlertNotification.showError(e.getMessage());
         }
+        return null;
     }
 
     public void update(JadwalKegiatan jadwalKegiatan) throws Exception {

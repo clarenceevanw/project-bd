@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +12,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.EditPresensiController">
+<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.TambahPesertaKegiatanController">
+
+    <!-- Sidebar -->
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
             <ImageView fitHeight="75" fitWidth="280.0">
@@ -28,34 +29,33 @@
         </VBox>
     </left>
 
+    <!-- Form Content -->
     <center>
         <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
-            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #6C3BB9;" text="Edit Presensi" />
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #6C3BB9;" text="Tambah Peserta" />
 
-            <GridPane alignment="CENTER" hgap="10" prefHeight="96.0" prefWidth="377.0" vgap="10">
+            <GridPane alignment="CENTER_LEFT" hgap="10" prefHeight="76.0" prefWidth="431.0" vgap="10">
                 <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT" maxWidth="70.0" minWidth="64.0" prefWidth="108.6666259765625" />
-                    <ColumnConstraints halignment="LEFT" maxWidth="250.0" minWidth="250.0" prefWidth="301.3333740234375" />
+                    <ColumnConstraints halignment="RIGHT" prefWidth="130" />
+                    <ColumnConstraints halignment="LEFT" prefWidth="250.0" />
                 </columnConstraints>
 
-                <!-- NRP Mhs -->
+                <!-- NRP -->
                 <Label text="NRP:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="txtNrp" prefHeight="25.0" prefWidth="165.0" GridPane.columnIndex="1" />
+                <TextField fx:id="txtNrp" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="242.0" promptText="Masukkan NRP" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                <!-- Nama Mhs -->
-                <Label text="Nama:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <TextField fx:id="txtNama" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                <!-- Kehadiran -->
-                <Label text="Kehadiran: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <ComboBox fx:id="comboKehadiran" prefHeight="25.0" prefWidth="313.0" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <!-- Email -->
+                <Label text="Email:" GridPane.rowIndex="1" />
+                <TextField fx:id="txtEmail" promptText="Masukkan Email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <rowConstraints>
                     <RowConstraints />
                     <RowConstraints />
-                    <RowConstraints />
+                    <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+                    <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
                 </rowConstraints>
             </GridPane>
 
+            <!-- Tombol Aksi -->
             <HBox alignment="CENTER" spacing="10">
                 <Button onAction="#handleSimpan" style="-fx-background-color: #6C3BB9; -fx-text-fill: white;" text="Simpan" />
                 <Button onAction="#handleKembali" style="-fx-background-color: #FF6B6B; -fx-text-fill: white;" text="Kembali" />

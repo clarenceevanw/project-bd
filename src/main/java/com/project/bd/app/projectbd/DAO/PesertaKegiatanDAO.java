@@ -18,8 +18,7 @@ public class PesertaKegiatanDAO {
     public void insert(PesertaKegiatan pesertaKegiatan) throws Exception {
         // Menggunakan 'id_peserta' sebagai primary key yang dikembalikan
         String sql = "INSERT INTO peserta_kegiatan (id_mahasiswa, id_kegiatan, status_sertifikat, nomor_sertifikat, tanggal_terbit_sertifikat) VALUES (?, ?, ?, ?, ?) RETURNING id_peserta;";
-        try (Connection conn = getConnection(); // Mengelola koneksi di sini
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, pesertaKegiatan.getMahasiswa().getIdMahasiswa());
             stmt.setObject(2, pesertaKegiatan.getKegiatan().getIdKegiatan());
 
@@ -28,7 +27,7 @@ public class PesertaKegiatanDAO {
                 stmt.setNull(4, Types.VARCHAR);
                 stmt.setNull(5, Types.DATE);
             } else {
-                stmt.setString(3, pesertaKegiatan.getStatusSertifikat());
+                stmt.setString(3, "Ada");
                 stmt.setString(4, pesertaKegiatan.getNomorSertifikat());
                 if (pesertaKegiatan.getTglSertifikat() != null) {
                     stmt.setDate(5, Date.valueOf(pesertaKegiatan.getTglSertifikat()));
@@ -51,8 +50,7 @@ public class PesertaKegiatanDAO {
     public void update(PesertaKegiatan pesertaKegiatan) throws Exception {
         // Menggunakan 'id_peserta' pada WHERE clause
         String sql = "UPDATE peserta_kegiatan SET id_mahasiswa = ?, id_kegiatan = ?, status_sertifikat = ?, nomor_sertifikat = ?, tanggal_terbit_sertifikat = ? WHERE id_peserta = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, pesertaKegiatan.getMahasiswa().getIdMahasiswa());
             stmt.setObject(2, pesertaKegiatan.getKegiatan().getIdKegiatan());
 
@@ -79,8 +77,7 @@ public class PesertaKegiatanDAO {
 
     public void delete(UUID idPeserta) throws Exception {
         String sql = "DELETE FROM peserta_kegiatan WHERE id_peserta = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, idPeserta);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -166,8 +163,7 @@ public class PesertaKegiatanDAO {
                 "WHERE p.id_kegiatan = ? " +
                 "ORDER BY m.nama";
         List<PesertaKegiatan> list = new ArrayList<>();
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, kegiatanObj.getIdKegiatan());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -198,8 +194,7 @@ public class PesertaKegiatanDAO {
                 "WHERE p.id_mahasiswa = ? " +
                 "ORDER BY k.nama";
         List<PesertaKegiatan> list = new ArrayList<>();
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, mahasiswaObj.getIdMahasiswa());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -230,8 +225,7 @@ public class PesertaKegiatanDAO {
                 "WHERE p.id_mahasiswa = ? AND p.id_kegiatan = ? " +
                 "ORDER BY k.nama";
         List<PesertaKegiatan> list = new ArrayList<>();
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, mahasiswaObj.getIdMahasiswa());
             stmt.setObject(2, kegiatanObj.getIdKegiatan());
             try (ResultSet rs = stmt.executeQuery()) {

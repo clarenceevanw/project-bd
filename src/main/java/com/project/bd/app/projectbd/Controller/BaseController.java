@@ -2,6 +2,7 @@ package com.project.bd.app.projectbd.Controller;
 
 import com.project.bd.app.projectbd.DAO.*;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +31,9 @@ public class BaseController {
     protected PresensiDAO presensiKegiatanDAO = new PresensiDAO();
 
     protected PesertaKegiatanDAO pesertaKegiatanDAO = new PesertaKegiatanDAO();
+
+    @FXML
+    protected Button btnDashboard, btnKelolaClub, btnKelolaKegiatan;
 
     public Stage getStage(){
         return stage;

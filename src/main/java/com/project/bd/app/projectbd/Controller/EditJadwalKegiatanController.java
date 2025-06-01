@@ -15,15 +15,6 @@ import java.time.LocalTime;
 
 public class EditJadwalKegiatanController extends BaseController {
     @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnKelolaClub;
-
-    @FXML
-    private Button btnKelolaKegiatan;
-
-    @FXML
     private DatePicker datePickerTanggal;
 
     @FXML

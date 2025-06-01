@@ -18,15 +18,6 @@ import java.util.List;
 public class KelolaKegiatanController extends BaseController {
     //Contoller untuk agar user memilih kegiatan club mana
     @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnKelolaClub;
-
-    @FXML
-    private Button btnKelolaKegiatan;
-
-    @FXML
     ComboBox<Club> comboClub;
 
     ObservableList<Club> clubs = FXCollections.observableArrayList();

@@ -130,6 +130,31 @@ public class MahasiswaDAO {
         return null;
     }
 
+    public Mahasiswa findByNrpEmail(String nrp, String email) throws Exception {
+        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, " +
+                "p.id_prodi, p.nama AS prodi_nama, " +
+                "pr.id_program, pr.nama AS program_nama " +
+                "FROM mahasiswa m " +
+                "LEFT JOIN prodi p ON m.id_prodi = p.id_prodi " +
+                "LEFT JOIN program pr ON m.id_program = pr.id_program " +
+                "WHERE m.nrp = ? AND m.email = ? ";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, nrp);
+            stmt.setString(2, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Mahasiswa mhs = mapResultSetToMahasiswa(rs);
+                mhs.setKeanggotaan(findKeanggotaan(mhs.getIdMahasiswa())); // Opsional
+                return mhs;
+            }
+        } catch (SQLException e) {
+            AlertNotification.showError(e.getMessage());
+        }
+
+        return null;
+    }
+
     private Mahasiswa mapResultSetToMahasiswa(ResultSet rs) throws SQLException {
         Prodi prodi = new Prodi();
         prodi.setIdProdi(rs.getObject("id_prodi", UUID.class));

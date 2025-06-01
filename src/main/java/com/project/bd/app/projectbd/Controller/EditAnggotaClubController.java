@@ -12,15 +12,6 @@ import java.io.IOException;
 
 public class EditAnggotaClubController extends BaseController {
     @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnKelolaClub;
-
-    @FXML
-    private Button btnKelolaKegiatan;
-
-    @FXML
     private TextField txtNrp;
 
     @FXML

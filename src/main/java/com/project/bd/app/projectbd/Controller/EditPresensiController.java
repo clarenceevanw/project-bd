@@ -10,15 +10,6 @@ import javafx.scene.control.TextField;
 
 public class EditPresensiController extends BaseController{
     @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnKelolaClub;
-
-    @FXML
-    private Button btnKelolaKegiatan;
-
-    @FXML
     private TextField txtNrp;
 
     @FXML

@@ -1,6 +1,8 @@
 package com.project.bd.app.projectbd.Controller;
 
 import com.project.bd.app.projectbd.Model.JadwalKegiatan;
+import com.project.bd.app.projectbd.Model.PesertaKegiatan;
+import com.project.bd.app.projectbd.Model.PresensiKegiatan;
 import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.fxml.FXML;
@@ -11,17 +13,9 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 public class TambahJadwalKegiatanController extends BaseController {
-    @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnKelolaClub;
-
-    @FXML
-    private Button btnKelolaKegiatan;
-
     @FXML
     private DatePicker datePickerTanggal;
 
@@ -73,7 +67,15 @@ public class TambahJadwalKegiatanController extends BaseController {
             jadwalKegiatan.setWaktuKegiatan(waktuKegiatan);
             jadwalKegiatan.setLokasiKegiatan(lokasi);
             jadwalKegiatan.setKegiatan(ClubSession.getInstance().getKegiatan());
-            jadwalKegiatanDAO.insert(jadwalKegiatan);
+            jadwalKegiatan.setIdJadwalKegiatan(jadwalKegiatanDAO.insert(jadwalKegiatan));
+
+            List<PesertaKegiatan> pesertaKegiatanList = pesertaKegiatanDAO.findByKegiatan(ClubSession.getInstance().getKegiatan());
+            for (PesertaKegiatan pesertaKegiatan : pesertaKegiatanList) {
+                PresensiKegiatan presensiKegiatan = new PresensiKegiatan();
+                presensiKegiatan.setPesertaKegiatan(pesertaKegiatan);
+                presensiKegiatan.setJadwalKegiatan(jadwalKegiatan);
+                presensiKegiatanDAO.insert(presensiKegiatan);
+            }
             AlertNotification.showSuccess("Jadwal kegiatan berhasil ditambahkan.");
             switchScenes("pengurus/jadwal-kegiatan.fxml", "Kelola Kegiatan");
         } catch (Exception e) {

@@ -16,15 +16,6 @@ import java.util.List;
 
 public class JadwalKegiatanController extends BaseController {
     @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnKelolaClub;
-
-    @FXML
-    private Button btnKelolaKegiatan;
-
-    @FXML
     private TableView<JadwalKegiatan> jadwalKegiatanTable = new TableView<>();
 
     @FXML
@@ -110,6 +101,7 @@ public class JadwalKegiatanController extends BaseController {
 
     @FXML
     public void handleTambahJadwal() throws Exception {
+        ClubSession.getInstance().setKegiatan(ClubSession.getInstance().getKegiatan());
         switchScenes("pengurus/tambah-jadwal-kegiatan.fxml", "Tambah Jadwal Kegiatan");
     }
 

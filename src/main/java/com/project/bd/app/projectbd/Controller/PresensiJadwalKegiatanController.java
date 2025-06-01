@@ -45,7 +45,12 @@ public class PresensiJadwalKegiatanController extends BaseController{
         colNrp.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPesertaKegiatan().getMahasiswa().getNrp()));
         colNama.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPesertaKegiatan().getMahasiswa().getNama()));
         colJurusan.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPesertaKegiatan().getMahasiswa().getProdi().getNama()));
-        colKehadiran.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatusPresensi()));
+        colKehadiran.setCellValueFactory(cellData -> {
+            if(cellData.getValue().getStatusPresensi() == null){
+                return new SimpleStringProperty("Tidak Hadir");
+            }
+            return new SimpleStringProperty(cellData.getValue().getStatusPresensi());
+        });
         try{
             loadData();
         }catch (Exception e){
