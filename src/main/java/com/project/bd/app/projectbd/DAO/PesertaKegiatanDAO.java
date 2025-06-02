@@ -15,7 +15,7 @@ public class PesertaKegiatanDAO {
         return DatabaseConnection.getConnection();
     }
 
-    public void insert(PesertaKegiatan pesertaKegiatan) throws Exception {
+    public UUID insert(PesertaKegiatan pesertaKegiatan) throws Exception {
         // Menggunakan 'id_peserta' sebagai primary key yang dikembalikan
         String sql = "INSERT INTO peserta_kegiatan (id_mahasiswa, id_kegiatan, status_sertifikat, nomor_sertifikat, tanggal_terbit_sertifikat) VALUES (?, ?, ?, ?, ?) RETURNING id_peserta;";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
@@ -40,11 +40,13 @@ public class PesertaKegiatanDAO {
                 // Mengambil 'id_peserta' sesuai RETURNING clause
                 // Pastikan model PesertaKegiatan memiliki setIdPeserta(UUID id)
                 pesertaKegiatan.setIdPesertaKegiatan(rs.getObject("id_peserta", UUID.class));
+                return pesertaKegiatan.getIdPesertaKegiatan();
             }
         } catch (SQLException e) {
             AlertNotification.showError("Kesalahan saat memasukkan data peserta kegiatan: " + e.getMessage());
             throw e;
         }
+        return null;
     }
 
     public void update(PesertaKegiatan pesertaKegiatan) throws Exception {
@@ -68,6 +70,24 @@ public class PesertaKegiatanDAO {
                 }
             }
             stmt.setObject(6, pesertaKegiatan.getIdPesertaKegiatan());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            AlertNotification.showError("Kesalahan saat memperbarui data peserta kegiatan: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public void updateSertifikatByKegiatan(PesertaKegiatan pesertaKegiatan) throws Exception {
+        String sql = "UPDATE peserta_kegiatan SET status_sertifikat = ? , nomor_sertifikat = ?, tanggal_terbit_sertifikat = ? WHERE id_kegiatan = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, pesertaKegiatan.getStatusSertifikat());
+            stmt.setString(2, pesertaKegiatan.getNomorSertifikat());
+            if (pesertaKegiatan.getTglSertifikat() != null) {
+                stmt.setDate(3, Date.valueOf(pesertaKegiatan.getTglSertifikat()));
+            } else {
+                stmt.setNull(3, Types.DATE);
+            }
+            stmt.setObject(4, pesertaKegiatan.getKegiatan().getIdKegiatan());
             stmt.executeUpdate();
         } catch (SQLException e) {
             AlertNotification.showError("Kesalahan saat memperbarui data peserta kegiatan: " + e.getMessage());
@@ -208,7 +228,7 @@ public class PesertaKegiatanDAO {
         return list;
     }
 
-    public List<PesertaKegiatan> findByMahasiswaAndKegiatan(Mahasiswa mahasiswaObj, Kegiatan kegiatanObj) throws Exception {
+    public PesertaKegiatan findByMahasiswaAndKegiatan(Mahasiswa mahasiswaObj, Kegiatan kegiatanObj) throws Exception {
         // Memilih 'p.id_peserta'
         String sql = "SELECT p.id_peserta, p.status_sertifikat, p.nomor_sertifikat, p.tanggal_terbit_sertifikat, " +
                 "m.id_mahasiswa, m.nrp, m.nama AS m_nama, m.email, m.tgl_lahir, " +
@@ -224,19 +244,18 @@ public class PesertaKegiatanDAO {
                 "LEFT JOIN club c ON k.id_club = c.id_club " +
                 "WHERE p.id_mahasiswa = ? AND p.id_kegiatan = ? " +
                 "ORDER BY k.nama";
-        List<PesertaKegiatan> list = new ArrayList<>();
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, mahasiswaObj.getIdMahasiswa());
             stmt.setObject(2, kegiatanObj.getIdKegiatan());
             try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    list.add(mapRowToPesertaKegiatan(rs));
+                if (rs.next()) {
+                    return (mapRowToPesertaKegiatan(rs));
                 }
             }
         } catch (SQLException e) {
             AlertNotification.showError("Kesalahan saat mencari peserta berdasarkan mahasiswa dan kegiatan: " + e.getMessage());
             throw e;
         }
-        return list;
+        return null;
     }
 }

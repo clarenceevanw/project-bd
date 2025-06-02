@@ -72,6 +72,10 @@ public class KelolaAnggotaClubController extends BaseController{
     @FXML
     public void handleEditAnggota() throws Exception {
         Keanggotaan keanggotaan = anggotaTable.getSelectionModel().getSelectedItem();
+        if(keanggotaan == null){
+            AlertNotification.showError("Pilih anggota terlebih dahulu.");
+            return;
+        }
         ClubSession.getInstance().setKeanggotaan(keanggotaan);
         try{
             switchScenes("pengurus/edit-anggota-club.fxml", "Edit Anggota Club");

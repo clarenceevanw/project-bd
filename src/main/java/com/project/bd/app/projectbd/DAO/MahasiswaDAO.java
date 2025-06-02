@@ -49,6 +49,17 @@ public class MahasiswaDAO {
         }
     }
 
+    public void updateActive(Mahasiswa mhs) throws Exception {
+        String sql = "UPDATE mahasiswa SET active = ? WHERE id_mahasiswa = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setBoolean(1, mhs.getActive());
+            stmt.setObject(2, mhs.getIdMahasiswa());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            AlertNotification.showError(e.getMessage());
+        }
+    }
+
     public void delete(UUID idMahasiswa) throws Exception {
         String sql = "DELETE FROM mahasiswa WHERE id_mahasiswa = ?";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
@@ -61,7 +72,7 @@ public class MahasiswaDAO {
 
     public List<Mahasiswa> findAll() throws Exception {
         List<Mahasiswa> list = new ArrayList<>();
-        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, " +
+        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, m.active, " +
                 "p.id_prodi, p.nama AS prodi_nama, " +
                 "pr.id_program, pr.nama AS program_nama " +
                 "FROM mahasiswa m " +
@@ -82,7 +93,7 @@ public class MahasiswaDAO {
     }
 
     public Mahasiswa findById(UUID idMahasiswa) throws Exception {
-        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, " +
+        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, m.active, " +
                 "p.id_prodi, p.nama AS prodi_nama, " +
                 "pr.id_program, pr.nama AS program_nama " +
                 "FROM mahasiswa m " +
@@ -107,7 +118,7 @@ public class MahasiswaDAO {
     }
 
     public Mahasiswa findByNrp(String nrp) throws Exception {
-        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, " +
+        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, m.active, " +
                 "p.id_prodi, p.nama AS prodi_nama, " +
                 "pr.id_program, pr.nama AS program_nama " +
                 "FROM mahasiswa m " +
@@ -170,7 +181,9 @@ public class MahasiswaDAO {
         String email = rs.getString("email");
         LocalDate tglLahir = rs.getDate("tgl_lahir").toLocalDate();
 
-        return new Mahasiswa(idMahasiswa, prodi, program, nrp, nama, email, tglLahir);
+        Mahasiswa mhs = new Mahasiswa(idMahasiswa, prodi, program, nrp, nama, email, tglLahir);
+        mhs.setActive(rs.getBoolean("active"));
+        return mhs;
     }
 
     public List<Keanggotaan> findKeanggotaan(UUID idMahasiswa) throws Exception {

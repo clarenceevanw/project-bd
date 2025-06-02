@@ -5,8 +5,6 @@ import com.project.bd.app.projectbd.utils.AlertNotification;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,8 +17,7 @@ public class PresensiDAO {
     public void insert(PresensiKegiatan presensi) throws Exception {
         // Kolom primary key untuk peserta_jadwal_kegiatan diasumsikan 'id_peserta_jadwal_kegiatan'
         String sql = "INSERT INTO peserta_jadwal_kegiatan (id_peserta, id_jadwal_kegiatan, status_kehadiran) VALUES (?, ?, ?) RETURNING id_peserta_jadwal_kegiatan;";
-        try (Connection conn = getConnection(); // Mengelola koneksi di sini
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
 
             // Pastikan PesertaKegiatan model memiliki getIdPeserta()
             if (presensi.getPesertaKegiatan() != null && presensi.getPesertaKegiatan().getIdPesertaKegiatan() != null) {
@@ -53,8 +50,7 @@ public class PresensiDAO {
 
     public void update(PresensiKegiatan presensi) throws Exception {
         String sql = "UPDATE peserta_jadwal_kegiatan SET status_kehadiran = ? WHERE id_peserta_jadwal_kegiatan = ?";
-        try (Connection conn = getConnection(); // Mengelola koneksi di sini
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setString(1, presensi.getStatusPresensi());
             stmt.setObject(2, presensi.getIdPesertaJadwalKegiatan());
             stmt.executeUpdate();
@@ -171,8 +167,7 @@ public class PresensiDAO {
         String sql = getCommonSelectQueryFields() +
                 "WHERE pre.id_jadwal_kegiatan = ? " +
                 "ORDER BY m.nama";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, jadwalKegiatan.getIdJadwalKegiatan());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -191,8 +186,7 @@ public class PresensiDAO {
         String sql = getCommonSelectQueryFields() +
                 "WHERE p.id_mahasiswa = ? " +
                 "ORDER BY k.nama";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, mahasiswaObj.getIdMahasiswa());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -211,8 +205,7 @@ public class PresensiDAO {
         String sql = getCommonSelectQueryFields() +
                 "WHERE j.id_kegiatan = ? " +
                 "ORDER BY m.nama";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, kegiatanObj.getIdKegiatan());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -231,8 +224,7 @@ public class PresensiDAO {
         String sql = getCommonSelectQueryFields() +
                 "WHERE pre.id_peserta = ? " +
                 "ORDER BY j.waktu_kegiatan";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, pesertaKegiatanObj.getIdPesertaKegiatan());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

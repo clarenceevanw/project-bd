@@ -42,8 +42,8 @@
             <!-- Sign Up Form -->
             <VBox fx:id="signUpForm" alignment="CENTER" spacing="15">
                 <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Sign Up" />
-                <TextField fx:id="signupUsername" maxWidth="250" promptText="New Username" />
-                <PasswordField fx:id="signupPassword" maxWidth="250" promptText="New Password" />
+                <TextField fx:id="signupUsername" maxWidth="250" promptText="NRP" />
+                <PasswordField fx:id="signupPassword" maxWidth="250" promptText="Password (Format DD-MM-YYYY)" />
                 <Button maxWidth="250" onAction="#handleSignUp" style="-fx-background-color: #6C3BB9; -fx-text-fill: white;" text="Sign Up" />
                 <Button maxWidth="250" onAction="#slideToLogin" style="-fx-background-color: #E1D6F5; -fx-text-fill: #6C3BB9;" text="Back to Login" />
             </VBox>

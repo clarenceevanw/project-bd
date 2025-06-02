@@ -1,36 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.BuatClubController">
-
-    <!-- Sidebar -->
-    <left>
-        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
-            <ImageView fitHeight="75" fitWidth="280.0">
-                <image>
-                    <Image url="@../image/PCU-LOGO.png" />
-                </image>
-            </ImageView>
-
-            <Button fx:id="btnDashboard" maxWidth="180" onAction="#navigateToDashboard"
-                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Dashboard" />
-            <Button fx:id="btnKelolaClub" maxWidth="180" onAction="#navigateToKelolaClub"
-                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Club" />
-            <Button fx:id="btnKelolaKegiatan" maxWidth="180" onAction="#navigateToKelolaKegiatan" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Kegiatan" />
-        </VBox>
-    </left>
+<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.BuatClubController">
 
     <!-- Form Content -->
     <center>
         <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #6C3BB9;" text="Buat Club" />
 
-            <GridPane hgap="10" vgap="10">
+            <GridPane alignment="CENTER" hgap="10" vgap="10">
                 <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT" prefWidth="130" />
+                    <ColumnConstraints halignment="RIGHT" prefWidth="100.0" />
                     <ColumnConstraints halignment="LEFT" prefWidth="300" />
                 </columnConstraints>
 
@@ -48,7 +39,7 @@
 
                 <!-- Kategori -->
                 <Label text="Kategori:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                <ComboBox fx:id="comboKategori" promptText="Pilih Kategori" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" />
+                <ComboBox fx:id="comboKategori" promptText="Pilih Kategori" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <rowConstraints>
                <RowConstraints />
                <RowConstraints />

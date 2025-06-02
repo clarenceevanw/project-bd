@@ -6,6 +6,8 @@ import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import java.util.List;
+
 public class TambahPesertaKegiatanController extends BaseController{
     @FXML
     private TextField txtNrp;
@@ -48,6 +50,7 @@ public class TambahPesertaKegiatanController extends BaseController{
             return;
         }
 
+
         Kegiatan kegiatan = ClubSession.getInstance().getKegiatan();
         Club clubPenyelenggara = kegiatan.getClub();
         if(kegiatan.getKategori().equals("Rutin")){
@@ -57,12 +60,28 @@ public class TambahPesertaKegiatanController extends BaseController{
                 return;
             }
         }
+        PesertaKegiatan peserta = pesertaKegiatanDAO.findByMahasiswaAndKegiatan(mhs, kegiatan);
+        if(peserta != null){
+            AlertNotification.showError("Mahasiswa sudah terdaftar pada kegiatan ini.");
+            return;
+        }
 
         PesertaKegiatan pesertaKegiatan = new PesertaKegiatan();
         pesertaKegiatan.setMahasiswa(mhs);
         pesertaKegiatan.setKegiatan(kegiatan);
 
-        pesertaKegiatanDAO.insert(pesertaKegiatan);
+        pesertaKegiatan.setIdPesertaKegiatan(pesertaKegiatanDAO.insert(pesertaKegiatan));
+
+        List<JadwalKegiatan> jadwalKegiatanList = jadwalKegiatanDAO.findByKegiatan(kegiatan);
+        if(!jadwalKegiatanList.isEmpty()){
+            for (JadwalKegiatan jadwalKegiatan : jadwalKegiatanList) {
+                PresensiKegiatan presensiKegiatan = new PresensiKegiatan();
+                presensiKegiatan.setPesertaKegiatan(pesertaKegiatan);
+                presensiKegiatan.setJadwalKegiatan(jadwalKegiatan);
+                presensiKegiatan.setStatusPresensi("Tidak Hadir");
+                presensiKegiatanDAO.insert(presensiKegiatan);
+            }
+        }
         AlertNotification.showSuccess("Peserta berhasil ditambahkan.");
         switchScenes("pengurus/peserta-kegiatan.fxml", "Kelola Kegiatan");
     }

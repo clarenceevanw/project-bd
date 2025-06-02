@@ -122,7 +122,7 @@ public class KelolaClubController extends BaseController {
         if (selected != null) {
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Apakah anda yakin ingin menghapus club " + selected.getNama() + " ?", ButtonType.YES,  ButtonType.CANCEL);
             confirm.showAndWait();
-            if (confirm.getResult() == ButtonType.CANCEL) {
+            if (confirm.getResult() == ButtonType.YES) {
                 clubDAO.delete(selected.getId_club());
                 clubList.remove(selected);
                 AlertNotification.showSuccess("Hapus Club, Club berhasil dihapus.");

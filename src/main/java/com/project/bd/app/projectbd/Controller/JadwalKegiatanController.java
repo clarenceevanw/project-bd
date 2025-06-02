@@ -76,7 +76,6 @@ public class JadwalKegiatanController extends BaseController {
             AlertNotification.showError("Gagal memuat jadwal kegiatan: " + e.getMessage());
         }
         jadwalKegiatanTable.refresh();
-        System.out.println("[Controller] TableView direfresh. Jumlah item di list: " + jadwalKegiatanList.size());
     }
 
     @FXML
