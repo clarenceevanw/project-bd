@@ -5,8 +5,11 @@ import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -23,7 +26,7 @@ public class DaftarClubController extends BaseController {
     private VBox sidebarDaftarClub;
 
     @FXML
-    private HBox clubContainer;
+    private VBox clubContainer;
 
     @FXML
     private ScrollPane scrollPane;
@@ -32,9 +35,9 @@ public class DaftarClubController extends BaseController {
     public void initialize() {
         // Posisi awal di luar layar (geser ke kiri)
         sidebarDaftarClub.setTranslateX(-300);
-        scrollPane.setPrefViewportHeight(250);
-        scrollPane.setPrefViewportWidth(600);
-        clubContainer.setFillHeight(false);
+        scrollPane.setFitToWidth(true); // Ikuti lebar scrollpane
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
         try {
             loadClubCards();
@@ -50,11 +53,8 @@ public class DaftarClubController extends BaseController {
         // Hapus listener animasi scroll
         // (Bagian ini dihapus seperti yang diminta)
 
-        scrollPane.setFitToWidth(false);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setPrefViewportWidth(700); // batas maksimal lebar viewport
 
-        clubContainer.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        clubContainer.setAlignment(Pos.TOP_CENTER);
         clubContainer.setMaxWidth(Region.USE_PREF_SIZE);
     }
 
@@ -104,17 +104,35 @@ public class DaftarClubController extends BaseController {
         Label namaLabel = new Label(club.getNama());
         namaLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
 
-        Label kategoriLabel = new Label("Kategori");
+        Label kategoriLabel = new Label(club.getKategori().getNama());
         kategoriLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #666;");
 
         card.getChildren().addAll(namaLabel, kategoriLabel);
         card.setAlignment(javafx.geometry.Pos.CENTER);
 
+        card.setOnMouseClicked(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/project/bd/app/projectbd/anggota/detailDaftarClub.fxml"));
+                Parent detailRoot = loader.load();
+
+                DetailDaftarClubController controller = loader.getController();
+                controller.setStage(this.stage);
+                controller.setFromDaftarYangDiikuti(false); // berasal dari halaman semua club
+                controller.setClubDetail(club);
+                stage.getScene().setRoot(detailRoot);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         return card;
     }
 
     @FXML
     public void goToDaftarClubYangDiikuti() throws IOException {
         switchScenes("anggota/daftarClubYangDiikuti.fxml", "Club Yang Diikuti");
+    }
+    @FXML
+    public void goToDaftarClub() throws IOException {
+        switchScenes("anggota/daftarClub.fxml", "Daftar Club");
     }
 }

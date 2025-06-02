@@ -1,31 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.project.bd.app.projectbd.Controller.DaftarClubYangDiikutiController">
-    <left>
-        <VBox fx:id="sidebarDaftarClubYangDiikuti" alignment="TOP_CENTER" prefWidth="200" spacing="20"
-              style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
-            <ImageView fitHeight="75" fitWidth="280.0">
-                <image>
-                    <Image url="@../image/PCU-LOGO.png"/>
-                </image>
-            </ImageView>
 
-            <Button maxWidth="180" onAction="#goToDashboard"
-                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;"
-                    text="Dashboard"/>
-            <Button maxWidth="180" onAction="#goToDaftarClubYangDiikuti"
-                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;"
-                    text="Club Yang Diikuti"/>
-        </VBox>
-    </left>
+    <center>
+        <HBox prefWidth="800" spacing="0" style="-fx-background-color: #F7F7F7;">
+            <!-- Sidebar -->
+            <VBox fx:id="sidebarDaftarClub" alignment="TOP_CENTER" prefWidth="200" spacing="20"
+                  style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+                <ImageView fitHeight="75" fitWidth="280.0">
+                    <image>
+                        <Image url="@../image/PCU-LOGO.png"/>
+                    </image>
+                </ImageView>
+
+                <Button maxWidth="180" onAction="#goToDashboard"
+                        style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;"
+                        text="Dashboard"/>
+                <Button maxWidth="180" onAction="#goToDaftarClub"
+                        style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;"
+                        text="Daftar Club"/>
+                <Button maxWidth="180" onAction="#goToDaftarClubYangDiikuti"
+                        style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;"
+                        text="Club Yang Diikuti"/>
+            </VBox>
+
+            <!-- Spacer kiri -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Konten utama -->
+            <VBox alignment="TOP_CENTER" prefWidth="600" spacing="20">
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Club Yang Diikuti"/>
+                <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER"
+                            maxWidth="600" prefHeight="500" prefWidth="600"
+                            style="-fx-background-color:transparent;" vbarPolicy="ALWAYS">
+                    <StackPane alignment="TOP_CENTER">
+                        <VBox fx:id="clubContainer" alignment="TOP_CENTER" maxWidth="600"
+                              spacing="20" style="-fx-padding: 20;">
+                            <!-- Cards akan diisi dari Controller -->
+                        </VBox>
+                    </StackPane>
+                </ScrollPane>
+            </VBox>
+
+            <!-- Spacer kanan -->
+            <Region prefWidth="50"/>
+        </HBox>
+    </center>
 </BorderPane>

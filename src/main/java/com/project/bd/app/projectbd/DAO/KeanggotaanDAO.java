@@ -18,6 +18,22 @@ public class KeanggotaanDAO {
         return DatabaseConnection.getConnection();
     }
 
+    public boolean isUserJoinedClub(UUID idMahasiswa, UUID idClub) throws Exception {
+        String sql = "SELECT COUNT(*) FROM keanggotaan WHERE id_mahasiswa = ? AND id_club = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setObject(1, idMahasiswa);
+            stmt.setObject(2, idClub);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            AlertNotification.showError("Gagal mengecek status keanggotaan.");
+        }
+        return false;
+    }
+
     public List<Keanggotaan> findKeanggotaanByMahasiswa(UUID idMahasiswa) throws Exception {
         List<Keanggotaan> list = new ArrayList<>();
         String sql = """
