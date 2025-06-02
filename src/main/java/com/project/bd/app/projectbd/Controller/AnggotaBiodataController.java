@@ -85,7 +85,7 @@ public class AnggotaBiodataController extends BaseController {
             namaLabel.setText(mahasiswa.getNama());
             emailLabel.setText(mahasiswa.getEmail());
 
-            if (mahasiswa.getProgram() != null) {
+            if (mahasiswa.getProgram().getIdProgram() != null) {
                 programLabel.setText(mahasiswa.getProgram().getNama());
                 prodiLabel.setText(mahasiswa.getProdi().getNama());
 

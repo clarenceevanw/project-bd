@@ -1,62 +1,55 @@
 package com.project.bd.app.projectbd.Controller;
 
 import com.project.bd.app.projectbd.DAO.KeanggotaanDAO;
+import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Model.Mahasiswa;
+import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
-import javafx.animation.Interpolator;
-import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import com.project.bd.app.projectbd.Model.Club;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.UUID;
+import java.util.List;
 
 public class DetailDaftarClubController extends BaseController {
 
-    @FXML
-    private Label namaClubLabel;
-
-    @FXML
-    private Label deskripsiLabel;
-
-    @FXML
-    private Label tahunBerdiriLabel;
-
-    @FXML
-    private Label kategoriLabel;
-
-    @FXML
-    private Pane kategoriBox;
-
-    @FXML
-    private Pane judulBox;
-
-    @FXML
-    private Pane deskripsiBox;
-
-    @FXML
-    private Pane tahunBox;
-
-    @FXML
-    private Button btnLihatAnggota;
-
-    @FXML
-    private Button btnJoin;
+    @FXML private Label namaClubLabel;
+    @FXML private Label deskripsiLabel;
+    @FXML private Label tahunBerdiriLabel;
+    @FXML private Label kategoriLabel;
+    @FXML private Pane kategoriBox;
+    @FXML private Pane judulBox;
+    @FXML private Pane deskripsiBox;
+    @FXML private Pane tahunBox;
+    @FXML private Button btnLihatAnggota;
+    @FXML private Button btnJoin;
 
     private Club club;
-
     private final KeanggotaanDAO keanggotaanDAO = new KeanggotaanDAO();
-
     private boolean fromDaftarYangDiikuti = false;
+
+    // ----- ORIGIN PAGE -----
+    // Bisa "daftarClub" atau "daftarClubYangDiikuti"
+    private String originPage = "daftarClub";
+
+    public void setOriginPage(String originPage) {
+        this.originPage = originPage;
+    }
+    // -----------------------
 
     public void setFromDaftarYangDiikuti(boolean fromDaftarYangDiikuti) {
         this.fromDaftarYangDiikuti = fromDaftarYangDiikuti;
@@ -65,7 +58,6 @@ public class DetailDaftarClubController extends BaseController {
     public void setModeDetail(boolean sudahIkut) {
         btnJoin.setVisible(!sudahIkut);
         btnJoin.setManaged(!sudahIkut);
-
         btnLihatAnggota.setVisible(sudahIkut);
         btnLihatAnggota.setManaged(sudahIkut);
     }
@@ -89,9 +81,9 @@ public class DetailDaftarClubController extends BaseController {
             boolean sudahIkut = keanggotaanDAO.isUserJoinedClub(idMahasiswa, club.getId_club());
 
             if (fromDaftarYangDiikuti) {
-                setModeDetail(true); // selalu "lihat anggota"
+                setModeDetail(true);
             } else {
-                setModeDetail(sudahIkut); // join kalau belum
+                setModeDetail(sudahIkut);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,61 +94,79 @@ public class DetailDaftarClubController extends BaseController {
     }
 
     private void playAnimations() {
-        // Judul: masuk dari atas ke tengah agak bawah (misal Y = 20)
         TranslateTransition slideJudul = new TranslateTransition(Duration.millis(500), judulBox);
-        slideJudul.setFromY(-100); // sudah diset di initialize()
-        slideJudul.setToY(20);     // supaya tidak terlalu atas (tidak terpotong)
+        slideJudul.setFromY(-100);
+        slideJudul.setToY(20);
 
-        // Deskripsi: dari kiri masuk ke posisi normal (X = 0)
         TranslateTransition slideDeskripsi = new TranslateTransition(Duration.millis(400), deskripsiBox);
         slideDeskripsi.setFromX(-600);
         slideDeskripsi.setToX(0);
 
-        // Tahun: dari kiri masuk ke posisi normal (X = 0)
         TranslateTransition slideTahun = new TranslateTransition(Duration.millis(400), tahunBox);
         slideTahun.setFromX(-600);
         slideTahun.setToX(0);
-        slideTahun.setDelay(Duration.millis(100)); // sedikit delay agar bertahap
+        slideTahun.setDelay(Duration.millis(100));
 
         TranslateTransition slideKategori = new TranslateTransition(Duration.millis(400), kategoriBox);
         slideKategori.setToX(0);
         slideKategori.setDelay(Duration.millis(200));
 
-        // Jalankan semuanya bersamaan
         slideJudul.play();
         slideDeskripsi.play();
         slideTahun.play();
         slideKategori.play();
     }
 
+    /**
+     * Tombol Back: kembali ke daftar sesuai originPage
+     */
     @FXML
     public void goBack() {
         try {
-            if (fromDaftarYangDiikuti) {
-                switchScenes("anggota/daftarClubYangDiikuti.fxml", "Club Yang Diikuti");
+            FXMLLoader loader;
+            String title;
+
+            if (originPage.equals("daftarClubYangDiikuti")) {
+                loader = new FXMLLoader(getClass().getResource("/com/project/bd/app/projectbd/anggota/daftarClubYangDiikuti.fxml"));
+                title = "Club Yang Diikuti";
             } else {
-                switchScenes("anggota/daftarClub.fxml", "Daftar Club");
+                loader = new FXMLLoader(getClass().getResource("/com/project/bd/app/projectbd/anggota/daftarClub.fxml"));
+                title = "Daftar Club";
             }
-        } catch (Exception e) {
+
+            Parent root = loader.load();
+            BaseController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.getScene().setRoot(root);
+            stage.setTitle(title);
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    public void goToLihatAnggotaCLub() throws Exception {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/project/bd/app/projectbd/anggota/lihatAnggotaClub.fxml"));
-            Parent root = loader.load();
+    private void goToLihatAnggotaCLub(ActionEvent event) throws IOException {
+        // Simpan club ke session
+        ClubSession.getInstance().setClub(club);
 
-            LihatAnggotaClubController controller = loader.getController();
-            controller.setStage(this.stage);
-            controller.setClub(club); // kirim club agar tahu club mana yang ditampilkan
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/project/bd/app/projectbd/anggota/lihatAnggotaClub.fxml")
+        );
+        Parent root = loader.load();
 
-            stage.getScene().setRoot(root);
-        } catch (Exception e) {
-            e.printStackTrace();
-            AlertNotification.showError("Gagal membuka daftar anggota: " + e.getMessage());
-        }
+        LihatAnggotaClubController controller = loader.getController();
+        // ★ INJECT stage ke controller list anggota
+        controller.setStage(this.stage);
+        // ★ TURUNKAN juga informasi asal halaman detail:
+        //   - apakah datang dari daftarClub atau daftarClubYangDiikuti?
+        controller.setOriginPage(this.originPage);
+        controller.setFromDaftarYangDiikuti(this.fromDaftarYangDiikuti);
+        //   (jika belum memiliki setter di LihatAnggotaClubController, tambahkan saja)
+        //   di sana, nanti goBack()‐nya akan kembali ke DetailDaftarClub.
+
+        stage.getScene().setRoot(root);
     }
 
 
@@ -164,7 +174,7 @@ public class DetailDaftarClubController extends BaseController {
         try {
             UUID idMahasiswa = LoginSession.getInstance().getIdMahasiswa();
 
-            Keanggotaan keanggotaan = new Keanggotaan();
+            com.project.bd.app.projectbd.Model.Keanggotaan keanggotaan = new Keanggotaan();
             keanggotaan.setId_keanggotaan(UUID.randomUUID());
 
             Mahasiswa mahasiswa = new Mahasiswa();
@@ -176,14 +186,12 @@ public class DetailDaftarClubController extends BaseController {
             keanggotaan.setTanggal_bergabung(LocalDate.now());
 
             keanggotaanDAO.insert(keanggotaan);
-
             AlertNotification.showSuccess("Berhasil bergabung ke club!");
-
             switchScenes("anggota/daftarClub.fxml", "Daftar Club");
+
         } catch (Exception e) {
             AlertNotification.showError("Gagal bergabung: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
 }

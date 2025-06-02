@@ -6,14 +6,9 @@
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.DetailDaftarClubController">
 
     <top>
-        <StackPane BorderPane.alignment="CENTER" prefHeight="80" style="-fx-padding: 0;">
-            <StackPane fx:id="judulBox"
-                       style="-fx-background-color: #6C3BB9; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 2);"
-                       prefHeight="60" minWidth="200" maxWidth="600"
-                       translateY="-100">
-                <Label fx:id="namaClubLabel"
-                       text="Nama Club"
-                       style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        <StackPane prefHeight="80" style="-fx-padding: 0;" BorderPane.alignment="CENTER">
+            <StackPane fx:id="judulBox" maxWidth="600" minWidth="200" prefHeight="60" style="-fx-background-color: #6C3BB9; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 2);" translateY="-100">
+                <Label fx:id="namaClubLabel" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;" text="Nama Club" />
             </StackPane>
         </StackPane>
 
@@ -25,7 +20,7 @@
                 <Pane fx:id="deskripsiBox" minHeight="150" prefWidth="600" style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 15;">
                     <VBox spacing="10" style="-fx-padding: 10;">
                         <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Deskripsi" />
-                        <Label fx:id="deskripsiLabel" maxWidth="570" style="-fx-font-size: 13px;" wrapText="true" />
+                        <Label fx:id="deskripsiLabel" maxWidth="570" style="-fx-font-size: 13px;" textAlignment="JUSTIFY" wrapText="true" />
                     </VBox>
                 </Pane>
 
@@ -48,20 +43,11 @@
 
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 15;">
-            <Button fx:id="btnBack"
-                    onAction="#goBack"
-                    style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 10 25 10 25; -fx-cursor: hand; -fx-background-radius: 20"
-                    text="Back" />
+            <Button fx:id="btnBack" onAction="#goBack" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 10 25 10 25; -fx-cursor: hand; -fx-background-radius: 20" text="Back" />
 
-            <Button fx:id="btnJoin"
-                    onAction="#goToJoinClub"
-                    style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 10 25 10 25; -fx-cursor: hand; -fx-background-radius: 20"
-                    text="Join Club" />
+            <Button fx:id="btnJoin" onAction="#goToJoinClub" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 10 25 10 25; -fx-cursor: hand; -fx-background-radius: 20" text="Join Club" />
 
-            <Button fx:id="btnLihatAnggota"
-                    text="Lihat Anggota"
-                    style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 10 25 10 25; -fx-cursor: hand; -fx-background-radius: 20"
-                    onAction="#goToLihatAnggotaCLub" />
+            <Button fx:id="btnLihatAnggota" onAction="#goToLihatAnggotaCLub" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 10 25 10 25; -fx-cursor: hand; -fx-background-radius: 20" text="Lihat Anggota" />
         </HBox>
     </bottom>
 </BorderPane>

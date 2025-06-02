@@ -20,18 +20,12 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 public class DaftarClubYangDiikutiController extends BaseController {
 
-    @FXML
-    private VBox sidebarDaftarClub;
-
-    @FXML
-    private VBox clubContainer;
-
-    @FXML
-    private ScrollPane scrollPane;
+    @FXML private VBox sidebarDaftarClub;
+    @FXML private VBox clubContainer;
+    @FXML private ScrollPane scrollPane;
 
     private final KeanggotaanDAO keanggotaanDAO = new KeanggotaanDAO();
 
@@ -41,11 +35,8 @@ public class DaftarClubYangDiikutiController extends BaseController {
         scrollPane.setFitToWidth(true);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        try {
-            loadClubsUserIkuti();
-        } catch (Exception e) {
-            AlertNotification.showError(e.getMessage());
-        }
+
+        loadClubsUserIkuti();
 
         TranslateTransition slideIn = new TranslateTransition(Duration.millis(1000), sidebarDaftarClub);
         slideIn.setToX(0);
@@ -56,8 +47,8 @@ public class DaftarClubYangDiikutiController extends BaseController {
     }
 
     private void loadClubsUserIkuti() throws Exception {
-        UUID idMahasiswa = LoginSession.getInstance().getIdMahasiswa();
-        List<Keanggotaan> keanggotaanList = keanggotaanDAO.findKeanggotaanByMahasiswa(idMahasiswa);
+        List<Keanggotaan> keanggotaanList = keanggotaanDAO
+                .findKeanggotaanByMahasiswa(LoginSession.getInstance().getIdMahasiswa());
 
         for (int i = 0; i < keanggotaanList.size(); i++) {
             Club club = keanggotaanList.get(i).getClub();
@@ -79,19 +70,17 @@ public class DaftarClubYangDiikutiController extends BaseController {
         card.setMinSize(200, 200);
         card.setMaxSize(200, 200);
         card.setOnMouseEntered(e -> {
-            ScaleTransition st = new ScaleTransition(Duration.millis(200), card);
-            st.setToX(1.02);
-            st.setToY(1.02);
-            st.play();
+            card.setScaleX(1.02);
+            card.setScaleY(1.02);
         });
         card.setOnMouseExited(e -> {
-            ScaleTransition st = new ScaleTransition(Duration.millis(200), card);
-            st.setToX(1.0);
-            st.setToY(1.0);
-            st.play();
+            card.setScaleX(1.0);
+            card.setScaleY(1.0);
         });
-        card.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 15;" +
-                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 3);");
+        card.setStyle(
+                "-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 15;" +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 3);"
+        );
 
         Label namaLabel = new Label(club.getNama());
         namaLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
@@ -104,20 +93,25 @@ public class DaftarClubYangDiikutiController extends BaseController {
 
         card.setOnMouseClicked(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/project/bd/app/projectbd/anggota/detailDaftarClub.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/project/bd/app/projectbd/anggota/detailDaftarClub.fxml")
+                );
                 Parent detailRoot = loader.load();
 
                 DetailDaftarClubController controller = loader.getController();
-                controller.setClubDetail(club);
+                // ◀── PASTIKAN inject stage
                 controller.setStage(this.stage);
+                // ◀── Tandai asalnya dari “Daftar Club Yang Diikuti”
                 controller.setFromDaftarYangDiikuti(true);
+                controller.setOriginPage("daftarClubYangDiikuti");
                 controller.setModeDetail(true);
+                controller.setClubDetail(club);
+
                 stage.getScene().setRoot(detailRoot);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-
         return card;
     }
 
