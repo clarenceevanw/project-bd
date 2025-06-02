@@ -92,8 +92,7 @@ public class JadwalKegiatanDAO {
             System.out.println("[DAO] Objek Kegiatan atau ID Kegiatan adalah null. Mengembalikan list kosong.");
             return list;
         }
-        try (Connection conn = getConnection(); // Pastikan koneksi ditutup dengan benar
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
 
             stmt.setObject(1, kegiatan.getIdKegiatan());
             try (ResultSet rs = stmt.executeQuery()) {

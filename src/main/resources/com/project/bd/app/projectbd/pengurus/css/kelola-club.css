@@ -4,18 +4,52 @@
 }
 
 #clubTable .column-header-background {
-    -fx-background-color: #6C3BB9;
+    -fx-background-color: white; /* DIUBAH: background header menjadi putih */
 }
 
-#clubTable .label {
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
+/* Mengubah .label agar lebih spesifik untuk label di dalam header kolom */
+#clubTable .column-header .label {
+    -fx-text-fill: black;       /* DIUBAH: warna teks header menjadi hitam */
+    -fx-font-weight: bold;      /* Tetap bold sesuai CSS awal Anda */
 }
+
+/*
+CATATAN: Aturan CSS awal Anda menggunakan `#clubTable .label` yang bersifat lebih umum.
+Jika aturan tersebut juga dimaksudkan untuk memberi style pada label lain di dalam tabel
+(misalnya, teks di dalam sel data) dan Anda ingin mempertahankan style tersebut
+(misalnya, teks sel data tetap putih), Anda mungkin perlu menambahkan aturan spesifik untuk itu.
+Contoh: `#clubTable .table-cell .label { -fx-text-fill: white; }`
+Perubahan di atas fokus pada permintaan untuk header.
+*/
 
 #clubTable .scroll-bar:vertical {
-    -fx-background-color: white;
+    -fx-background-color: white; /* SUDAH SESUAI: background scrollbar putih tanpa gradien */
 }
 
 #clubTable .scroll-bar:horizontal {
-    -fx-background-color: white;
+    -fx-background-color: white; /* SUDAH SESUAI: background scrollbar putih tanpa gradien */
 }
+
+/*
+Untuk kontrol lebih lanjut terhadap tampilan scrollbar (jika diinginkan agar thumb dan track juga putih solid):
+#clubTable .scroll-bar > .thumb {
+    -fx-background-color: #E0E0E0;  /* Warna thumb (abu-abu muda) atau bisa juga putih */
+    -fx-background-insets: 0;
+    -fx-background-radius: 0; /* Untuk sudut yang tajam */
+}
+
+#clubTable .scroll-bar > .track {
+    -fx-background-color: white; /* Track scrollbar putih */
+}
+
+#clubTable .scroll-bar > .increment-button,
+#clubTable .scroll-bar > .decrement-button {
+    -fx-background-color: white;
+    -fx-padding: 0.25em;
+}
+
+#clubTable .scroll-bar > .increment-button > .increment-arrow,
+#clubTable .scroll-bar > .decrement-button > .decrement-arrow {
+    -fx-background-color: black; /* Warna panah scrollbar, bisa disesuaikan */
+}
+*/

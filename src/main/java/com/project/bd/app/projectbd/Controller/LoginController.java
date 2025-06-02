@@ -100,6 +100,11 @@ public class LoginController extends BaseController {
             return;
         }
 
+        if (!mhs.getActive()) {
+            AlertNotification.showError("Mahasiswa belum aktif!");
+            return;
+        }
+
 //        List<Keanggotaan> keanggotaan = mhs.getKeanggotaan();
 //
 //        if (keanggotaan == null || keanggotaan.isEmpty()) {
@@ -182,5 +187,29 @@ public class LoginController extends BaseController {
             AlertNotification.showError("Username atau Password tidak boleh kosong!");
             return;
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        LocalDate tglLahir = LocalDate.parse(password, formatter);
+        Mahasiswa mhs = mhsDAO.findByNrp(username);
+
+        if (mhs == null) {
+            AlertNotification.showError("Mahasiswa tidak ditemukan!");
+            return;
+        }
+
+        if (!mhs.getTglLahir().equals(tglLahir)) {
+            AlertNotification.showSuccess("Password salah!");
+            return;
+        }
+
+        if(mhs.getActive()) {
+            AlertNotification.showError("Mahasiswa sudah aktif!");
+            return;
+        }
+
+        mhs.setActive(true);
+
+        mhsDAO.updateActive(mhs);
+        AlertNotification.showSuccess("Mahasiswa berhasil diaktifkan!");
+        switchScenes("login.fxml", "Login");
     }
 }

@@ -13,6 +13,7 @@ public class Mahasiswa {
     private String email;
     private LocalDate tglLahir;
     private List<Keanggotaan> keanggotaan;
+    private Boolean active;
 
     public Mahasiswa() {}
 
@@ -88,5 +89,13 @@ public class Mahasiswa {
 
     public void setKeanggotaan(List<Keanggotaan> keanggotaan) throws Exception {
         this.keanggotaan = keanggotaan;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

@@ -21,10 +21,8 @@
                 </image>
             </ImageView>
 
-            <Button fx:id="btnDashboard" maxWidth="180" onAction="#navigateToDashboard"
-                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Dashboard" />
-            <Button fx:id="btnKelolaClub" maxWidth="180"
-                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Club" />
+            <Button fx:id="btnDashboard" maxWidth="180" onAction="#navigateToDashboard" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Dashboard" />
+            <Button fx:id="btnKelolaClub" maxWidth="180" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Club" />
             <Button fx:id="btnKelolaKegiatan" maxWidth="180" onAction="#navigateToKelolaKegiatan" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Kegiatan" />
         </VBox>
     </left>

@@ -70,11 +70,13 @@ public class TambahJadwalKegiatanController extends BaseController {
             jadwalKegiatan.setIdJadwalKegiatan(jadwalKegiatanDAO.insert(jadwalKegiatan));
 
             List<PesertaKegiatan> pesertaKegiatanList = pesertaKegiatanDAO.findByKegiatan(ClubSession.getInstance().getKegiatan());
-            for (PesertaKegiatan pesertaKegiatan : pesertaKegiatanList) {
-                PresensiKegiatan presensiKegiatan = new PresensiKegiatan();
-                presensiKegiatan.setPesertaKegiatan(pesertaKegiatan);
-                presensiKegiatan.setJadwalKegiatan(jadwalKegiatan);
-                presensiKegiatanDAO.insert(presensiKegiatan);
+            if(!pesertaKegiatanList.isEmpty()){
+                for (PesertaKegiatan pesertaKegiatan : pesertaKegiatanList) {
+                    PresensiKegiatan presensiKegiatan = new PresensiKegiatan();
+                    presensiKegiatan.setPesertaKegiatan(pesertaKegiatan);
+                    presensiKegiatan.setJadwalKegiatan(jadwalKegiatan);
+                    presensiKegiatanDAO.insert(presensiKegiatan);
+                }
             }
             AlertNotification.showSuccess("Jadwal kegiatan berhasil ditambahkan.");
             switchScenes("pengurus/jadwal-kegiatan.fxml", "Kelola Kegiatan");
