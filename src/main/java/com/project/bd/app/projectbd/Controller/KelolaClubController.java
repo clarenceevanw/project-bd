@@ -17,15 +17,6 @@ import java.util.List;
 
 public class KelolaClubController extends BaseController {
     @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnKelolaClub;
-
-    @FXML
-    private Button btnKelolaKegiatan;
-
-    @FXML
     private TableView<Club> clubTable;
 
     @FXML

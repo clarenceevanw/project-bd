@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.PresensiKegiatanController">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+            <ImageView fitHeight="75" fitWidth="280.0">
+                <image>
+                    <Image url="@../image/PCU-LOGO.png" />
+                </image>
+            </ImageView>
+
+            <Button fx:id="btnDashboard" maxWidth="180" onAction="#navigateToDashboard" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Dashboard" />
+            <Button fx:id="btnKelolaClub" maxWidth="180" onAction="#navigateToKelolaClub" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Club" />
+            <Button fx:id="btnKelolaKegiatan" maxWidth="180" onAction="#navigateToKelolaKegiatan" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Kegiatan" />
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="10" style="-fx-padding: 20;">
+
+            <HBox fx:id="actionBox" spacing="10">
+                <Button onAction="#handleBack" style="-fx-background-color: #6C3BB9; -fx-text-fill: white;" text="Back" />
+            </HBox>
+            <Label fx:id="txtJudul" prefHeight="35.0" prefWidth="237.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Presensi" />
+
+            <TableView fx:id="presensiTable" maxHeight="400.0" maxWidth="500.0" minHeight="200.0" minWidth="300.0" prefHeight="158.0" prefWidth="540.0">
+                <columns>
+                    <TableColumn fx:id="colTanggal" prefWidth="147.3333740234375" text="Tanggal" />
+                    <TableColumn fx:id="colWaktu" prefWidth="169.33334350585938" text="Waktu" />
+                    <TableColumn fx:id="colKehadiran" prefWidth="183.33331298828125" text="Status Kehadiran" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

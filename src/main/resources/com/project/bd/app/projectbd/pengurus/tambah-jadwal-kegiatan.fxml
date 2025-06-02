@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -13,9 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.EditKegiatanController">
-
-    <!-- Sidebar -->
+<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.TambahJadwalKegiatanController">
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
             <ImageView fitHeight="75" fitWidth="280.0">
@@ -30,10 +28,9 @@
         </VBox>
     </left>
 
-    <!-- Form Content -->
     <center>
         <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
-            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #6C3BB9;" text="Edit Kegiatan Club" />
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #6C3BB9;" text="Buat Jadwal Kegiatan" />
 
             <GridPane hgap="10" vgap="10">
                 <columnConstraints>
@@ -41,30 +38,24 @@
                     <ColumnConstraints halignment="LEFT" prefWidth="300" />
                 </columnConstraints>
 
-                <!-- Nama Kegiatan -->
-                <Label text="Nama Kegiatan:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="txtNama" promptText="Masukkan nama club" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <!-- Waktu Tanggal -->
+                <Label text="Tanggal Kegiatan:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <DatePicker fx:id="datePickerTanggal" prefHeight="25.0" prefWidth="301.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                <!-- Link Dokumentasi -->
-                <Label text="Link Dokumentasi:" GridPane.rowIndex="1" />
-                <TextField fx:id="txtDokumentasi" promptText="Masukkan Link Dokumentasi" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <!-- Waktu Jam -->
+                <Label text="Jam (HH:mm):" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="txtJam" promptText="Contoh: 14:30" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                <!-- Jenis Kegiatan -->
-                <Label text="Jenis Kegiatan: " GridPane.rowIndex="2" />
-                <ComboBox fx:id="comboJenis" promptText="Pilih Jenis Kegiatan" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-                <!-- Kategori -->
-                <Label text="Kategori:" GridPane.rowIndex="3" />
-                <ComboBox fx:id="comboKategori" prefHeight="28.0" prefWidth="145.0" promptText="Pilih Kategori" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <rowConstraints>
-                    <RowConstraints />
-                    <RowConstraints />
-                    <RowConstraints />
-                    <RowConstraints />
-                </rowConstraints>
+                <!-- Lokasi -->
+                <Label text="Lokasi Kegiatan:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <TextField fx:id="txtLokasi" promptText="Masukkan lokasi kegiatan" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
             </GridPane>
 
-            <!-- Tombol Aksi -->
             <HBox alignment="CENTER" spacing="10">
                 <Button onAction="#handleSimpan" style="-fx-background-color: #6C3BB9; -fx-text-fill: white;" text="Simpan" />
                 <Button onAction="#handleKembali" style="-fx-background-color: #FF6B6B; -fx-text-fill: white;" text="Kembali" />

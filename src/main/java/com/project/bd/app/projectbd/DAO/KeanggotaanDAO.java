@@ -18,20 +18,55 @@ public class KeanggotaanDAO {
         return DatabaseConnection.getConnection();
     }
 
-    public boolean isUserJoinedClub(UUID idMahasiswa, UUID idClub) throws Exception {
-        String sql = "SELECT COUNT(*) FROM keanggotaan WHERE id_mahasiswa = ? AND id_club = ?";
+    public Keanggotaan findKeanggotaanByClubAndMahasiswa(UUID idClub, UUID idMahasiswa) throws Exception {
+        String sql = """
+        SELECT k.*, m.nama AS nama_mahasiswa, m.nrp as nrp, m.email as email, m.tgl_lahir as tgl_lahir, m.id_prodi as id_prodi, m.id_program as id_program, c.*, k2.nama AS nama_kategori
+        FROM keanggotaan k
+        JOIN mahasiswa m ON k.id_mahasiswa = m.id_mahasiswa
+        JOIN club c ON k.id_club = c.id_club
+        JOIN kategori k2 ON c.id_kategori = k2.id_kategori
+        WHERE k.id_mahasiswa = ? AND k.id_club = ?
+    """;
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setObject(1, idMahasiswa);
             stmt.setObject(2, idClub);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0;
+                UUID idKeanggotaan = rs.getObject("id_keanggotaan", UUID.class);
+
+                // Buat Mahasiswa
+                Mahasiswa mhs = new Mahasiswa();
+                mhs.setIdMahasiswa(idMahasiswa);
+                mhs.setNrp(rs.getString("nrp"));
+                mhs.setNama(rs.getString("nama_mahasiswa"));
+                mhs.setEmail(rs.getString("email"));
+                mhs.setTglLahir(rs.getDate("tgl_lahir").toLocalDate());
+                Prodi prodi = new ProdiDAO().findById(rs.getObject("id_prodi", UUID.class));
+                Program program = new ProgramDAO().findById(rs.getObject("id_program", UUID.class));
+                mhs.setProdi(prodi);
+                mhs.setProgram(program);
+
+                // Buat Club
+                Club club = new Club();
+                club.setId_club(idClub);
+                club.setNama(rs.getString("nama"));
+                club.setDeskripsi(rs.getString("deskripsi"));
+                club.setTahun_berdiri(rs.getInt("tahun_berdiri"));
+                club.setKategori(new Kategori(rs.getObject("id_kategori", UUID.class), rs.getString("nama_kategori")));
+                Keanggotaan keanggotaan = new Keanggotaan(
+                        idKeanggotaan,
+                        mhs,
+                        club,
+                        rs.getString("peran"),
+                        rs.getString("status"),
+                        rs.getDate("tanggal_bergabung").toLocalDate()
+                );
+                return keanggotaan;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            AlertNotification.showError("Gagal mengecek status keanggotaan.");
         }
-        return false;
+        return null;
     }
 
     public List<Keanggotaan> findKeanggotaanByMahasiswa(UUID idMahasiswa) throws Exception {
@@ -173,5 +208,21 @@ public class KeanggotaanDAO {
         } catch (SQLException e) {
             AlertNotification.showError(e.getMessage());
         }
+    }
+
+    public boolean isUserJoinedClub(UUID idMahasiswa, UUID idClub) throws Exception {
+        String sql = "SELECT COUNT(*) FROM keanggotaan WHERE id_mahasiswa = ? AND id_club = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setObject(1, idMahasiswa);
+            stmt.setObject(2, idClub);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            AlertNotification.showError("Gagal mengecek status keanggotaan.");
+        }
+        return false;
     }
 }

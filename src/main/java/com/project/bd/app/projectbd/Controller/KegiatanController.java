@@ -13,13 +13,6 @@ import java.io.IOException;
 public class KegiatanController extends BaseController{
     //Controller untuk per Kegiatan
     @FXML
-    private Button btnDashboard;
-    @FXML
-    private Button btnKelolaClub;
-    @FXML
-    private Button btnKelolaKegiatan;
-
-    @FXML
     TableView<Kegiatan> kegiatanTable = new TableView<>();
 
     @FXML
@@ -105,6 +98,17 @@ public class KegiatanController extends BaseController{
             }
         } else {
             AlertNotification.showError("Pilih kegiatan yang ingin dihapus.");
+        }
+    }
+
+    @FXML
+    public void handleLihatPeserta() throws Exception {
+        Kegiatan selected = kegiatanTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            ClubSession.getInstance().setKegiatan(selected);
+            switchScenes("pengurus/peserta-kegiatan.fxml", "Peserta Kegiatan");
+        } else {
+            AlertNotification.showError("Pilih kegiatan terlebih dahulu.");
         }
     }
 

@@ -1,0 +1,21 @@
+#clubTable {
+    -fx-background-color: white;
+    -fx-table-cell-border-color: transparent;
+}
+
+#clubTable .column-header-background {
+    -fx-background-color: #6C3BB9;
+}
+
+#clubTable .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#clubTable .scroll-bar:vertical {
+    -fx-background-color: white;
+}
+
+#clubTable .scroll-bar:horizontal {
+    -fx-background-color: white;
+}

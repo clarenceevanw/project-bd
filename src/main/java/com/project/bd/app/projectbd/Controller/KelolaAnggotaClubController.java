@@ -12,15 +12,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class KelolaAnggotaClubController extends BaseController{
-    @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnKelolaClub;
-
-    @FXML
-    private Button btnKelolaKegiatan;
-
     @FXML private TableView<Keanggotaan> anggotaTable;
     @FXML private TableColumn<Keanggotaan, String> colNrp;
     @FXML private TableColumn<Keanggotaan, String> colNama;

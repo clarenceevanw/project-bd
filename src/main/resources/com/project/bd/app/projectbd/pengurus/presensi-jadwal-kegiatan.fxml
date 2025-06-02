@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.KegiatanController">
+<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.PresensiJadwalKegiatanController">
 
     <!-- Sidebar -->
     <left>
@@ -30,23 +30,19 @@
     <!-- Main Content -->
     <center>
         <VBox alignment="TOP_CENTER" spacing="10" style="-fx-padding: 20;">
-            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Manajemen Kegiatan Club" />
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Presensi Kegiatan" />
 
             <HBox alignment="CENTER" spacing="10">
-                <Button onAction="#handleTambahKegiatan" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold;" text="Tambah Kegiatan" />
-                <Button onAction="#handleEditKegiatan" style="-fx-background-color: #9D50BB; -fx-text-fill: white; -fx-font-weight: bold;" text="Edit Kegiatan" />
-                <Button onAction="#handleHapusKegiatan" style="-fx-background-color: #FF6B6B; -fx-text-fill: white; -fx-font-weight: bold;" text="Hapus Kegiatan" />
-            <Button onAction="#handleLihatPeserta" style="-fx-background-color: darkblue; -fx-text-fill: white; -fx-font-weight: bold;" text="Lihat Peserta" />
-                <Button onAction="#handleLihatJadwal" style="-fx-background-color: #208EFF; -fx-text-fill: white; -fx-font-weight: bold;" text="Lihat Jadwal" />
+                <Button onAction="#handleBack" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold;" text="Back" />
+                <Button onAction="#handleEditPresensi" style="-fx-background-color: #FF6B6B; -fx-text-fill: white; -fx-font-weight: bold;" text="Edit Presensi" />
             </HBox>
 
-            <TableView fx:id="kegiatanTable" prefHeight="400" prefWidth="650">
+            <TableView fx:id="presensiTable" prefHeight="400" prefWidth="650">
                 <columns>
-                    <TableColumn fx:id="colNamaKegiatan" prefWidth="180" text="Nama Kegiatan" />
-                    <TableColumn fx:id="colClub" prefWidth="220" text="Club Penyelenggara" />
-                    <TableColumn fx:id="colJenis" prefWidth="150" text="Jenis" />
-                    <TableColumn fx:id="colKategori" prefWidth="150" text="Kategori" />
-                    <TableColumn fx:id="colDokumentasi" prefWidth="100" text="Link Dokumentasi" />
+                    <TableColumn fx:id="colNrp" prefWidth="180" text="NRP" />
+                    <TableColumn fx:id="colNama" prefWidth="220" text="Nama" />
+                    <TableColumn fx:id="colJurusan" prefWidth="150" text="Jurusan" />
+                    <TableColumn fx:id="colKehadiran" prefWidth="150" text="Status Kehadiran" />
                 </columns>
             </TableView>
         </VBox>

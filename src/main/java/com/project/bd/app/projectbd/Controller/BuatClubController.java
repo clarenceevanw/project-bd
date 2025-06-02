@@ -15,16 +15,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class BuatClubController extends BaseController{
-
-    @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnKelolaClub;
-
-    @FXML
-    private Button btnKelolaKegiatan;
-
     @FXML
     private TextField txtNama;
 
