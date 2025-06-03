@@ -108,6 +108,7 @@ public class DetailDaftarClubController extends BaseController {
         slideTahun.setDelay(Duration.millis(100));
 
         TranslateTransition slideKategori = new TranslateTransition(Duration.millis(400), kategoriBox);
+        slideKategori.setFromX(-600); // Tambahkan ini agar animasi konsisten
         slideKategori.setToX(0);
         slideKategori.setDelay(Duration.millis(200));
 
@@ -116,6 +117,7 @@ public class DetailDaftarClubController extends BaseController {
         slideTahun.play();
         slideKategori.play();
     }
+
 
     /**
      * Tombol Back: kembali ke daftar sesuai originPage
