@@ -38,7 +38,8 @@ public class KelolaAnggotaClubController extends BaseController{
 
     public void loadData() throws Exception {
         UUID idClub = ClubSession.getInstance().getClub().getId_club();
-        anggotaList = FXCollections.observableArrayList(keanggotaanDAO.findKeanggotaanByClub(idClub));
+        anggotaList.clear();
+        anggotaList.addAll(keanggotaanDAO.findKeanggotaanByClub(idClub));
         anggotaTable.refresh();
     }
 
@@ -91,6 +92,7 @@ public class KelolaAnggotaClubController extends BaseController{
         confirm.showAndWait();
         if (confirm.getResult() == ButtonType.YES){
             keanggotaanDAO.delete(keanggotaan.getId_keanggotaan());
+            AlertNotification.showSuccess("Hapus Anggota, Anggota berhasil dihapus.");
             loadData();
         }
     }

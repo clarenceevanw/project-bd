@@ -211,7 +211,7 @@ public class PesertaKegiatanController extends BaseController {
         }
 
         pesertaKegiatan.setStatusSertifikat("Ada");
-        pesertaKegiatan.setNomorSertifikat("SERT/"+ LocalDate.now().getYear() + "/"+ pesertaKegiatan.getKegiatan().getNama().substring(0, 3).toUpperCase() + "/" + pesertaKegiatan.getMahasiswa().getNrp().toUpperCase());
+        pesertaKegiatan.setNomorSertifikat("SERT/"+ LocalDate.now().getYear() + "/"+ pesertaKegiatan.getKegiatan().getIdKegiatan().toString().substring(pesertaKegiatan.getKegiatan().getIdKegiatan().toString().length() - 3)+ "/" + pesertaKegiatan.getKegiatan().getNama().substring(0, 3).toUpperCase() + "/" + pesertaKegiatan.getMahasiswa().getNrp().toUpperCase() + "/"+ pesertaKegiatan.getIdPesertaKegiatan().toString().substring(pesertaKegiatan.getIdPesertaKegiatan().toString().length() - 3));
         pesertaKegiatan.setTglSertifikat(LocalDate.now());
         pesertaKegiatanDAO.update(pesertaKegiatan);
         AlertNotification.showSuccess("Sertifikat berhasil di generate.");
