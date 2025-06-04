@@ -13,22 +13,31 @@ import java.io.IOException;
 public class KegiatanController extends BaseController{
     //Controller untuk per Kegiatan
     @FXML
-    TableView<Kegiatan> kegiatanTable = new TableView<>();
+    TableView<Kegiatan> kegiatanTable;
 
     @FXML
-    TableColumn<Kegiatan, String> colNamaKegiatan = new TableColumn<>();
+    TableColumn<Kegiatan, String> colNamaKegiatan;
 
     @FXML
-    TableColumn<Kegiatan, String> colClub = new TableColumn<>();
+    TableColumn<Kegiatan, String> colClub;
 
     @FXML
-    TableColumn<Kegiatan, String> colJenis = new TableColumn<>();
+    TableColumn<Kegiatan, String> colJenis;
 
     @FXML
-    TableColumn<Kegiatan, String> colKategori = new TableColumn<>();
+    TableColumn<Kegiatan, String> colKategori;
 
     @FXML
-    TableColumn<Kegiatan, String> colDokumentasi = new TableColumn<>();
+    TableColumn<Kegiatan, String> colDokumentasi;
+
+    @FXML
+    TableColumn<Kegiatan, String> colTanggalMulai;
+
+    @FXML
+    TableColumn<Kegiatan, String> colTanggalSelesai;
+
+    @FXML
+    TableColumn<Kegiatan, String> colPublish;
 
     ObservableList<Kegiatan> kegiatanList = FXCollections.observableArrayList();
 
@@ -39,6 +48,25 @@ public class KegiatanController extends BaseController{
         colJenis.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getJenisKegiatan().getNama()));
         colKategori.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori()));
         colDokumentasi.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLinkDokumentasi()));
+        colTanggalMulai.setCellValueFactory(cellData -> {
+            if(cellData.getValue().getTanggalMulai() == null) {
+                return new javafx.beans.property.SimpleStringProperty("Belum di atur");
+            }
+            return new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTanggalMulai().toString());
+        });
+        colTanggalSelesai.setCellValueFactory(cellData -> {
+            if(cellData.getValue().getTanggalSelesai() == null) {
+                return new javafx.beans.property.SimpleStringProperty("Belum diatur");
+            }
+            return new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTanggalSelesai().toString());
+        });
+        colPublish.setCellValueFactory(cellData -> {
+            if (cellData.getValue().isPublish()) {
+                return new javafx.beans.property.SimpleStringProperty("Sudah");
+            } else {
+                return new javafx.beans.property.SimpleStringProperty("Belum");
+            }
+    });
         try {
             loadData();
         } catch (Exception e) {
@@ -119,6 +147,36 @@ public class KegiatanController extends BaseController{
             ClubSession.getInstance().setKegiatan(selected);
             switchScenes("pengurus/jadwal-kegiatan.fxml", "Jadwal Kegiatan");
         } else {
+            AlertNotification.showError("Pilih kegiatan terlebih dahulu.");
+        }
+    }
+
+    @FXML
+    public void handlePublish() throws Exception {
+        Kegiatan selected = kegiatanTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            if (selected.getTanggalMulai() == null || selected.getTanggalSelesai() == null) {
+                AlertNotification.showError("Tanggal mulai dan selesai harus diisi.");
+            } else {
+                selected.setPublish(true);
+                kegiatanDAO.updatePublish(selected);
+                AlertNotification.showSuccess("Kegiatan berhasil dipublish.");
+                loadData();
+            }
+        }else {
+            AlertNotification.showError("Pilih kegiatan terlebih dahulu.");
+        }
+    }
+
+    @FXML
+    public void handleUnpublish() throws Exception {
+        Kegiatan selected = kegiatanTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            selected.setPublish(false);
+            kegiatanDAO.updatePublish(selected);
+            AlertNotification.showSuccess("Kegiatan berhasil diunpublish.");
+            loadData();
+        }else {
             AlertNotification.showError("Pilih kegiatan terlebih dahulu.");
         }
     }

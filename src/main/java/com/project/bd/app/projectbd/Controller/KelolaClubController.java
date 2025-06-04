@@ -4,6 +4,7 @@ import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.Session.LoginSession;
+import com.project.bd.app.projectbd.Session.PageSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -95,6 +96,7 @@ public class KelolaClubController extends BaseController {
     @FXML
     public void handleAddClub() throws Exception {
         try{
+            PageSession.getInstance().setOriginPage("kelolaClub");
             switchScenes("pengurus/buat-club.fxml", "Buat Club");
         }catch(Exception e) {
             AlertNotification.showError(e.getMessage());
@@ -126,6 +128,7 @@ public class KelolaClubController extends BaseController {
                 clubDAO.delete(selected.getId_club());
                 clubList.remove(selected);
                 AlertNotification.showSuccess("Hapus Club, Club berhasil dihapus.");
+                if(clubList.isEmpty()) switchScenes("pengurus/dashboard.fxml", "Dashboard");
                 loadData();
             }
         } else {

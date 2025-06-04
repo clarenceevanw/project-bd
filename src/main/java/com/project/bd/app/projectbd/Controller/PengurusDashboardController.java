@@ -3,6 +3,7 @@ package com.project.bd.app.projectbd.Controller;
 import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Session.LoginSession;
+import com.project.bd.app.projectbd.Session.PageSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 
 import javafx.animation.FadeTransition;
@@ -58,6 +59,7 @@ public class PengurusDashboardController extends BaseController implements Initi
             buatClub.setStyle("-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
             buatClub.setOnAction(e -> {
                 try {
+                    PageSession.getInstance().setOriginPage("pengurusDashboard");
                     goToBuatClub();
                 } catch (IOException ex) {
                     try {

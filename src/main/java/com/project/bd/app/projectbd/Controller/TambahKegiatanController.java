@@ -7,7 +7,10 @@ import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+
+import java.time.LocalDate;
 
 public class TambahKegiatanController extends BaseController {
     @FXML
@@ -15,6 +18,12 @@ public class TambahKegiatanController extends BaseController {
 
     @FXML
     private TextField txtDokumentasi;
+
+    @FXML
+    private DatePicker tanggalMulaiPicker;
+
+    @FXML
+    private DatePicker tanggalSelesaiPicker;
 
     @FXML
     private ComboBox<JenisKegiatan> comboJenis;
@@ -58,9 +67,31 @@ public class TambahKegiatanController extends BaseController {
         String dokumentasi = txtDokumentasi.getText().trim();
         JenisKegiatan jenis = comboJenis.getSelectionModel().getSelectedItem();
         String kategori = comboKategori.getSelectionModel().getSelectedItem();
+        LocalDate tanggalMulai = tanggalMulaiPicker.getValue();
+        LocalDate tanggalSelesai = tanggalSelesaiPicker.getValue();
 
-        if (nama.isEmpty() || dokumentasi.isEmpty() || jenis == null || kategori == null) {
+        if (nama.isEmpty() || dokumentasi.isEmpty() || jenis == null || kategori == null || tanggalMulai == null || tanggalSelesai == null) {
             AlertNotification.showError("Semua field harus diisi.");
+            return;
+        }
+
+        if(tanggalMulai.isAfter(tanggalSelesai)) {
+            AlertNotification.showError("Tanggal mulai harus sebelum tanggal selesai.");
+            return;
+        }
+
+        if(tanggalMulai.isBefore(LocalDate.now())) {
+            AlertNotification.showError("Tanggal mulai harus setelah hari ini.");
+            return;
+        }
+
+        if(tanggalSelesai.isBefore(LocalDate.now())) {
+            AlertNotification.showError("Tanggal selesai harus setelah hari ini.");
+            return;
+        }
+
+        if(tanggalSelesai.isBefore(tanggalMulai)) {
+            AlertNotification.showError("Tanggal selesai harus setelah tanggal mulai.");
             return;
         }
 
@@ -70,6 +101,8 @@ public class TambahKegiatanController extends BaseController {
         kegiatan.setClub(ClubSession.getInstance().getClub());
         kegiatan.setJenisKegiatan(jenis);
         kegiatan.setKategori(kategori);
+        kegiatan.setTanggalMulai(tanggalMulai);
+        kegiatan.setTanggalSelesai(tanggalSelesai);
         try{
             kegiatanDAO.insert(kegiatan);
         } catch (Exception e) {

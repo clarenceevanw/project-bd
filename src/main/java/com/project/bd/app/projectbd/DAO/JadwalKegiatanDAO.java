@@ -5,6 +5,7 @@ import com.project.bd.app.projectbd.utils.AlertNotification;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -56,7 +57,7 @@ public class JadwalKegiatanDAO {
 
     public List<JadwalKegiatan> findAll() throws Exception {
         List<JadwalKegiatan> list = new ArrayList<>();
-        String sql = "SELECT ja.*, k.id_kegiatan, k.nama as nama_kegiatan, k.link_dokumentasi, k.kategori, c.id_club, c.nama, c.deskripsi, c.tahun_berdiri, ka.id_kategori, ka.nama as nama_kategori, j.id_jenis_kegiatan, j.nama as nama_jenis_kegiatan FROM jadwal_kegiatan ja " +
+        String sql = "SELECT ja.*, k.id_kegiatan, k.nama as nama_kegiatan, k.link_dokumentasi, k.kategori, k.tanggal_mulai, k.tanggal_selesai, k.publish, c.id_club, c.nama, c.deskripsi, c.tahun_berdiri, ka.id_kategori, ka.nama as nama_kategori, j.id_jenis_kegiatan, j.nama as nama_jenis_kegiatan FROM jadwal_kegiatan ja " +
                 "JOIN kegiatan k ON ja.id_kegiatan = k.id_kegiatan " +
                 "JOIN club c ON k.id_club = c.id_club " +
                 "JOIN kategori ka on c.id_kategori = ka.id_kategori " +
@@ -76,7 +77,7 @@ public class JadwalKegiatanDAO {
     public List<JadwalKegiatan> findByKegiatan(Kegiatan kegiatan) throws Exception {
         List<JadwalKegiatan> list = new ArrayList<>();
         // Query Anda sudah benar, namun pastikan nama alias dan kolom sudah tepat
-        String sql = "SELECT ja.*, k.id_kegiatan, k.nama as nama_kegiatan, k.link_dokumentasi, k.kategori as kategori_kegiatan, " + // Beri alias jika 'kategori' ambigu
+        String sql = "SELECT ja.*, k.id_kegiatan, k.nama as nama_kegiatan, k.link_dokumentasi, k.kategori as kategori_kegiatan, k.tanggal_mulai, k.tanggal_selesai, k.publish, " + // Beri alias jika 'kategori' ambigu
                 "c.id_club, c.nama as nama_club, c.deskripsi, c.tahun_berdiri, " + // Beri alias 'nama_club'
                 "ka.id_kategori, ka.nama as nama_kategori_club, " + // Beri alias 'nama_kategori_club'
                 "j.id_jenis_kegiatan, j.nama as nama_jenis_kegiatan " +
@@ -112,7 +113,7 @@ public class JadwalKegiatanDAO {
 
     public List<JadwalKegiatan> findByJadwalKegiatan(JadwalKegiatan jadwalKegiatan) throws Exception {
         List<JadwalKegiatan> list = new ArrayList<>();
-        String sql = "SELECT ja.*, k.id_kegiatan, k.nama as nama_kegiatan, k.link_dokumentasi, k.kategori, c.id_club, c.nama, c.deskripsi, c.tahun_berdiri, ka.id_kategori, ka.nama as nama_kategori, j.id_jenis_kegiatan, j.nama as nama_jenis_kegiatan FROM jadwal_kegiatan ja " +
+        String sql = "SELECT ja.*, k.id_kegiatan, k.nama as nama_kegiatan, k.link_dokumentasi, k.kategori, k.tanggal_mulai, k.tanggal_selesai, k.publish, c.id_club, c.nama, c.deskripsi, c.tahun_berdiri, ka.id_kategori, ka.nama as nama_kategori, j.id_jenis_kegiatan, j.nama as nama_jenis_kegiatan FROM jadwal_kegiatan ja " +
                 "JOIN kegiatan k ON ja.id_kegiatan = k.id_kegiatan " +
                 "JOIN club c ON k.id_club = c.id_club " +
                 "JOIN kategori ka on c.id_kategori = ka.id_kategori " +
@@ -143,6 +144,9 @@ public class JadwalKegiatanDAO {
         JenisKegiatan jenisKegiatan = new JenisKegiatan(rs.getObject("id_jenis_kegiatan", UUID.class), rs.getString("nama_jenis_kegiatan"));
 
         Kegiatan kegiatanObj = new Kegiatan(rs.getObject("id_kegiatan", UUID.class), rs.getString("nama_kegiatan"), rs.getString("link_dokumentasi"), club, jenisKegiatan, rs.getString("kategori_kegiatan")); // atau rs.getString("kategori") jika tidak ada alias
+        kegiatanObj.setTanggalMulai(rs.getObject("tanggal_mulai", LocalDate.class));
+        kegiatanObj.setTanggalSelesai(rs.getObject("tanggal_selesai", LocalDate.class));
+        kegiatanObj.setPublish(rs.getBoolean("publish"));
         jadwalKegiatan.setKegiatan(kegiatanObj);
         return jadwalKegiatan;
     }

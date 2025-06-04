@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class BaseController {
     protected Stage stage;
@@ -33,7 +34,7 @@ public class BaseController {
     protected PesertaKegiatanDAO pesertaKegiatanDAO = new PesertaKegiatanDAO();
 
     @FXML
-    protected Button btnDashboard, btnKelolaClub, btnKelolaKegiatan;
+    protected Button btnDashboard, btnKelolaClub, btnKelolaKegiatan, btnDaftarClub, btnClubDiikuti, btnDaftarKegiatan, btnKegiatanDiikuti, btnSertifikat;
 
     public Stage getStage(){
         return stage;
@@ -51,10 +52,14 @@ public class BaseController {
         controller.setStage(stage);
 
         stage.setTitle(title);
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/project/bd/app/projectbd/css/style.css")).toExternalForm());
+        stage.setScene(scene);
         DatabaseConnection.getConnection();
         stage.show();
         stage.centerOnScreen();
+        stage.setResizable(false);
+        stage.setFullScreen(false);
     }
 
     public void setActiveSidebarButton(String page, Button btnDashboard, Button btnKelolaClub, Button btnKelolaKegiatan) {
@@ -71,6 +76,32 @@ public class BaseController {
             btnKelolaClub.setStyle(active);
         } else if (page.equals("kegiatan")){
             btnKelolaKegiatan.setStyle(active);
+        }
+    }
+
+    public void setActiveSideBarButton(String page, Button btnDashboard, Button btnDaftarClub, Button btnClubDiikuti, Button btnDaftarKegiatan, Button btnKegiatanDiikuti, Button btnSertifikat) {
+        String active = "-fx-background-color: #4B208E; -fx-text-fill: white; -fx-font-weight: bold;";
+        String inactive = "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-weight: bold;";
+
+        btnDashboard.setStyle(inactive);
+        btnDaftarClub.setStyle(inactive);
+        btnClubDiikuti.setStyle(inactive);
+        btnDaftarKegiatan.setStyle(inactive);
+        btnKegiatanDiikuti.setStyle(inactive);
+        btnSertifikat.setStyle(inactive);
+
+        if (page.equals("dashboard")) {
+            btnDashboard.setStyle(active);
+        } else if (page.equals("daftarClub")) {
+            btnDaftarClub.setStyle(active);
+        } else if (page.equals("clubDiikuti")){
+            btnClubDiikuti.setStyle(active);
+        } else if (page.equals("daftarKegiatan")){
+            btnDaftarKegiatan.setStyle(active);
+        } else if (page.equals("kegiatanDiikuti")){
+            btnKegiatanDiikuti.setStyle(active);
+        } else if (page.equals("sertifikat")){
+            btnSertifikat.setStyle(active);
         }
     }
 }

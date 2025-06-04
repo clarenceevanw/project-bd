@@ -47,8 +47,17 @@
                     <TableColumn fx:id="colJenis" prefWidth="150" text="Jenis" />
                     <TableColumn fx:id="colKategori" prefWidth="150" text="Kategori" />
                     <TableColumn fx:id="colDokumentasi" prefWidth="100" text="Link Dokumentasi" />
+                    <TableColumn fx:id="colTanggalMulai" prefWidth="100" text="Tanggal Mulai" />
+                    <TableColumn fx:id="colTanggalSelesai" prefWidth="100" text="Tanggal Selesai" />
+                    <TableColumn fx:id="colPublish" prefWidth="100" text="Publish" />
                 </columns>
             </TableView>
+             <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                <children>
+                   <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleUnpublish" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: red; -fx-text-fill: white; -fx-font-weight: bold;" text="Unpublish" textAlignment="CENTER" />
+                   <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handlePublish" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: darkblue; -fx-text-fill: white; -fx-font-weight: bold;" text="Publish" textAlignment="CENTER" />
+                </children>
+             </HBox>
         </VBox>
     </center>
 </BorderPane>

@@ -5,6 +5,7 @@ import com.project.bd.app.projectbd.utils.AlertNotification;
 import com.project.bd.app.projectbd.utils.DatabaseConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -104,6 +105,9 @@ public class PresensiDAO {
         kegiatan.setIdKegiatan(rs.getObject("id_kegiatan", UUID.class));
         kegiatan.setNama(rs.getString("nama_kegiatan")); // Menggunakan alias
         kegiatan.setKategori(rs.getString("kategori_kegiatan")); // Menggunakan alias
+        kegiatan.setTanggalMulai(rs.getObject("tanggal_mulai", LocalDate.class));
+        kegiatan.setTanggalSelesai(rs.getObject("tanggal_selesai", LocalDate.class));
+        kegiatan.setPublish(rs.getBoolean("publish"));
         kegiatan.setClub(club);
 
         JadwalKegiatan jadwalKegiatan = new JadwalKegiatan();
@@ -150,7 +154,7 @@ public class PresensiDAO {
                 "m.id_mahasiswa, m.nrp, m.nama AS nama_mahasiswa, m.email, m.tgl_lahir, " + // Alias untuk m.nama
                 "pr.id_program, pr.nama AS program_nama, " +
                 "pro.id_prodi, pro.nama AS prodi_nama, " +
-                "k.id_kegiatan, k.nama AS nama_kegiatan, k.kategori AS kategori_kegiatan, " + // Alias untuk k.nama dan k.kategori
+                "k.id_kegiatan, k.nama AS nama_kegiatan, k.kategori AS kategori_kegiatan, k.tanggal_mulai, k.tanggal_selesai, k.publish, " + // Alias untuk k.nama dan k.kategori
                 "c.id_club, c.nama AS club_nama " +
                 "FROM peserta_jadwal_kegiatan pre " +
                 "JOIN jadwal_kegiatan j ON pre.id_jadwal_kegiatan = j.id_jadwal_kegiatan " +

@@ -11,6 +11,7 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -31,6 +32,7 @@ public class DaftarClubYangDiikutiController extends BaseController {
 
     @FXML
     public void initialize() throws Exception {
+        setActiveSideBarButton("clubDiikuti", btnDashboard, btnDaftarClub, btnClubDiikuti, btnDaftarKegiatan, btnKegiatanDiikuti, btnSertifikat);
         sidebarDaftarClub.setTranslateX(-300);
         scrollPane.setFitToWidth(true);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -70,12 +72,18 @@ public class DaftarClubYangDiikutiController extends BaseController {
         card.setMinSize(200, 200);
         card.setMaxSize(200, 200);
         card.setOnMouseEntered(e -> {
-            card.setScaleX(1.02);
-            card.setScaleY(1.02);
+            ScaleTransition scale = new ScaleTransition(Duration.millis(200), card);
+            scale.setToX(1.03);
+            scale.setToY(1.03);
+            scale.play();
+
+            card.setCursor(Cursor.HAND);
         });
         card.setOnMouseExited(e -> {
-            card.setScaleX(1.0);
-            card.setScaleY(1.0);
+            ScaleTransition scale = new ScaleTransition(Duration.millis(200), card);
+            scale.setToX(1);
+            scale.setToY(1);
+            scale.play();
         });
         card.setStyle(
                 "-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 15;" +
@@ -128,5 +136,15 @@ public class DaftarClubYangDiikutiController extends BaseController {
     @FXML
     public void goToDaftarClub() throws IOException {
         switchScenes("anggota/daftarClub.fxml", "Daftar Club");
+    }
+
+    @FXML
+    public void goToDaftarKegiatan() throws IOException {
+        switchScenes("anggota/daftarKegiatan.fxml", "Daftar Kegiatan");
+    }
+
+    @FXML
+    public void goToDaftarKegiatanDiikuti () throws IOException {
+        switchScenes("anggota/daftarKegiatanDiikuti.fxml", "Kegiatan Yang Diikuti");
     }
 }

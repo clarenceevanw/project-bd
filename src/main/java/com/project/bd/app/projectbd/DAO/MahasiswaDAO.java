@@ -142,7 +142,7 @@ public class MahasiswaDAO {
     }
 
     public Mahasiswa findByNrpEmail(String nrp, String email) throws Exception {
-        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, " +
+        String sql = "SELECT m.id_mahasiswa, m.nrp, m.nama, m.email, m.tgl_lahir, m.active, " +
                 "p.id_prodi, p.nama AS prodi_nama, " +
                 "pr.id_program, pr.nama AS program_nama " +
                 "FROM mahasiswa m " +

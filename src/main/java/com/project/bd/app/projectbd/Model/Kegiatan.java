@@ -1,5 +1,6 @@
 package com.project.bd.app.projectbd.Model;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class Kegiatan {
@@ -9,6 +10,9 @@ public class Kegiatan {
     private Club club;
     private JenisKegiatan jenisKegiatan;
     private String kategori;
+    private LocalDate tanggalMulai;
+    private LocalDate tanggalSelesai;
+    private boolean publish;
 
     public Kegiatan() {}
 
@@ -67,5 +71,29 @@ public class Kegiatan {
 
     public void setKategori(String kategori) {
         this.kategori = kategori;
+    }
+
+    public LocalDate getTanggalMulai() {
+        return tanggalMulai;
+    }
+
+    public void setTanggalMulai(LocalDate tanggalMulai) {
+        this.tanggalMulai = tanggalMulai;
+    }
+
+    public LocalDate getTanggalSelesai() {
+        return tanggalSelesai;
+    }
+
+    public void setTanggalSelesai(LocalDate tanggalSelesai) {
+        this.tanggalSelesai = tanggalSelesai;
+    }
+
+    public boolean isPublish() {
+        return publish;
+    }
+
+    public void setPublish(boolean publish) {
+        this.publish = publish;
     }
 }

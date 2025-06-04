@@ -1,6 +1,7 @@
 package com.project.bd.app.projectbd.Controller;
 
 import com.project.bd.app.projectbd.Model.JadwalKegiatan;
+import com.project.bd.app.projectbd.Model.Kegiatan;
 import com.project.bd.app.projectbd.Model.PesertaKegiatan;
 import com.project.bd.app.projectbd.Model.PresensiKegiatan;
 import com.project.bd.app.projectbd.Session.ClubSession;
@@ -24,6 +25,8 @@ public class TambahJadwalKegiatanController extends BaseController {
 
     @FXML
     private TextField txtLokasi;
+
+    private Kegiatan kegiatan = ClubSession.getInstance().getKegiatan();
 
     public void initialize() {
         setActiveSidebarButton("kegiatan", btnDashboard, btnKelolaClub, btnKelolaKegiatan);
@@ -52,6 +55,16 @@ public class TambahJadwalKegiatanController extends BaseController {
 
         if (tanggal == null && timeText == null && lokasi == null) {
             AlertNotification.showError("Semua field harus diisi.");
+            return;
+        }
+
+        if(tanggal.isBefore(kegiatan.getTanggalMulai())) {
+            AlertNotification.showError("Tanggal harus setelah tanggal mulai kegiatan.");
+            return;
+        }
+
+        if(tanggal.isAfter(kegiatan.getTanggalSelesai())) {
+            AlertNotification.showError("Tanggal harus sebelum tanggal selesai kegiatan.");
             return;
         }
 

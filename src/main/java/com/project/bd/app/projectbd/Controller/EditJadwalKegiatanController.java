@@ -23,10 +23,11 @@ public class EditJadwalKegiatanController extends BaseController {
     @FXML
     private TextField txtLokasi;
 
+    private JadwalKegiatan jadwal = ClubSession.getInstance().getJadwalKegiatan();
+
     public void initialize() {
         setActiveSidebarButton("kegiatan", btnDashboard, btnKelolaClub, btnKelolaKegiatan);
 
-        JadwalKegiatan jadwal = ClubSession.getInstance().getJadwalKegiatan();
 
         if (jadwal != null) {
             // Set tanggal ke DatePicker
@@ -65,6 +66,16 @@ public class EditJadwalKegiatanController extends BaseController {
 
         if (tanggal == null && timeText == null && lokasi == null) {
             AlertNotification.showError("Semua field harus diisi.");
+            return;
+        }
+
+        if(tanggal.isBefore(jadwal.getKegiatan().getTanggalMulai())) {
+            AlertNotification.showError("Tanggal harus setelah tanggal mulai kegiatan.");
+            return;
+        }
+
+        if(tanggal.isAfter(jadwal.getKegiatan().getTanggalSelesai())) {
+            AlertNotification.showError("Tanggal harus sebelum tanggal selesai kegiatan.");
             return;
         }
 

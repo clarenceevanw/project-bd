@@ -11,12 +11,12 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.DaftarClubController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.DaftarKegiatanDiikutiController">
 
     <center>
         <HBox prefWidth="800" spacing="0" style="-fx-background-color: #F7F7F7;">
             <!-- Sidebar -->
-            <VBox fx:id="sidebarDaftarClub" alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+            <VBox fx:id="sideBarDaftarKegiatanDiikuti" alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
                 <ImageView fitHeight="75" fitWidth="280.0">
                     <image>
                         <Image url="@../image/PCU-LOGO.png" />
@@ -36,10 +36,10 @@
 
             <!-- Konten utama -->
             <VBox alignment="TOP_CENTER" prefWidth="600" spacing="20">
-                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Daftar Club" />
-                <ScrollPane fx:id="scrollPane" fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" maxWidth="600" prefHeight="500" prefWidth="600" style="-fx-background-color:transparent;" vbarPolicy="ALWAYS">
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Kegiatan yang Diikuti" />
+                <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color:transparent;" vbarPolicy="ALWAYS">
                     <StackPane alignment="TOP_CENTER">
-                        <VBox fx:id="clubContainer" alignment="TOP_CENTER" maxWidth="600" spacing="20" style="-fx-padding: 20;">
+                        <VBox fx:id="kegiatanContainer" alignment="TOP_CENTER" maxWidth="600" spacing="20" style="-fx-padding: 20;">
                             <!-- Cards akan diisi dari Controller -->
                         </VBox>
                     </StackPane>

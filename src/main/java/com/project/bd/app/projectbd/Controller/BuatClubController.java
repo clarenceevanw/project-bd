@@ -5,6 +5,7 @@ import com.project.bd.app.projectbd.Model.Kategori;
 import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Model.Mahasiswa;
 import com.project.bd.app.projectbd.Session.LoginSession;
+import com.project.bd.app.projectbd.Session.PageSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +32,6 @@ public class BuatClubController extends BaseController{
 
     @FXML
     public void initialize() {
-        setActiveSidebarButton("kelola", btnDashboard, btnKelolaClub, btnKelolaKegiatan);
         try{
             kategoriList.addAll(kategoriDAO.findAll());
         } catch (Exception e) {
@@ -93,8 +93,13 @@ public class BuatClubController extends BaseController{
 
     @FXML
     private void handleKembali() throws Exception {
+        String originPage = PageSession.getInstance().getOriginPage();
         try{
-            switchScenes("pengurus/dashboard.fxml", "Dashboard");
+            if(originPage.equals("pengurusDashboard")){
+                switchScenes("pengurus/dashboard.fxml", "Dashboard");
+            }else if(originPage.equals("kelolaClub")) {
+                switchScenes("pengurus/kelola-club.fxml", "Kelola Club");
+            }
         } catch (IOException e) {
             AlertNotification.showError(e.getMessage());
         }

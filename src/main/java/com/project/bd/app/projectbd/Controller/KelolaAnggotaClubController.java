@@ -71,6 +71,15 @@ public class KelolaAnggotaClubController extends BaseController{
     }
 
     @FXML
+    public void handleKembali() throws Exception {
+        try{
+            switchScenes("pengurus/kelola-club.fxml", "Kelola Club");
+        } catch (IOException e) {
+            AlertNotification.showError(e.getMessage());
+        }
+    }
+
+    @FXML
     public void handleEditAnggota() throws Exception {
         Keanggotaan keanggotaan = anggotaTable.getSelectionModel().getSelectedItem();
         if(keanggotaan == null){

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -50,17 +51,24 @@
                 <TextField fx:id="txtDokumentasi" promptText="Masukkan Link Dokumentasi" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                 <!-- Jenis Kegiatan -->
-                <Label text="Jenis Kegiatan: " GridPane.rowIndex="2" />
-                <ComboBox fx:id="comboJenis" promptText="Pilih Jenis Kegiatan" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label text="Jenis Kegiatan: " GridPane.rowIndex="5" />
+                <ComboBox fx:id="comboJenis" prefHeight="28.0" prefWidth="319.0" promptText="Pilih Jenis Kegiatan" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
                 <!-- Kategori -->
-                <Label text="Kategori:" GridPane.rowIndex="3" />
-                <ComboBox fx:id="comboKategori" prefHeight="28.0" prefWidth="145.0" promptText="Pilih Kategori" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label text="Kategori:" GridPane.rowIndex="6" />
+                <ComboBox fx:id="comboKategori" prefHeight="28.0" prefWidth="327.0" promptText="Pilih Kategori" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Tanggal Mulai:" GridPane.rowIndex="3" />
+            <DatePicker fx:id="tanggalMulaiPicker" prefHeight="25.0" prefWidth="313.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Tanggal Selesai:" GridPane.rowIndex="4" />
+            <DatePicker fx:id="tanggalSelesaiPicker" prefHeight="25.0" prefWidth="313.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <rowConstraints>
                     <RowConstraints />
                     <RowConstraints />
                     <RowConstraints />
                     <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
                 </rowConstraints>
             </GridPane>
 

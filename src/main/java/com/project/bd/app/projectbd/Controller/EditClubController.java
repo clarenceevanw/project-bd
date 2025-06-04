@@ -98,7 +98,7 @@ public class EditClubController extends BaseController{
     @FXML
     private void handleKembali() throws Exception {
         try{
-            switchScenes("pengurus/dashboard.fxml", "Dashboard");
+            switchScenes("pengurus/kelola-club.fxml", "Dashboard");
         } catch (IOException e) {
             AlertNotification.showError(e.getMessage());
         }

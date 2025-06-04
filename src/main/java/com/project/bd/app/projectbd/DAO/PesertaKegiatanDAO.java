@@ -155,11 +155,19 @@ public class PesertaKegiatanDAO {
             club.setNama(rs.getString("club_nama"));
         }
 
+        JenisKegiatan jenisKegiatan = new JenisKegiatan();
+        jenisKegiatan.setIdJenisKegiatan(rs.getObject("id_jenis_kegiatan", UUID.class));
+        jenisKegiatan.setNama(rs.getString("jenis_kegiatan_nama"));
+
         Kegiatan kegiatan = new Kegiatan();
         kegiatan.setIdKegiatan(rs.getObject("id_kegiatan", UUID.class));
         kegiatan.setNama(rs.getString("kegiatan_nama_asli"));
         kegiatan.setKategori(rs.getString("kegiatan_kategori"));
+        kegiatan.setTanggalMulai(rs.getObject("tanggal_mulai", LocalDate.class));
+        kegiatan.setTanggalSelesai(rs.getObject("tanggal_selesai", LocalDate.class));
+        kegiatan.setPublish(rs.getBoolean("publish"));
         kegiatan.setClub(club);
+        kegiatan.setJenisKegiatan(jenisKegiatan);
 
         pesertaKegiatan.setMahasiswa(mahasiswa);
         pesertaKegiatan.setKegiatan(kegiatan);
@@ -172,13 +180,15 @@ public class PesertaKegiatanDAO {
                 "m.id_mahasiswa, m.nrp, m.nama AS m_nama, m.email, m.tgl_lahir, " +
                 "pr.id_program, pr.nama AS program_nama, " +
                 "pro.id_prodi, pro.nama AS prodi_nama, " +
-                "k.id_kegiatan, k.nama AS kegiatan_nama_asli, k.kategori AS kegiatan_kategori, " +
+                "k.id_kegiatan, k.nama AS kegiatan_nama_asli, k.kategori AS kegiatan_kategori, k.tanggal_mulai, k.tanggal_selesai, k.publish, " +
+                "jk.id_jenis_kegiatan, jk.nama AS jenis_kegiatan_nama, " +
                 "c.id_club, c.nama AS club_nama " +
                 "FROM peserta_kegiatan p " +
                 "JOIN mahasiswa m ON p.id_mahasiswa = m.id_mahasiswa " +
                 "LEFT JOIN program pr ON m.id_program = pr.id_program " +
                 "LEFT JOIN prodi pro ON m.id_prodi = pro.id_prodi " +
                 "JOIN kegiatan k ON p.id_kegiatan = k.id_kegiatan " +
+                "LEFT JOIN jenis_kegiatan jk ON k.id_jenis_kegiatan = jk.id_jenis_kegiatan "  +
                 "LEFT JOIN club c ON k.id_club = c.id_club " +
                 "WHERE p.id_kegiatan = ? " +
                 "ORDER BY m.nama";
@@ -203,13 +213,15 @@ public class PesertaKegiatanDAO {
                 "m.id_mahasiswa, m.nrp, m.nama AS m_nama, m.email, m.tgl_lahir, " +
                 "pr.id_program, pr.nama AS program_nama, " +
                 "pro.id_prodi, pro.nama AS prodi_nama, " +
-                "k.id_kegiatan, k.nama AS kegiatan_nama_asli, k.kategori AS kegiatan_kategori, " +
+                "k.id_kegiatan, k.nama AS kegiatan_nama_asli, k.kategori AS kegiatan_kategori, k.tanggal_mulai, k.tanggal_selesai, k.publish, " +
+                "jk.id_jenis_kegiatan, jk.nama AS jenis_kegiatan_nama, " +
                 "c.id_club, c.nama AS club_nama " +
                 "FROM peserta_kegiatan p " +
                 "JOIN mahasiswa m ON p.id_mahasiswa = m.id_mahasiswa " +
                 "LEFT JOIN program pr ON m.id_program = pr.id_program " +
                 "LEFT JOIN prodi pro ON m.id_prodi = pro.id_prodi " +
                 "JOIN kegiatan k ON p.id_kegiatan = k.id_kegiatan " +
+                "LEFT JOIN jenis_kegiatan jk ON k.id_jenis_kegiatan = jk.id_jenis_kegiatan "  +
                 "LEFT JOIN club c ON k.id_club = c.id_club " +
                 "WHERE p.id_mahasiswa = ? " +
                 "ORDER BY k.nama";
@@ -234,13 +246,15 @@ public class PesertaKegiatanDAO {
                 "m.id_mahasiswa, m.nrp, m.nama AS m_nama, m.email, m.tgl_lahir, " +
                 "pr.id_program, pr.nama AS program_nama, " +
                 "pro.id_prodi, pro.nama AS prodi_nama, " +
-                "k.id_kegiatan, k.nama AS kegiatan_nama_asli, k.kategori AS kegiatan_kategori, " +
+                "k.id_kegiatan, k.nama AS kegiatan_nama_asli, k.kategori AS kegiatan_kategori, k.tanggal_mulai, k.tanggal_selesai, k.publish, " +
+                "jk.id_jenis_kegiatan, jk.nama AS jenis_kegiatan_nama, " +
                 "c.id_club, c.nama AS club_nama " +
                 "FROM peserta_kegiatan p " +
                 "JOIN mahasiswa m ON p.id_mahasiswa = m.id_mahasiswa " +
                 "LEFT JOIN program pr ON m.id_program = pr.id_program " +
                 "LEFT JOIN prodi pro ON m.id_prodi = pro.id_prodi " +
                 "JOIN kegiatan k ON p.id_kegiatan = k.id_kegiatan " +
+                "LEFT JOIN jenis_kegiatan jk ON k.id_jenis_kegiatan = jk.id_jenis_kegiatan " +
                 "LEFT JOIN club c ON k.id_club = c.id_club " +
                 "WHERE p.id_mahasiswa = ? AND p.id_kegiatan = ? " +
                 "ORDER BY k.nama";

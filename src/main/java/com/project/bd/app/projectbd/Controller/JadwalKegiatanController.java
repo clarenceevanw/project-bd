@@ -76,7 +76,7 @@ public class JadwalKegiatanController extends BaseController {
             AlertNotification.showError("Gagal memuat jadwal kegiatan: " + e.getMessage());
         }
         jadwalKegiatanTable.refresh();
-    }
+}
 
     @FXML
     public void handleBack() throws Exception {
