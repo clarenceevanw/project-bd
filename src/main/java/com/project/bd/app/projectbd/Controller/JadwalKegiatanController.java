@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -36,7 +37,10 @@ public class JadwalKegiatanController extends BaseController {
             JadwalKegiatan jadwal = cellData.getValue();
             if (jadwal != null && jadwal.getWaktuKegiatan() != null) {
                 LocalDateTime dt = jadwal.getWaktuKegiatan();
-                return new SimpleStringProperty(dt.toLocalDate().toString());
+                LocalDate date = dt.toLocalDate();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+                String formattedDate = date.format(formatter);
+                return new SimpleStringProperty(formattedDate);
             }
             return new SimpleStringProperty("");
         });
