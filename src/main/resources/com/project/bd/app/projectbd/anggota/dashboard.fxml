@@ -28,7 +28,7 @@
             <Button fx:id="btnClubDiikuti" onAction="#goToDaftarClubYangDiikuti" prefHeight="50" prefWidth="200" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Lihat Club Diikuti" />
             <Button fx:id="btnDaftarKegiatan" onAction="#goToDaftarKegiatan" prefHeight="50" prefWidth="200" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Lihat Daftar Kegiatan" />
             <Button fx:id="btnKegiatanDiikuti" onAction="#goToDaftarKegiatanDiikuti" prefHeight="50" prefWidth="200" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Lihat Kegiatan Diikuti" />
-            <Button fx:id="btnSertifikat" onAction="#goToDaftarClub" prefHeight="50" prefWidth="200" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Lihat Sertifikat" />
+            <Button fx:id="btnSertifikat" onAction="#goToLihatSertifikat" prefHeight="50" prefWidth="200" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Lihat Sertifikat" />
             <Button fx:id="btnLogout" onAction="#handleLogout" prefHeight="50" prefWidth="200" style="-fx-background-color: #E1D6F5; -fx-text-fill: #6C3BB9; -fx-font-weight: bold; -fx-background-radius: 10;" text="Logout" />
         </VBox>
     </center>

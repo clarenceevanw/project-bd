@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.DaftarKegiatanController">
 
     <center>
@@ -28,7 +30,7 @@
                 <Button fx:id="btnClubDiikuti" maxWidth="180" onAction="#goToDaftarClubYangDiikuti" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Club Yang Diikuti" />
                 <Button fx:id="btnDaftarKegiatan" maxWidth="180" onAction="#goToDaftarClubYangDiikuti" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Daftar Kegiatan" />
                 <Button fx:id="btnKegiatanDiikuti" maxWidth="180" onAction="#goToDaftarKegiatanDiikuti" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kegiatan Yang Diikuti" />
-                <Button fx:id="btnSertifikat" maxWidth="180" onAction="#goToDaftarClubYangDiikuti" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Lihat Sertifikat" />
+                <Button fx:id="btnSertifikat" maxWidth="180" onAction="#goToLihatSertifikat" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Lihat Sertifikat" />
             </VBox>
 
             <!-- Spacer kiri -->
@@ -37,6 +39,14 @@
             <!-- Konten utama -->
             <VBox alignment="TOP_CENTER" prefWidth="600" spacing="20">
                 <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Daftar Kegiatan" />
+                <HBox alignment="TOP_RIGHT" prefHeight="21.0" prefWidth="480.0">
+                    <children>
+                        <ComboBox fx:id="comboFilter" prefWidth="150.0" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" />
+                    </children>
+                    <padding>
+                        <Insets right="12.0" />
+                    </padding>
+                </HBox>
                 <ScrollPane fx:id="scrollPane" fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" maxWidth="600" prefHeight="500" prefWidth="600" style="-fx-background-color:transparent;" vbarPolicy="ALWAYS">
                     <StackPane alignment="TOP_CENTER">
                         <VBox fx:id="kegiatanContainer" alignment="TOP_CENTER" maxWidth="600" spacing="20" style="-fx-padding: 20;">

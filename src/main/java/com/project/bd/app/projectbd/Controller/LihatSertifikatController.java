@@ -1,6 +1,5 @@
 package com.project.bd.app.projectbd.Controller;
 
-import com.project.bd.app.projectbd.Model.Kegiatan;
 import com.project.bd.app.projectbd.Model.Mahasiswa;
 import com.project.bd.app.projectbd.Model.PesertaKegiatan;
 import com.project.bd.app.projectbd.Session.ClubSession;
@@ -16,52 +15,63 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class DaftarKegiatanDiikutiController extends BaseController{
+public class LihatSertifikatController extends BaseController{
     @FXML
-    private VBox sideBarDaftarKegiatanDiikuti;
+    private VBox sideBar;
 
     @FXML
     private ScrollPane scrollPane;
 
     @FXML
-    private VBox kegiatanContainer;
+    private VBox sertifikatContainer;
+
+    private List<PesertaKegiatan> semuaPesertaKegiatan;
 
     public void initialize() {
-        sideBarDaftarKegiatanDiikuti.setTranslateX(-300);
+        sideBar.setTranslateX(-300);
         scrollPane.setFitToWidth(true);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        setActiveSideBarButton("kegiatanDiikuti", btnDashboard, btnDaftarClub, btnClubDiikuti, btnDaftarKegiatan, btnKegiatanDiikuti, btnSertifikat);
-        TranslateTransition slideIn = new TranslateTransition(Duration.millis(1000), sideBarDaftarKegiatanDiikuti);
+        setActiveSideBarButton("sertifikat", btnDashboard, btnDaftarClub, btnClubDiikuti, btnDaftarKegiatan, btnKegiatanDiikuti, btnSertifikat);
+        TranslateTransition slideIn = new TranslateTransition(Duration.millis(1000), sideBar);
         slideIn.setToX(0);
         slideIn.play();
-        try {
-            loadData();
-        }catch (Exception e) {
+
+        try{
+            Mahasiswa mhs = mhsDAO.findById(LoginSession.getInstance().getIdMahasiswa());
+            this.semuaPesertaKegiatan = pesertaKegiatanDAO.findByMahasiswa(mhs);
+            if(this.semuaPesertaKegiatan == null) { // Jaga-jaga jika DAO mengembalikan null
+                this.semuaPesertaKegiatan = new ArrayList<>();
+            }
+        } catch (Exception e) {
+            this.semuaPesertaKegiatan = new ArrayList<>();
+            AlertNotification.showSuccess("Gagal memuat data peserta kegiatan dari database.");
             throw new RuntimeException(e);
         }
+
+        renderKegiatanCard(this.semuaPesertaKegiatan);
     }
 
-    public void loadData() throws Exception {
-        Mahasiswa mahasiswa = mhsDAO.findById(LoginSession.getInstance().getIdMahasiswa());
-        List<PesertaKegiatan> pesertaKegiatanList = pesertaKegiatanDAO.findByMahasiswa(mahasiswa);
-        if(pesertaKegiatanList.isEmpty()) kegiatanContainer.getChildren().add(new Text("Anda belum bergabung ke kegiatan apapun"));
-        renderKegiatanCard(pesertaKegiatanList);
-    }
+    private void renderKegiatanCard(List<PesertaKegiatan> listPesertaKegiatan) {
+        if(listPesertaKegiatan.isEmpty()){
+            Label label = new Label("Belum ada sertifikat");
+            label.setStyle("-fx-font-size: 14px; -fx-text-fill: #888;");
+            sertifikatContainer.getChildren().add(label);
+            return;
+        }
 
-    private void renderKegiatanCard(List<PesertaKegiatan> pesertaKegiatanList) {
         Duration delayBetween = Duration.millis(150);
         Duration duration = Duration.millis(500);
 
-        for (int i = 0; i < pesertaKegiatanList.size(); i++) {
-            PesertaKegiatan pesertaKegiatan = pesertaKegiatanList.get(i);
+        for (int i = 0; i < listPesertaKegiatan.size(); i++) {
+            PesertaKegiatan pesertaKegiatan = listPesertaKegiatan.get(i);
+            if(!pesertaKegiatan.getStatusSertifikat().equals("Ada")) continue;
 
             VBox box = new VBox();
             box.setStyle("-fx-background-color: white; -fx-background-radius: 10; "
@@ -70,29 +80,20 @@ public class DaftarKegiatanDiikutiController extends BaseController{
 
             Label nama = new Label(pesertaKegiatan.getKegiatan().getNama());
             nama.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
-            Label club = new Label("Penyelenggara: Club " + pesertaKegiatan.getKegiatan().getClub().getNama());
-            Label jenis = new Label("Jenis: " + pesertaKegiatan.getKegiatan().getJenisKegiatan());
-            Label kategori = new Label(pesertaKegiatan.getKegiatan().getKategori());
+            Label noSertifikat = new Label("No Sertifikat: " + (pesertaKegiatan.getNomorSertifikat() != null ? pesertaKegiatan.getNomorSertifikat() : "Belum Terbit"));
+            Label tanggalTerbit = new Label("Tanggal Terbit: " + (pesertaKegiatan.getTglSertifikat() != null ? pesertaKegiatan.getTglSertifikat().toString() : "Belum Terbit"));
 
-            box.getChildren().addAll(nama, club,jenis, kategori);
+            box.getChildren().addAll(nama, noSertifikat, tanggalTerbit);
             box.setOpacity(0);
             box.setTranslateY(-20);
 
-            kegiatanContainer.getChildren().add(box);
-
-//            Popup popup = new Popup();
-//            VBox popupContent = new VBox();
-//            popupContent.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-border-color: #ccc; -fx-border-width: 1;");
-//            popupContent.getChildren().add(new Text("Detail kegiatan: " + pesertaKegiatan.getKegiatan().getNama()));
-//            popup.getContent().add(popupContent);
+            sertifikatContainer.getChildren().add(box);
 
             box.setOnMouseEntered(event -> {
                 ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), box);
                 scaleUp.setToX(1.05);
                 scaleUp.setToY(1.05);
                 scaleUp.play();
-
-//                popup.show(box, event.getScreenX() + 10, event.getScreenY() + 10);
                 box.setCursor(Cursor.HAND);
             });
 
@@ -101,16 +102,22 @@ public class DaftarKegiatanDiikutiController extends BaseController{
                 scaleDown.setToX(1.0);
                 scaleDown.setToY(1.0);
                 scaleDown.play();
-
-//                popup.hide();
             });
 
 
             box.setOnMouseClicked(event -> {
+                if(pesertaKegiatan.getNomorSertifikat() == null || pesertaKegiatan.getTglSertifikat() == null) {
+                    try {
+                        AlertNotification.showError("Sertifikat belum terbit.");
+                        return;
+                    }catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 try {
-                    ClubSession.getInstance().setKegiatan(pesertaKegiatan.getKegiatan());
-                    PageSession.getInstance().setOriginPage("daftarKegiatanDiikuti");
-                    switchScenes("anggota/detailDaftarKegiatan.fxml", "Detail Kegiatan");
+                    ClubSession.getInstance().setPesertaKegiatan(pesertaKegiatan);
+                    PageSession.getInstance().setOriginPage("lihatSertifikat");
+                    switchScenes("anggota/detailSertifikat.fxml", "Detail Sertifikat");
                 }catch (Exception e) {
                     try {
                         AlertNotification.showError(e.getMessage());

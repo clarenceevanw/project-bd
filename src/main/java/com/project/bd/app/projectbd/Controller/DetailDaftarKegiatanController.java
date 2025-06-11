@@ -167,6 +167,7 @@ public class DetailDaftarKegiatanController extends BaseController {
 
     @FXML
     public void handleLihatJadwal() throws Exception {
-        switchScenes("anggota/jadwal-kegiatan.fxml", "Jadwal Kegiatan");
+        ClubSession.getInstance().setKegiatan(kegiatan);
+        switchScenes("anggota/lihat-jadwal-kegiatan.fxml", "Jadwal Kegiatan");
     }
 }

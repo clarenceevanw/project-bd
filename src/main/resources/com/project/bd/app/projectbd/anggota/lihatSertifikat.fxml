@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.project.bd.app.projectbd.Controller.DaftarClubYangDiikutiController">
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.LihatSertifikatController">
 
     <center>
         <HBox prefWidth="800" spacing="0" style="-fx-background-color: #F7F7F7;">
             <!-- Sidebar -->
-            <VBox fx:id="sidebarDaftarClub" alignment="TOP_CENTER" prefWidth="200" spacing="20"
-                  style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+            <VBox fx:id="sideBar" alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
                 <ImageView fitHeight="75" fitWidth="280.0">
                     <image>
-                        <Image url="@../image/PCU-LOGO.png"/>
+                        <Image url="@../image/PCU-LOGO.png" />
                     </image>
                 </ImageView>
 
@@ -23,29 +30,26 @@
                 <Button fx:id="btnClubDiikuti" maxWidth="180" onAction="#goToDaftarClubYangDiikuti" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Club Yang Diikuti" />
                 <Button fx:id="btnDaftarKegiatan" maxWidth="180" onAction="#goToDaftarKegiatan" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Daftar Kegiatan" />
                 <Button fx:id="btnKegiatanDiikuti" maxWidth="180" onAction="#goToDaftarKegiatanDiikuti" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kegiatan Yang Diikuti" />
-                <Button fx:id="btnSertifikat" maxWidth="180" onAction="#goToLihatSertifikat" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Lihat Sertifikat" />
+                <Button fx:id="btnSertifikat" maxWidth="180" onAction="#goToDaftarClubYangDiikuti" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Lihat Sertifikat" />
             </VBox>
 
             <!-- Spacer kiri -->
-            <Region HBox.hgrow="ALWAYS"/>
+            <Region fx:id="leftSpacer" HBox.hgrow="ALWAYS" />
 
             <!-- Konten utama -->
             <VBox alignment="TOP_CENTER" prefWidth="600" spacing="20">
-                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Club Yang Diikuti"/>
-                <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER"
-                            maxWidth="600" prefHeight="500" prefWidth="600"
-                            style="-fx-background-color:transparent;" vbarPolicy="ALWAYS">
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Lihat Sertifikat" />
+                <ScrollPane fx:id="scrollPane" fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" maxWidth="600" prefHeight="500" prefWidth="600" style="-fx-background-color:transparent;" vbarPolicy="ALWAYS">
                     <StackPane alignment="TOP_CENTER">
-                        <VBox fx:id="clubContainer" alignment="TOP_CENTER" maxWidth="600"
-                              spacing="20" style="-fx-padding: 20;">
+                        <VBox fx:id="sertifikatContainer" alignment="TOP_CENTER" maxWidth="600" spacing="20" style="-fx-padding: 20;">
                             <!-- Cards akan diisi dari Controller -->
                         </VBox>
                     </StackPane>
                 </ScrollPane>
             </VBox>
 
-            <!-- Spacer kanan -->
-            <Region prefWidth="50"/>
+            <!-- Spacer kanan agar simetris -->
+            <Region fx:id="rightSpacer" prefWidth="50" />
         </HBox>
     </center>
 </BorderPane>

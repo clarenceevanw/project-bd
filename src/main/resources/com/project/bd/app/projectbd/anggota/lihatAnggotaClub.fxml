@@ -11,14 +11,6 @@
     </top>
 
     <center>
-        <VBox fx:id="anggotaItem"
-              style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 3);"
-              xmlns:fx="http://javafx.com/fxml">
-            <Label fx:id="namaLabel" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
-            <Label fx:id="peranLabel" style="-fx-font-size: 13;"/>
-            <Label fx:id="tanggalGabungLabel" style="-fx-font-size: 13;"/>
-            <Label fx:id="statusLabel" style="-fx-font-size: 13;"/>
-        </VBox>
         <ScrollPane fitToWidth="true" style="-fx-background-color:transparent;">
             <VBox fx:id="anggotaContainer" spacing="10" style="-fx-padding: 15;" />
         </ScrollPane>

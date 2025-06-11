@@ -85,4 +85,9 @@ public class AnggotaDashboardController extends BaseController {
     public void goToDaftarKegiatanDiikuti () throws IOException {
         switchScenes("anggota/daftarKegiatanDiikuti.fxml", "Kegiatan Yang Diikuti");
     }
+
+    @FXML
+    public void goToLihatSertifikat() throws IOException {
+        switchScenes("anggota/lihatSertifikat.fxml", "Lihat Sertifikat");
+    }
 }

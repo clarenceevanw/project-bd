@@ -157,6 +157,8 @@ public class KegiatanController extends BaseController{
         if (selected != null) {
             if (selected.getTanggalMulai() == null || selected.getTanggalSelesai() == null) {
                 AlertNotification.showError("Tanggal mulai dan selesai harus diisi.");
+            } else if (selected.isPublish()){
+                AlertNotification.showError("Kegiatan sudah dipublish.");
             } else {
                 selected.setPublish(true);
                 kegiatanDAO.updatePublish(selected);
@@ -172,6 +174,10 @@ public class KegiatanController extends BaseController{
     public void handleUnpublish() throws Exception {
         Kegiatan selected = kegiatanTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
+            if (!selected.isPublish()){
+                AlertNotification.showError("Kegiatan sudah unpublish.");
+                return;
+            }
             selected.setPublish(false);
             kegiatanDAO.updatePublish(selected);
             AlertNotification.showSuccess("Kegiatan berhasil diunpublish.");

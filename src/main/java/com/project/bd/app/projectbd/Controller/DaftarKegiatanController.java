@@ -10,6 +10,7 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
@@ -18,7 +19,9 @@ import javafx.stage.Popup;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DaftarKegiatanController extends BaseController{
     @FXML
@@ -30,6 +33,11 @@ public class DaftarKegiatanController extends BaseController{
     @FXML
     private VBox kegiatanContainer;
 
+    @FXML
+    private ComboBox<String> comboFilter;
+
+    private List<Kegiatan> semuaKegiatan;
+
     public void initialize() {
         sideBarDaftarKegiatan.setTranslateX(-300);
         scrollPane.setFitToWidth(true);
@@ -39,20 +47,50 @@ public class DaftarKegiatanController extends BaseController{
         TranslateTransition slideIn = new TranslateTransition(Duration.millis(1000), sideBarDaftarKegiatan);
         slideIn.setToX(0);
         slideIn.play();
-        try {
-            loadData();
-        }catch (Exception e) {
+
+        try{
+            this.semuaKegiatan = kegiatanDAO.findAll();
+            if(this.semuaKegiatan == null) { // Jaga-jaga jika DAO mengembalikan null
+                this.semuaKegiatan = new ArrayList<>();
+            }
+        } catch (Exception e) {
+            this.semuaKegiatan = new ArrayList<>();
+            AlertNotification.showSuccess("Gagal memuat data kegiatan dari database.");
             throw new RuntimeException(e);
         }
+
+        setUpComboBox();
+        comboFilter.setOnAction(event -> filterAndDisplayKegiatan());
+        renderKegiatanCard(this.semuaKegiatan);
     }
 
-    public void loadData() throws Exception {
-        List<Kegiatan> listKegiatan = kegiatanDAO.findAll();
-        if(listKegiatan.isEmpty()) kegiatanContainer.getChildren().add(new Text("Belum ada kegiatan"));
+    private void filterAndDisplayKegiatan() {
+        String selectedFilter = comboFilter.getValue();
+        List<Kegiatan> listKegiatan = new ArrayList<>();
+        if(selectedFilter.equals("Semua")) {
+            listKegiatan = this.semuaKegiatan;
+        } else if (selectedFilter.equals("Rutin")) {
+            listKegiatan = this.semuaKegiatan.stream().filter(kegiatan -> kegiatan.getKategori().equals("Rutin")).collect(Collectors.toList());
+        } else if (selectedFilter.equals("Eksternal")) {
+            listKegiatan = this.semuaKegiatan.stream().filter(kegiatan -> kegiatan.getKategori().equals("Eksternal")).collect(Collectors.toList());
+        }
+        kegiatanContainer.getChildren().clear();
         renderKegiatanCard(listKegiatan);
     }
 
+    private void setUpComboBox() {
+        comboFilter.getItems().addAll("Semua", "Rutin", "Eksternal");
+        comboFilter.setValue("Semua");
+    }
+
     private void renderKegiatanCard(List<Kegiatan> listKegiatan) {
+        if(listKegiatan.isEmpty()){
+            Label label = new Label("Belum ada kegiatan");
+            label.setStyle("-fx-font-size: 14px; -fx-text-fill: #888;");
+            kegiatanContainer.getChildren().add(label);
+            return;
+        }
+
         Duration delayBetween = Duration.millis(150);
         Duration duration = Duration.millis(500);
 
@@ -155,5 +193,10 @@ public class DaftarKegiatanController extends BaseController{
     @FXML
     public void goToDaftarKegiatanDiikuti () throws IOException {
         switchScenes("anggota/daftarKegiatanDiikuti.fxml", "Kegiatan Yang Diikuti");
+    }
+
+    @FXML
+    public void goToLihatSertifikat() throws IOException {
+        switchScenes("anggota/lihatSertifikat.fxml", "Lihat Sertifikat");
     }
 }
