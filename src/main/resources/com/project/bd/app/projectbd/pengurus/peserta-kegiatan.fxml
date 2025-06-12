@@ -47,7 +47,7 @@
                     <TableColumn fx:id="colProdi" prefWidth="150" text="Jurusan" />
                     <TableColumn fx:id="colStatus" prefWidth="100" text="Status Sertifikat" />
                     <TableColumn fx:id="colNomor" prefWidth="200.0" text="Nomor Sertifikat" />
-                    <TableColumn fx:id="colTanggal" prefWidth="75.0" text="Tanggal Terbit" />
+                    <TableColumn fx:id="colTanggal" prefWidth="150.0" text="Tanggal Terbit" />
                 </columns>
             </TableView>
         </VBox>
