@@ -6,17 +6,24 @@ import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.Session.PageSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
+import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class KelolaClubController extends BaseController {
+    @FXML
+    private HBox buttonContainer;
+
     @FXML
     private TableView<Club> clubTable;
 
@@ -32,6 +39,9 @@ public class KelolaClubController extends BaseController {
     @FXML
     private TableColumn<Club, String> colKategori;
 
+    @FXML
+    private VBox sidebar;
+
     private final ObservableList<Club> clubList = FXCollections.observableArrayList();
 
     @FXML
@@ -42,34 +52,80 @@ public class KelolaClubController extends BaseController {
         colNama.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNama()));
         colDeskripsi.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeskripsi()));
         colTahun.setCellValueFactory(cellData -> new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getTahun_berdiri()));
-        colKategori.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori().getNama())); // nanti bisa diganti nama kategori
-        colDeskripsi.setCellFactory(tc -> {
-            TableCell<Club, String> cell = new TableCell<>() {
-                private final Text text = new Text();
+        colKategori.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori().getNama()));
+        colDeskripsi.setCellFactory(tc -> new TableCell<>() {
+            private final Text text = new Text();
 
-                {
-                    text.wrappingWidthProperty().bind(tc.widthProperty().subtract(10)); // kurangi padding
-                    setGraphic(text);
-                    setPrefHeight(Control.USE_COMPUTED_SIZE);
-                }
+            {
+                text.wrappingWidthProperty().bind(tc.widthProperty().subtract(10));
+                setGraphic(text);
+                setPrefHeight(Control.USE_COMPUTED_SIZE);
 
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        text.setText("");
-                    } else {
-                        text.setText(item);
+                // Ubah warna teks berdasarkan seleksi
+                tableRowProperty().addListener((obs, oldRow, newRow) -> {
+                    if (newRow != null) {
+                        newRow.selectedProperty().addListener((__, ___, isSelected) -> {
+                            updateTextColor(isSelected);
+                        });
                     }
+                });
+            }
+
+            private void updateTextColor(boolean isSelected) {
+                text.setStyle("-fx-fill: " + (isSelected ? "white" : "#7e43ba") + ";");
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    text.setText("");
+                } else {
+                    text.setText(item);
+                    updateTextColor(getTableRow() != null && getTableRow().isSelected());
                 }
-            };
-            return cell;
+            }
         });
+
 
         clubTable.setFixedCellSize(-1);
         loadData();
         clubTable.setItems(clubList);
+
+        // === Animasi Sidebar (Smooth Slide In) ===
+        sidebar.setTranslateX(-300);
+        TranslateTransition slideInSidebar = new TranslateTransition(Duration.millis(1000), sidebar);
+        slideInSidebar.setToX(0);
+        slideInSidebar.setInterpolator(Interpolator.EASE_OUT);
+        slideInSidebar.play();
+
+        // === TableView Fade In ===
+        clubTable.setOpacity(0);
+        FadeTransition fadeInTable = new FadeTransition(Duration.millis(600), clubTable);
+        fadeInTable.setFromValue(0);
+        fadeInTable.setToValue(1);
+        fadeInTable.setInterpolator(Interpolator.EASE_BOTH);
+
+        // === ButtonContainer Slide Up with Fade ===
+        buttonContainer.setOpacity(0);
+        buttonContainer.setTranslateY(20);
+
+        FadeTransition fadeButtons = new FadeTransition(Duration.millis(600), buttonContainer);
+        fadeButtons.setFromValue(0);
+        fadeButtons.setToValue(1);
+
+        TranslateTransition slideUpButtons = new TranslateTransition(Duration.millis(600), buttonContainer);
+        slideUpButtons.setFromY(20);
+        slideUpButtons.setToY(0);
+        slideUpButtons.setInterpolator(Interpolator.EASE_OUT);
+
+        ParallelTransition buttonTransition = new ParallelTransition(fadeButtons, slideUpButtons);
+
+        // === Urutan Animasi: Sidebar → Table → Buttons ===
+        SequentialTransition sequence = new SequentialTransition(fadeInTable, buttonTransition);
+        sequence.play();
     }
+
 
     public void loadData(){
         clubList.clear();
@@ -143,7 +199,6 @@ public class KelolaClubController extends BaseController {
             // TODO: buka view anggota club
             ClubSession.getInstance().setClub(selected);
             switchScenes("pengurus/kelola-anggota-club.fxml", "Kelola Anggota Club");
-            AlertNotification.showSuccess("Melihat anggota dari club: " + selected.getNama());
         } else {
             AlertNotification.showError("Pilih club terlebih dahulu.");
         }
@@ -155,7 +210,6 @@ public class KelolaClubController extends BaseController {
         if (selected != null) {
             ClubSession.getInstance().setClub(selected);
             switchScenes("pengurus/kegiatan.fxml", "Kelola Kegiatan Club");
-            AlertNotification.showSuccess("Melihat kegiatan dari club: " + selected.getNama());
         } else {
             AlertNotification.showError("Pilih club terlebih dahulu.");
         }

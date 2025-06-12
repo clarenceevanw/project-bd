@@ -6,10 +6,15 @@ import com.project.bd.app.projectbd.Model.PesertaKegiatan;
 import com.project.bd.app.projectbd.Model.PresensiKegiatan;
 import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +22,12 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class TambahJadwalKegiatanController extends BaseController {
+    @FXML
+    private VBox sidebar;
+
+    @FXML
+    private VBox formContainer;
+
     @FXML
     private DatePicker datePickerTanggal;
 
@@ -30,6 +41,17 @@ public class TambahJadwalKegiatanController extends BaseController {
 
     public void initialize() {
         setActiveSidebarButton("kegiatan", btnDashboard, btnKelolaClub, btnKelolaKegiatan);
+        sidebar.setTranslateX(-300);
+        TranslateTransition slideIn = new TranslateTransition(Duration.millis(1000), sidebar);
+        slideIn.setToX(0);
+        slideIn.setInterpolator(Interpolator.EASE_BOTH);
+        slideIn.play();
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), formContainer);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.setInterpolator(Interpolator.EASE_BOTH);
+        fadeTransition.play();
     }
 
     @FXML

@@ -12,7 +12,7 @@
 
     <!-- Sidebar -->
     <left>
-        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+        <VBox fx:id="sidebar" alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
             <ImageView fitHeight="75" fitWidth="280.0">
                 <image>
                     <Image url="@../image/PCU-LOGO.png" />
@@ -27,7 +27,7 @@
 
     <!-- Main Content -->
     <center>
-        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 40;">
+        <VBox fx:id="mainContent" alignment="CENTER" spacing="20" style="-fx-padding: 40;">
             <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Pilih Club untuk Kelola Kegiatan" />
 
             <ComboBox fx:id="comboClub" prefWidth="250" promptText="Pilih Club" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" />

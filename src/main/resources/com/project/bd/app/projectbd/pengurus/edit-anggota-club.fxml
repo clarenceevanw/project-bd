@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.EditAnggotaClubController">
+<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.EditAnggotaClubController">
 
     <!-- Sidebar -->
     <left>
-        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+        <VBox fx:id="sidebar" alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
             <ImageView fitHeight="75" fitWidth="280.0">
                 <image>
                     <Image url="@../image/PCU-LOGO.png" />
                 </image>
             </ImageView>
 
-            <Button fx:id="btnDashboard" maxWidth="180" onAction="#navigateToDashboard"
-                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Dashboard" />
-            <Button fx:id="btnKelolaClub" maxWidth="180" onAction="#navigateToKelolaClub"
-                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Club" />
-            <Button fx:id="btnKelolaKegiatan" maxWidth="180" onAction="#navigateToKelolaKegiatan"
-                    style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Kegiatan" />
+            <Button fx:id="btnDashboard" maxWidth="180" onAction="#navigateToDashboard" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Dashboard" />
+            <Button fx:id="btnKelolaClub" maxWidth="180" onAction="#navigateToKelolaClub" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Club" />
+            <Button fx:id="btnKelolaKegiatan" maxWidth="180" onAction="#navigateToKelolaKegiatan" style="-fx-background-color: white; -fx-text-fill: #6C3BB9; -fx-font-weight: bold;" text="Kelola Kegiatan" />
         </VBox>
     </left>
 
     <!-- Form Content -->
     <center>
-        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
+        <VBox fx:id="formContainer" alignment="CENTER" spacing="20" style="-fx-padding: 30;">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #6C3BB9;" text="Edit Anggota Club" />
 
             <GridPane hgap="10" vgap="10">
@@ -53,11 +59,11 @@
 
                 <!-- Peran -->
                 <Label text="Peran:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                <ComboBox fx:id="comboPeran" promptText="Pilih Peran" GridPane.columnIndex="1" GridPane.rowIndex="4" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;"/>
+                <ComboBox fx:id="comboPeran" prefHeight="28.0" prefWidth="307.0" promptText="Pilih Peran" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
                 <!-- Status -->
                 <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                <ComboBox fx:id="comboStatus" promptText="Pilih Status" GridPane.columnIndex="1" GridPane.rowIndex="5" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;"/>
+                <ComboBox fx:id="comboStatus" prefHeight="28.0" prefWidth="371.0" promptText="Pilih Status" style="-fx-background-color: white; -fx-border-color: #6C3BB9; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
                 <rowConstraints>
                     <RowConstraints />

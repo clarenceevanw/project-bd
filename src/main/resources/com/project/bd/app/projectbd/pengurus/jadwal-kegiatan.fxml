@@ -14,7 +14,7 @@
 
     <!-- Sidebar -->
     <left>
-        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+        <VBox fx:id="sidebar" alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
             <ImageView fitHeight="75" fitWidth="280.0">
                 <image>
                     <Image url="@../image/PCU-LOGO.png" />
@@ -32,9 +32,9 @@
         <VBox alignment="TOP_CENTER" spacing="10" style="-fx-padding: 20;">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Manajemen Jadwal" />
 
-            <HBox alignment="CENTER" spacing="10">
+            <HBox fx:id="buttonContainer" alignment="CENTER" spacing="10">
                 <Button onAction="#handleBack" style="-fx-background-color: #5f33a4; -fx-text-fill: white; -fx-font-weight: bold;" text="Back" />
-            <Button onAction="#handleTambahJadwal" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold;" text="Tambah Jadwal" />
+                <Button onAction="#handleTambahJadwal" style="-fx-background-color: #6C3BB9; -fx-text-fill: white; -fx-font-weight: bold;" text="Tambah Jadwal" />
                 <Button onAction="#handleEditJadwal" style="-fx-background-color: #9D50BB; -fx-text-fill: white; -fx-font-weight: bold;" text="Edit Jadwal" />
                 <Button onAction="#handleHapusJadwal" style="-fx-background-color: #FF6B6B; -fx-text-fill: white; -fx-font-weight: bold;" text="Hapus Jadwal" />
                 <Button onAction="#handleLihatPresensi" style="-fx-background-color: #208EFF; -fx-text-fill: white; -fx-font-weight: bold;" text="Lihat Presensi" />

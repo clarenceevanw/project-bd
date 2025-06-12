@@ -59,11 +59,11 @@ public class LoginController extends BaseController {
             signUpForm.setVisible(false); // disembunyikan saat start
         }
 
-        TranslateTransition slideRight = new TranslateTransition(Duration.millis(1500), leftPane);
+        TranslateTransition slideRight = new TranslateTransition(Duration.millis(1000), leftPane);
         slideRight.setToX(0);
         slideRight.play();
 
-        TranslateTransition slideLeft = new TranslateTransition(Duration.millis(1500), formContainer);
+        TranslateTransition slideLeft = new TranslateTransition(Duration.millis(1000), formContainer);
         slideLeft.setToX(0);
         slideLeft.play();
     }

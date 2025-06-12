@@ -7,15 +7,22 @@ import com.project.bd.app.projectbd.Model.Mahasiswa;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.Session.PageSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
 public class BuatClubController extends BaseController{
+    @FXML
+    private VBox formContent;
+
     @FXML
     private TextField txtNama;
 
@@ -42,6 +49,12 @@ public class BuatClubController extends BaseController{
             }
         }
         comboKategori.setItems(kategoriList);
+
+        FadeTransition fade = new FadeTransition(Duration.millis(1000), formContent);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.setInterpolator(Interpolator.EASE_IN);
+        fade.play();
     }
 
     @FXML
@@ -100,33 +113,6 @@ public class BuatClubController extends BaseController{
             }else if(originPage.equals("kelolaClub")) {
                 switchScenes("pengurus/kelola-club.fxml", "Kelola Club");
             }
-        } catch (IOException e) {
-            AlertNotification.showError(e.getMessage());
-        }
-    }
-
-    @FXML
-    private void navigateToDashboard() throws Exception {
-        try{
-            switchScenes("pengurus/dashboard.fxml", "Dashboard");
-        } catch (IOException e) {
-            AlertNotification.showError(e.getMessage());
-        }
-    }
-
-    @FXML
-    private void navigateToKelolaClub() throws Exception {
-        try{
-            switchScenes("pengurus/kelola-club.fxml", "Kelola Club");
-        } catch (IOException e) {
-            AlertNotification.showError(e.getMessage());
-        }
-    }
-
-    @FXML
-    private void navigateToKelolaKegiatan() throws Exception {
-        try{
-            switchScenes("pengurus/kelola-kegiatan.fxml", "Kelola Kegiatan");
         } catch (IOException e) {
             AlertNotification.showError(e.getMessage());
         }

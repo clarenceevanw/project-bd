@@ -14,7 +14,7 @@
 
     <!-- Sidebar -->
     <left>
-        <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+        <VBox fx:id="sidebar" alignment="TOP_CENTER" prefWidth="200.0" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
             <ImageView fitHeight="75" fitWidth="280.0">
                 <image>
                     <Image url="@../image/PCU-LOGO.png" />
@@ -34,7 +34,7 @@
             <HBox fx:id="actionBox" spacing="10">
                 <Button onAction="#handleBack" style="-fx-background-color: #6C3BB9; -fx-text-fill: white;" text="Back" />
             </HBox>
-            <Label fx:id="txtJudul" prefHeight="35.0" prefWidth="237.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Presensi" />
+            <Label fx:id="txtJudul" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="501.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Presensi" textAlignment="CENTER" />
 
             <TableView fx:id="presensiTable" maxHeight="400.0" maxWidth="500.0" minHeight="200.0" minWidth="300.0" prefHeight="158.0" prefWidth="540.0">
                 <columns>

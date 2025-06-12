@@ -6,15 +6,25 @@ import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class EditClubController extends BaseController{
+    @FXML
+    private VBox sidebar;
+
+    @FXML
+    private VBox mainContent;
+
     @FXML
     private TextField txtNama;
 
@@ -57,6 +67,18 @@ public class EditClubController extends BaseController{
                 throw new RuntimeException(er);
             }
         }
+
+        sidebar.setTranslateX(-300);
+        TranslateTransition slideIn = new TranslateTransition(Duration.millis(1000), sidebar);
+        slideIn.setToX(0);
+        slideIn.setInterpolator(Interpolator.EASE_BOTH);
+        slideIn.play();
+
+        FadeTransition fade = new FadeTransition(Duration.millis(1000), mainContent);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.setInterpolator(Interpolator.EASE_BOTH);
+        fade.play();
     }
 
 

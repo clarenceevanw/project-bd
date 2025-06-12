@@ -5,11 +5,16 @@ import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +22,12 @@ import java.util.List;
 
 public class KelolaKegiatanController extends BaseController {
     //Contoller untuk agar user memilih kegiatan club mana
+    @FXML
+    private VBox sidebar;
+
+    @FXML
+    private VBox mainContent;
+
     @FXML
     ComboBox<Club> comboClub;
 
@@ -43,6 +54,18 @@ public class KelolaKegiatanController extends BaseController {
         }
         clubs.addAll(clubPengurus);
         comboClub.setItems(clubs);
+
+        sidebar.setTranslateX(-300);
+        TranslateTransition slideIn = new TranslateTransition(Duration.millis(1000), sidebar);
+        slideIn.setToX(0);
+        slideIn.setInterpolator(Interpolator.EASE_BOTH);
+        slideIn.play();
+
+        FadeTransition fade = new FadeTransition(Duration.millis(1000), mainContent);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.setInterpolator(Interpolator.EASE_BOTH);
+        fade.play();
     }
 
     @FXML

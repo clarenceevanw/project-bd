@@ -18,7 +18,7 @@
 
     <!-- Sidebar -->
     <left>
-        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+        <VBox fx:id="sidebar" alignment="TOP_CENTER" prefWidth="200" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
             <ImageView fitHeight="75" fitWidth="280.0">
                 <image>
                     <Image url="@../image/PCU-LOGO.png" />
@@ -33,7 +33,7 @@
 
     <!-- Form Content -->
     <center>
-        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
+        <VBox fx:id="formContainer" alignment="CENTER" spacing="20" style="-fx-padding: 30;">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #6C3BB9;" text="Buat Kegiatan Club" />
 
             <GridPane hgap="10" vgap="10">

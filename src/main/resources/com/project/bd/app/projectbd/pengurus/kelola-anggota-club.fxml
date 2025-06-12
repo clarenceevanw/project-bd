@@ -14,7 +14,7 @@
 
     <!-- Sidebar -->
     <left>
-        <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
+        <VBox fx:id="sidebar" alignment="TOP_CENTER" prefWidth="200.0" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #6C3BB9, #9D50BB); -fx-padding: 20;">
             <ImageView fitHeight="75" fitWidth="280.0">
                 <image>
                     <Image url="@../image/PCU-LOGO.png" />
@@ -32,9 +32,9 @@
         <VBox alignment="TOP_CENTER" spacing="10" style="-fx-padding: 20;">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Manajemen Anggota Club" />
 
-            <HBox alignment="CENTER" spacing="10">
+            <HBox fx:id="buttonContainer" alignment="CENTER" spacing="10">
                 <Button onAction="#handleKembali" style="-fx-background-color: #6C3BB9; -fx-text-fill: white;" text="Back" />
-            <Button onAction="#handleEditAnggota" style="-fx-background-color: #9D50BB; -fx-text-fill: white;" text="Edit Anggota" />
+                <Button onAction="#handleEditAnggota" style="-fx-background-color: #9D50BB; -fx-text-fill: white;" text="Edit Anggota" />
                 <Button onAction="#handleDeleteAnggota" style="-fx-background-color: #FF6B6B; -fx-text-fill: white;" text="Hapus Anggota" />
             </HBox>
 
