@@ -2,9 +2,7 @@ package com.project.bd.app.projectbd.Controller;
 
 import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.Kategori;
-import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Session.ClubSession;
-import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;

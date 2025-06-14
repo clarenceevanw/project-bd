@@ -20,7 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.util.List;
 
 public class LihatAnggotaClubController extends BaseController {

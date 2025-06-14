@@ -1,6 +1,5 @@
 package com.project.bd.app.projectbd.Controller;
 
-import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.JenisKegiatan;
 import com.project.bd.app.projectbd.Model.Kegiatan;
 import com.project.bd.app.projectbd.Model.PesertaKegiatan;
@@ -10,7 +9,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;

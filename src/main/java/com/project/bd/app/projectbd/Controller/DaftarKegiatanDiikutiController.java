@@ -1,6 +1,5 @@
 package com.project.bd.app.projectbd.Controller;
 
-import com.project.bd.app.projectbd.Model.Kegiatan;
 import com.project.bd.app.projectbd.Model.Mahasiswa;
 import com.project.bd.app.projectbd.Model.PesertaKegiatan;
 import com.project.bd.app.projectbd.Session.ClubSession;

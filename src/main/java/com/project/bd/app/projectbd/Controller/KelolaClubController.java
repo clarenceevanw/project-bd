@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -188,7 +187,6 @@ public class KelolaClubController extends BaseController {
     public void handleViewAnggota() throws Exception {
         Club selected = clubTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            // TODO: buka view anggota club
             ClubSession.getInstance().setClub(selected);
             switchScenes("pengurus/kelola-anggota-club.fxml", "Kelola Anggota Club");
         } else {
