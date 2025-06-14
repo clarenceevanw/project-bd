@@ -4,7 +4,6 @@ import com.project.bd.app.projectbd.DAO.KeanggotaanDAO;
 import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Session.LoginSession;
-import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;

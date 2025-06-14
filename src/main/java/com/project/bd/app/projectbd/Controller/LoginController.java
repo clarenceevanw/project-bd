@@ -1,6 +1,5 @@
 package com.project.bd.app.projectbd.Controller;
 
-import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Model.Mahasiswa;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
@@ -15,7 +14,6 @@ import javafx.util.Duration;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class LoginController extends BaseController {
 

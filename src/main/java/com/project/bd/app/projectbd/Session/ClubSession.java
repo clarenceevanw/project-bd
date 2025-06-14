@@ -2,10 +2,6 @@ package com.project.bd.app.projectbd.Session;
 
 import com.project.bd.app.projectbd.Model.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 public class ClubSession {
     private static ClubSession instance;
     private Club club; //Untuk menyimpan club yang dipilih oleh user
