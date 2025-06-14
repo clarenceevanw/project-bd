@@ -1,5 +1,6 @@
 package com.project.bd.app.projectbd.Controller;
 
+import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Model.Kegiatan;
 import com.project.bd.app.projectbd.Model.Mahasiswa;
 import com.project.bd.app.projectbd.Model.PesertaKegiatan;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import java.util.List;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -152,6 +154,26 @@ public class DetailDaftarKegiatanController extends BaseController {
 
     @FXML
     public void handleJoinKegiatan() throws Exception {
+        if(kegiatan.getKategori().equals("Rutin")){
+            List<Keanggotaan> keanggotaan = keanggotaanDAO.findKeanggotaanByMahasiswa(getMahasiswa().getIdMahasiswa());
+            if(keanggotaan.isEmpty()) {
+                AlertNotification.showError("Anda harus menjadi anggota klub terlebih dahulu untuk bergabung ke kegiatan ini.");
+                return;
+            }
+            boolean isAnggotaClub = false;
+            for (Keanggotaan k : keanggotaan) {
+                if (k.getStatus().equals("Aktif")) {
+                    if(k.getClub().getId_club().equals(kegiatan.getClub().getId_club())) {
+                        isAnggotaClub = true;
+                        break;
+                    }
+                }
+            }
+            if(!isAnggotaClub) {
+                AlertNotification.showError("Anda harus menjadi anggota klub " + kegiatan.getClub().getNama() + " terlebih dahulu untuk bergabung ke kegiatan ini.");
+                return;
+            }
+        }
         try {
             PesertaKegiatan pesertaKegiatan = new PesertaKegiatan();
             pesertaKegiatan.setMahasiswa(getMahasiswa());
