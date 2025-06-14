@@ -67,38 +67,7 @@ public class PesertaKegiatanController extends BaseController {
                 }
             });
             actionBox.getChildren().add(btnGenerate);
-            // === Animasi Sidebar (Smooth Slide In) ===
-            sidebar.setTranslateX(-300);
-            TranslateTransition slideInSidebar = new TranslateTransition(Duration.millis(1000), sidebar);
-            slideInSidebar.setToX(0);
-            slideInSidebar.setInterpolator(Interpolator.EASE_OUT);
-            slideInSidebar.play();
-
-            // === TableView Fade In ===
-            pesertaTable.setOpacity(0);
-            FadeTransition fadeInTable = new FadeTransition(Duration.millis(600), pesertaTable);
-            fadeInTable.setFromValue(0);
-            fadeInTable.setToValue(1);
-            fadeInTable.setInterpolator(Interpolator.EASE_BOTH);
-
-            // === ButtonContainer Slide Up with Fade ===
-            actionBox.setOpacity(0);
-            actionBox.setTranslateY(20);
-
-            FadeTransition fadeButtons = new FadeTransition(Duration.millis(600), actionBox);
-            fadeButtons.setFromValue(0);
-            fadeButtons.setToValue(1);
-
-            TranslateTransition slideUpButtons = new TranslateTransition(Duration.millis(600), actionBox);
-            slideUpButtons.setFromY(20);
-            slideUpButtons.setToY(0);
-            slideUpButtons.setInterpolator(Interpolator.EASE_OUT);
-
-            ParallelTransition buttonTransition = new ParallelTransition(fadeButtons, slideUpButtons);
-
-            // === Urutan Animasi: Sidebar → Table → Buttons ===
-            SequentialTransition sequence = new SequentialTransition(fadeInTable, buttonTransition);
-            sequence.play();
+            
         }
 
         colNrp.setCellValueFactory(cellData -> {
@@ -172,6 +141,38 @@ public class PesertaKegiatanController extends BaseController {
         }
 
         pesertaTable.setItems(pesertaList);
+        // === Animasi Sidebar (Smooth Slide In) ===
+        sidebar.setTranslateX(-300);
+        TranslateTransition slideInSidebar = new TranslateTransition(Duration.millis(1000), sidebar);
+        slideInSidebar.setToX(0);
+        slideInSidebar.setInterpolator(Interpolator.EASE_OUT);
+        slideInSidebar.play();
+
+        // === TableView Fade In ===
+        pesertaTable.setOpacity(0);
+        FadeTransition fadeInTable = new FadeTransition(Duration.millis(600), pesertaTable);
+        fadeInTable.setFromValue(0);
+        fadeInTable.setToValue(1);
+        fadeInTable.setInterpolator(Interpolator.EASE_BOTH);
+
+        // === ButtonContainer Slide Up with Fade ===
+        actionBox.setOpacity(0);
+        actionBox.setTranslateY(20);
+
+        FadeTransition fadeButtons = new FadeTransition(Duration.millis(600), actionBox);
+        fadeButtons.setFromValue(0);
+        fadeButtons.setToValue(1);
+
+        TranslateTransition slideUpButtons = new TranslateTransition(Duration.millis(600), actionBox);
+        slideUpButtons.setFromY(20);
+        slideUpButtons.setToY(0);
+        slideUpButtons.setInterpolator(Interpolator.EASE_OUT);
+
+        ParallelTransition buttonTransition = new ParallelTransition(fadeButtons, slideUpButtons);
+
+        // === Urutan Animasi: Sidebar → Table → Buttons ===
+        SequentialTransition sequence = new SequentialTransition(fadeInTable, buttonTransition);
+        sequence.play();
     }
 
     public void loadData() throws Exception {
