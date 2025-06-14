@@ -2,6 +2,8 @@ package com.project.bd.app.projectbd.Controller;
 
 import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.Kategori;
+import com.project.bd.app.projectbd.Session.ClubSession;
+import com.project.bd.app.projectbd.Session.PageSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
@@ -156,18 +158,9 @@ public class DaftarClubController extends BaseController {
 
         card.setOnMouseClicked(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/project/bd/app/projectbd/anggota/detailDaftarClub.fxml")
-                );
-                Parent detailRoot = loader.load();
-
-                DetailDaftarClubController controller = loader.getController();
-                controller.setStage(this.stage);
-                controller.setFromDaftarYangDiikuti(false);
-                controller.setOriginPage("daftarClub");
-                controller.setClubDetail(club);
-
-                stage.getScene().setRoot(detailRoot);
+                ClubSession.getInstance().setClub(club);
+                PageSession.getInstance().setOriginPage("daftarClub");
+                switchScenes("anggota/detailDaftarClub.fxml", "Detail Club");
             } catch (IOException e) {
                 e.printStackTrace();
             }

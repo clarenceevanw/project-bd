@@ -50,7 +50,11 @@ public class DaftarKegiatanDiikutiController extends BaseController{
     public void loadData() throws Exception {
         Mahasiswa mahasiswa = mhsDAO.findById(LoginSession.getInstance().getIdMahasiswa());
         List<PesertaKegiatan> pesertaKegiatanList = pesertaKegiatanDAO.findByMahasiswa(mahasiswa);
-        if(pesertaKegiatanList.isEmpty()) kegiatanContainer.getChildren().add(new Text("Anda belum bergabung ke kegiatan apapun"));
+        if(pesertaKegiatanList.isEmpty()) {
+            Label label = new Label("Belum mengikuti kegiatan apapun.");
+            label.setStyle("-fx-font-size: 14px; -fx-text-fill: #888;");
+            kegiatanContainer.getChildren().add(label);
+        }
         renderKegiatanCard(pesertaKegiatanList);
     }
 

@@ -66,6 +66,20 @@ public class LihatSertifikatController extends BaseController{
             return;
         }
 
+        int count = 0;
+        for (int i = 0; i < listPesertaKegiatan.size(); i++) {
+            if(!listPesertaKegiatan.get(i).getStatusSertifikat().equals("Ada")) {
+                count++;
+            }
+        }
+        
+        if(count == listPesertaKegiatan.size()) {
+            Label label = new Label("Belum ada sertifikat");
+            label.setStyle("-fx-font-size: 14px; -fx-text-fill: #888;");
+            sertifikatContainer.getChildren().add(label);
+            return;
+        }
+
         Duration delayBetween = Duration.millis(150);
         Duration duration = Duration.millis(500);
 

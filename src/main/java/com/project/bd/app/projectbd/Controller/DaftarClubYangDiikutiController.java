@@ -1,17 +1,17 @@
 package com.project.bd.app.projectbd.Controller;
 
-import com.project.bd.app.projectbd.DAO.KeanggotaanDAO;
 import com.project.bd.app.projectbd.Model.Club;
 import com.project.bd.app.projectbd.Model.Keanggotaan;
+import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.Session.LoginSession;
+import com.project.bd.app.projectbd.Session.PageSession;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
@@ -26,8 +26,6 @@ public class DaftarClubYangDiikutiController extends BaseController {
     @FXML private VBox sidebarDaftarClub;
     @FXML private VBox clubContainer;
     @FXML private ScrollPane scrollPane;
-
-    private final KeanggotaanDAO keanggotaanDAO = new KeanggotaanDAO();
 
     @FXML
     public void initialize() throws Exception {
@@ -50,6 +48,13 @@ public class DaftarClubYangDiikutiController extends BaseController {
     private void loadClubsUserIkuti() throws Exception {
         List<Keanggotaan> keanggotaanList = keanggotaanDAO
                 .findKeanggotaanByMahasiswa(LoginSession.getInstance().getIdMahasiswa());
+                
+        if (keanggotaanList.isEmpty()) {
+            Label label = new Label("Belum mengikuti club apapun.");
+            label.setStyle("-fx-font-size: 14px; -fx-text-fill: #888;");
+            clubContainer.getChildren().add(label);
+            return;
+        }
 
         for (int i = 0; i < keanggotaanList.size(); i++) {
             Club club = keanggotaanList.get(i).getClub();
@@ -100,21 +105,9 @@ public class DaftarClubYangDiikutiController extends BaseController {
 
         card.setOnMouseClicked(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/project/bd/app/projectbd/anggota/detailDaftarClub.fxml")
-                );
-                Parent detailRoot = loader.load();
-
-                DetailDaftarClubController controller = loader.getController();
-                // ◀── PASTIKAN inject stage
-                controller.setStage(this.stage);
-                // ◀── Tandai asalnya dari “Daftar Club Yang Diikuti”
-                controller.setFromDaftarYangDiikuti(true);
-                controller.setOriginPage("daftarClubYangDiikuti");
-                controller.setModeDetail(true);
-                controller.setClubDetail(club);
-
-                stage.getScene().setRoot(detailRoot);
+                ClubSession.getInstance().setClub(club);
+                PageSession.getInstance().setOriginPage("daftarClubYangDiikuti");
+                switchScenes("anggota/detailDaftarClub.fxml", "Detail Club");
             } catch (IOException e) {
                 e.printStackTrace();
             }

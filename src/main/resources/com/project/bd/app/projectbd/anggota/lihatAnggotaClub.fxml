@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.LihatAnggotaClubController">
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.bd.app.projectbd.Controller.LihatAnggotaClubController">
     <top>
         <HBox alignment="CENTER" style="-fx-padding: 10;">
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="List Anggota" textAlignment="CENTER" />

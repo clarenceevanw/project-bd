@@ -1,7 +1,9 @@
 package com.project.bd.app.projectbd.Controller;
 
 import com.project.bd.app.projectbd.Model.JenisKegiatan;
+import com.project.bd.app.projectbd.Model.Keanggotaan;
 import com.project.bd.app.projectbd.Model.Kegiatan;
+import com.project.bd.app.projectbd.Model.Mahasiswa;
 import com.project.bd.app.projectbd.Model.PesertaKegiatan;
 import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
@@ -150,6 +152,18 @@ public class EditKegiatanController extends BaseController {
                     peserta.setNomorSertifikat(null);
                     peserta.setTglSertifikat(null);
                     pesertaKegiatanDAO.updateSertifikatByKegiatan(peserta);
+                    List<Keanggotaan> keanggotaanList = keanggotaanDAO.findKeanggotaanByMahasiswa(peserta.getMahasiswa().getIdMahasiswa());
+                    boolean isAnggota = false;
+                    for (Keanggotaan keanggotaan : keanggotaanList) {
+                        if (keanggotaan.getClub().getId_club().equals(kegiatan.getClub().getId_club())) {
+                            isAnggota = true;
+                            break;
+                        }
+                    }
+                    if(!isAnggota) {
+                        pesertaKegiatanDAO.delete(peserta.getIdPesertaKegiatan());
+                    }
+
                 } else if (kategori.equals("Eksternal")) {
                     peserta.setStatusSertifikat("Ada");
                     pesertaKegiatanDAO.updateSertifikatByKegiatan(peserta);

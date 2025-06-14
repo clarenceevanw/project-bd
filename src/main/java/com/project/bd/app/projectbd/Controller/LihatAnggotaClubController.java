@@ -8,16 +8,10 @@ import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.List;
@@ -27,24 +21,6 @@ public class LihatAnggotaClubController extends BaseController {
     @FXML private VBox anggotaContainer;
     @FXML private Button btnBack; // Pastikan di FXML fx:id="btnBack" onAction="#goToDetailDaftarClub"
 
-    private Stage stage;
-
-    // ----- ORIGIN PAGE dari mana detail berasal -----
-    // Nilai akan diteruskan dari DetailDaftarClubController
-    private String originPage;              // "daftarClub" atau "daftarClubYangDiikuti"
-    private boolean fromDaftarYangDiikuti;  // true jika berasal dari daftar yang diikuti
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public void setOriginPage(String originPage) {
-        this.originPage = originPage;
-    }
-
-    public void setFromDaftarYangDiikuti(boolean fromDaftarYangDiikuti) {
-        this.fromDaftarYangDiikuti = fromDaftarYangDiikuti;
-    }
 
     public void initialize() throws Exception {
         Club club = ClubSession.getInstance().getClub();
@@ -100,24 +76,7 @@ public class LihatAnggotaClubController extends BaseController {
      * Button “Back” mengembalikan ke DetailDaftarClub sesuai originPage
      */
     @FXML
-    private void goToDetailDaftarClub(ActionEvent event) throws Exception {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/project/bd/app/projectbd/anggota/detailDaftarClub.fxml")
-        );
-        Parent root = loader.load();
-
-        // Ambil controller Detail
-        DetailDaftarClubController controller = loader.getController();
-        // Inject stage
-        controller.setStage(this.stage);
-        // Teruskan originPage dan flag fromDaftarYangDiikuti
-        controller.setOriginPage(this.originPage);
-        controller.setFromDaftarYangDiikuti(this.fromDaftarYangDiikuti);
-        // Kirim ulang Club-nya
-        controller.setClubDetail(ClubSession.getInstance().getClub());
-
-        // Ganti scene
-        Scene scene = ((Node) event.getSource()).getScene();
-        scene.setRoot(root);
+    private void goToDetailDaftarClub() throws Exception {
+        switchScenes("anggota/detailDaftarClub.fxml", "Detail Club");
     }
 }
