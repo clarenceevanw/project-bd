@@ -110,6 +110,7 @@ public class TambahJadwalKegiatanController extends BaseController {
                     PresensiKegiatan presensiKegiatan = new PresensiKegiatan();
                     presensiKegiatan.setPesertaKegiatan(pesertaKegiatan);
                     presensiKegiatan.setJadwalKegiatan(jadwalKegiatan);
+                    presensiKegiatan.setStatusPresensi("Tidak Hadir");
                     presensiKegiatanDAO.insert(presensiKegiatan);
                 }
             }

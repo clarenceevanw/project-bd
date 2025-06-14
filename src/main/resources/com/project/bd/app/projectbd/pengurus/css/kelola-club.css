@@ -1,75 +1,16 @@
-/* ===== TABEL UTAMA ===== */
-#clubTable {
-    -fx-background-color: white;
-    -fx-border-color: transparent;
-    -fx-table-cell-border-color: transparent;
-    -fx-background-radius: 6px;
-    -fx-padding: 5px;
-}
-
-/* ===== HEADER KOLOM ===== */
-#clubTable .column-header-background {
-    -fx-background-color: white;
-    -fx-border-color: #DDDDDD;
-    -fx-border-width: 0 0 1px 0;
-}
-
-#clubTable .column-header .label {
-    -fx-text-fill: #222222;
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-padding: 6px 10px;
-}
-
-/* ===== BARIS TABEL ===== */
-#clubTable .table-row-cell {
-    -fx-background-color: transparent;
-    -fx-border-color: #EFEFEF;
-    -fx-border-width: 0 0 1px 0;
-    -fx-padding: 5px;
-}
-
-#clubTable .table-row-cell:odd {
-    -fx-background-color: #FAFAFA;
-}
-
-#clubTable .table-row-cell:even {
-    -fx-background-color: white;
-}
-
-#clubTable .table-row-cell:hover {
-    -fx-background-color: #F0F4FF;
-}
-
-/* ===== SEL TABEL ===== */
-#clubTable .table-cell {
-    -fx-text-fill: #333333;
-    -fx-font-size: 13px;
-    -fx-padding: 8px 10px;
+/* Mengatur semua cell di TableView agar bisa melakukan text wrapping */
+.table-view .table-cell {
+    -fx-wrap-text: true; /* Ini adalah properti kuncinya */
     -fx-alignment: CENTER_LEFT;
+    -fx-padding: 5px; /* Beri sedikit padding agar tidak terlalu mepet */
 }
 
-/* ===== SCROLL BAR CUSTOM ===== */
-#clubTable .scroll-bar:vertical,
-#clubTable .scroll-bar:horizontal {
-    -fx-background-color: white;
+/* Mengatur agar teks di dalam cell kolom deskripsi memiliki warna ungu */
+.table-view .table-cell .text {
+   -fx-fill: #7e43ba;
 }
 
-#clubTable .scroll-bar > .thumb {
-    -fx-background-color: #D0D0D0;
-    -fx-background-radius: 5;
-}
-
-#clubTable .scroll-bar > .track {
-    -fx-background-color: white;
-}
-
-#clubTable .scroll-bar > .increment-button,
-#clubTable .scroll-bar > .decrement-button {
-    -fx-background-color: white;
-}
-
-#clubTable .scroll-bar > .increment-button > .increment-arrow,
-#clubTable .scroll-bar > .decrement-button > .decrement-arrow {
-    -fx-background-color: #666666;
+/* Mengubah warna teks menjadi putih HANYA saat barisnya sedang dipilih (selected) */
+.table-view .table-row-cell:selected .table-cell .text {
+    -fx-fill: white;
 }

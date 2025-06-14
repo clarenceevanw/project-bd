@@ -40,7 +40,7 @@
                 <Button onAction="#handleViewKegiatan" style="-fx-background-color: #208EFF; -fx-text-fill: white;" text="Lihat Kegiatan" />
             </HBox>
 
-            <TableView fx:id="clubTable" prefHeight="400" prefWidth="650">
+            <TableView fx:id="clubTable" prefHeight="449.0" prefWidth="540.0">
                 <columns>
                     <TableColumn fx:id="colNama" prefWidth="150" text="Club" />
                     <TableColumn fx:id="colDeskripsi" prefWidth="250" text="Deskripsi" />

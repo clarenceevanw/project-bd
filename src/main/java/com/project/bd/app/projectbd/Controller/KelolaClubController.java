@@ -7,11 +7,14 @@ import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.Session.PageSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;
 import javafx.animation.*;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -49,26 +52,17 @@ public class KelolaClubController extends BaseController {
         setActiveSidebarButton("kelola", btnDashboard, btnKelolaClub, btnKelolaKegiatan);
 
         // Inisialisasi kolom
-        colNama.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNama()));
-        colDeskripsi.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeskripsi()));
-        colTahun.setCellValueFactory(cellData -> new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getTahun_berdiri()));
-        colKategori.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori().getNama()));
+        colNama.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNama()));
+        colDeskripsi.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDeskripsi()));
+        colTahun.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTahun_berdiri()));
+        colKategori.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKategori().getNama()));
         colDeskripsi.setCellFactory(tc -> new TableCell<>() {
             private final Text text = new Text();
 
             {
                 text.wrappingWidthProperty().bind(tc.widthProperty().subtract(10));
                 setGraphic(text);
-                setPrefHeight(Control.USE_COMPUTED_SIZE);
-
-                // Ubah warna teks berdasarkan seleksi
-                tableRowProperty().addListener((obs, oldRow, newRow) -> {
-                    if (newRow != null) {
-                        newRow.selectedProperty().addListener((__, ___, isSelected) -> {
-                            updateTextColor(isSelected);
-                        });
-                    }
-                });
+                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             }
 
             private void updateTextColor(boolean isSelected) {
@@ -87,8 +81,6 @@ public class KelolaClubController extends BaseController {
             }
         });
 
-
-        clubTable.setFixedCellSize(-1);
         loadData();
         clubTable.setItems(clubList);
 

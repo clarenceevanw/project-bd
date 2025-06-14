@@ -1,6 +1,5 @@
 package com.project.bd.app.projectbd.Controller;
 
-import com.project.bd.app.projectbd.DAO.MahasiswaDAO;
 import com.project.bd.app.projectbd.Model.Mahasiswa;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.utils.AlertNotification;

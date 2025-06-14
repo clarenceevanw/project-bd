@@ -69,6 +69,11 @@ public class BuatClubController extends BaseController{
             return;
         }
 
+        if(deskripsi.length() < 20){
+            AlertNotification.showError("Deskripsi minimal 20 karakter.");
+            return;
+        }
+
         try {
             int tahunInt = Integer.parseInt(tahun);
 
