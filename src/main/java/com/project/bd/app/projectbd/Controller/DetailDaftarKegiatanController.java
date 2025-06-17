@@ -1,9 +1,6 @@
 package com.project.bd.app.projectbd.Controller;
 
-import com.project.bd.app.projectbd.Model.Keanggotaan;
-import com.project.bd.app.projectbd.Model.Kegiatan;
-import com.project.bd.app.projectbd.Model.Mahasiswa;
-import com.project.bd.app.projectbd.Model.PesertaKegiatan;
+import com.project.bd.app.projectbd.Model.*;
 import com.project.bd.app.projectbd.Session.ClubSession;
 import com.project.bd.app.projectbd.Session.LoginSession;
 import com.project.bd.app.projectbd.Session.PageSession;
@@ -180,6 +177,17 @@ public class DetailDaftarKegiatanController extends BaseController {
             pesertaKegiatan.setKegiatan(kegiatan);
             UUID idPeserta = pesertaKegiatanDAO.insert(pesertaKegiatan);
             pesertaKegiatan.setIdPesertaKegiatan(idPeserta);
+            List<JadwalKegiatan> jadwalKegiatanList = jadwalKegiatanDAO.findByKegiatan(kegiatan);
+            if(!jadwalKegiatanList.isEmpty()) {
+                for (JadwalKegiatan jadwalKegiatan : jadwalKegiatanList) {
+                    PresensiKegiatan presensiKegiatan = new PresensiKegiatan();
+                    presensiKegiatan.setJadwalKegiatan(jadwalKegiatan);
+                    presensiKegiatan.setPesertaKegiatan(pesertaKegiatan);
+                    presensiKegiatan.setStatusPresensi("Tidak Hadir");
+                    presensiKegiatanDAO.insert(presensiKegiatan);
+                }
+            }
+
             AlertNotification.showSuccess("Berhasil bergabung ke kegiatan");
             switchScenes("anggota/daftarKegiatan.fxml", "Daftar Kegiatan");
         }catch (Exception e) {
