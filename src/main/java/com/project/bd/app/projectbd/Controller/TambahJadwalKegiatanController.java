@@ -94,6 +94,11 @@ public class TambahJadwalKegiatanController extends BaseController {
             return;
         }
 
+        if(Integer.parseInt(timeText.substring(0, 2)) > 23 || Integer.parseInt(timeText.substring(3, 5)) > 59 || Integer.parseInt(timeText.substring(0, 2)) < 0 || Integer.parseInt(timeText.substring(3, 5)) < 0){
+            AlertNotification.showError("Format waktu harus HH:MM.");
+            return;
+        }
+
         try {
             LocalTime time = LocalTime.parse(timeText);
             LocalDateTime waktuKegiatan = LocalDateTime.of(tanggal, time);
